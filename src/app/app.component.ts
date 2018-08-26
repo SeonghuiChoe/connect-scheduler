@@ -6,7 +6,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  pageTitle: string = 'Home';
+  pageTitle: string = 'Todo';
 
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
     this.pageTitle = tabChangeEvent.tab.textLabel;
