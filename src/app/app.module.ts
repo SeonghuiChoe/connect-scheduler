@@ -3,11 +3,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 
+// Components
 import { AppComponent } from './app.component';
+import { CommonNavbar } from '../components/common-navbar/common-navbar.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CommonNavbar
   ],
   imports: [
     BrowserModule,
