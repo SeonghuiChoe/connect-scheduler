@@ -5,13 +5,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 // Components
 import { AppComponent } from './app.component';
-import { CommonNavbar } from '../components/common-navbar/common-navbar.component';
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    CommonNavbar
   ],
   imports: [
     BrowserModule,
