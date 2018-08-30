@@ -5,15 +5,17 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 // Components
 import { AppComponent } from './app.component';
+import { TodoPage } from '../components/todo-page/todo-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    TodoPage,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatTabsModule
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
