@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { TodoPage } from '../components/todo-page/todo-page.component';
 import { dayPage } from '../components/day-page/day-page.component';
 
+// Services
+import { LocalStorageService } from '../services/local-storage.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +22,9 @@ import { dayPage } from '../components/day-page/day-page.component';
     BrowserAnimationsModule,
     MatTabsModule,
   ],
-  providers: [],
+  providers: [
+    LocalStorageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

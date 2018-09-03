@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'todo-page',
@@ -8,4 +9,12 @@ import { Component } from "@angular/core";
 
 export class TodoPage {
 
+  todos: Array<Object> = [];
+  constructor(private localStorageService: LocalStorageService) {
+    // tag정보
+    this.todos = [
+      { name: 'Fixing bug #9239 on test project', isDone:false},
+      { name: 'Pay internet bills', isDone: true }
+    ];
+  }
 }
