@@ -13,8 +13,9 @@ export class TodoPage {
   constructor(private localStorageService: LocalStorageService) {
     // tag정보
     this.todos = [
-      { name: 'Fixing bug #9239 on test project', isDone:false},
+      { name: 'Fixing bug #9239 on test project', isDone: false },
       { name: 'Pay internet bills', isDone: true }
     ];
+    // console.log(JSON.stringify(this.todos));
   }
 }

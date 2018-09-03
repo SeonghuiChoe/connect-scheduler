@@ -1,6 +1,6 @@
 <div class="todo-wrap">
-  <div ng-repeat="todo in todos">
-    <span>name: {{todo.name}} </span>
-    <input class="form-control" ng-model="todo.isDone" type="checkbox">
+  <div *ngFor="let todo of todos">
+    <span>{{todo.name}}</span>
+    <input class="form-control" [(ngModel)]="todo.isDone" type="checkbox">
   </div>
 </div>
