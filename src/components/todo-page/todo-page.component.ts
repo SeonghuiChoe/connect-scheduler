@@ -11,11 +11,8 @@ export class TodoPage {
 
   todos: Array<Object> = [];
   constructor(private localStorageService: LocalStorageService) {
+    this.todos = JSON.parse(localStorageService.getTodoList());
     // tag정보
-    this.todos = [
-      { name: 'Fixing bug #9239 on test project', isDone: false },
-      { name: 'Pay internet bills', isDone: true }
-    ];
-    // console.log(JSON.stringify(this.todos));
+    // localStorageService.setTodoList(JSON.stringify(this.todos));
   }
 }
