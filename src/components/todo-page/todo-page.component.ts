@@ -18,11 +18,20 @@ export class TodoPage {
   }
 
   insertTodo() {
+    if (!this.insertText) {
+      // 입력해주세요.
+      return;
+    }
     this.todos.push({
       name: this.insertText,
       isDone: false
     });
     this.localStorageService.setTodoList(JSON.stringify(this.todos));
     this.insertText = '';
+  }
+
+  deleteTodo(index) {
+    console.log(index);
+    this.todos.splice(index, 1);
   }
 }
