@@ -1,4 +1,6 @@
 <div class="todo-wrap">
+  <input type="text" [(ngModel)]="insertText">
+  <input type="button" value="ok" (click)="insertTodo()">
   <div *ngFor="let todo of todos">
     <input class="form-control" [(ngModel)]="todo.isDone" type="checkbox">
     <span>{{todo.name}}</span>

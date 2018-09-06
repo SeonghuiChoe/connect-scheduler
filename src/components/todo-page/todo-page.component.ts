@@ -9,10 +9,20 @@ import { LocalStorageService } from '../../services/local-storage.service';
 
 export class TodoPage {
 
+  insertText = '';
+
   todos: Array<Object> = [];
   constructor(private localStorageService: LocalStorageService) {
     this.todos = JSON.parse(localStorageService.getTodoList());
     // tag정보
-    // localStorageService.setTodoList(JSON.stringify(this.todos));
+  }
+
+  insertTodo() {
+    this.todos.push({
+      name: this.insertText,
+      isDone: false
+    });
+    this.localStorageService.setTodoList(JSON.stringify(this.todos));
+    this.insertText = '';
   }
 }
