@@ -1,5 +1,12 @@
 .todo-wrap {
   height: 100%;
+
+  .todo-box {
+    height: 2em;
+    padding: 1em;
+    margin: 1em;
+    border: 1px solid #eee;
+  }
 }
 
 .todo-delete-btn {

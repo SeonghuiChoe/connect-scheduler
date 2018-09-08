@@ -1,7 +1,7 @@
 <div class="todo-wrap">
   <input type="text" [(ngModel)]="insertText">
   <input type="button" value="ok" (click)="insertTodo()">
-  <div *ngFor="let todo of todos; index as i;">
+  <div *ngFor="let todo of todos; index as i;" class="todo-box">
     <input class="form-control" [(ngModel)]="todo.isDone" type="checkbox">
     <span>{{todo.name}}</span>
     <input class="todo-delete-btn" type="button" value="delete" (click)="deleteTodo(i)">
