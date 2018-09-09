@@ -1,14 +1,29 @@
 .todo-wrap {
   height: 100%;
 
+  .insert-text-box {
+    display: flex;
+    height: 5%;
+    padding: .5em;
+
+    .insert-text {
+      width: 90%;
+      border: 1px solid #eee;
+    }
+
+    .insert-btn {
+      width: 10%;
+    }
+  }
+
   .todo-box {
     height: 2em;
-    padding: 1em;
-    margin: 1em;
+    padding: .3em .5em;
+    margin: .5em;
+    margin-top: 0;
     border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-}
-
-.todo-delete-btn {
-  float: right;
 }
