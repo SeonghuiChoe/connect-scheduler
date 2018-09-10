@@ -31,7 +31,7 @@ export class TodoPage {
   }
 
   deleteTodo(index) {
-    console.log(index);
     this.todos.splice(index, 1);
+    this.localStorageService.setTodoList(JSON.stringify(this.todos));
   }
 }
