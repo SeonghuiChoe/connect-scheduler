@@ -24,7 +24,8 @@ export class TodoPage {
     }
     this.todos.push({
       name: this.insertText,
-      isDone: false
+      isDone: false,
+      isStart: false
     });
     this.localStorageService.setTodoList(JSON.stringify(this.todos));
     this.insertText = '';
