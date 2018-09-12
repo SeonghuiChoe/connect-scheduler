@@ -1,6 +1,6 @@
 <div class="todo-wrap">
   <div class="insert-text-box">
-    <input type="text" class="insert-text" [(ngModel)]="insertText">
+    <input type="text" class="insert-text" [(ngModel)]="insertText" (keyup.enter)="insertTodo()">
     <input type="button" class="insert-btn" value="ok" (click)="insertTodo()">
   </div>
   <div *ngFor="let todo of todos; index as i;" class="todo-box">
