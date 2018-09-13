@@ -4,8 +4,12 @@
     <input type="button" class="insert-btn" value="ok" (click)="insertTodo()">
   </div>
   <div *ngFor="let todo of todos; index as i;" class="todo-box">
-    <input type="checkbox" class="form-control" [(ngModel)]="todo.isDone">
-    <span>{{todo.name}}</span>
+    <div
+      class="todo-star"
+      [ngClass]="{'todo-star-check': todo.isStar}"
+      (click)="checkStar(todo)"></div>
+    <input type="checkbox" class="form-control todo-check" [(ngModel)]="todo.isDone">
+    <span class="todo-name">{{todo.name}}</span>
     <input type="button" class="todo-delete-btn" value="x" (click)="deleteTodo(i)">
   </div>
 </div>

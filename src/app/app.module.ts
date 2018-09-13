@@ -21,8 +21,8 @@ import { LocalStorageService } from '../services/local-storage.service';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatTabsModule,
     FormsModule,
+    MatTabsModule,
   ],
   providers: [
     LocalStorageService,

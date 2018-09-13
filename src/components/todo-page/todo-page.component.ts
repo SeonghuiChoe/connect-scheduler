@@ -17,6 +17,10 @@ export class TodoPage {
     // tag정보
   }
 
+  private setStorage() {
+    this.localStorageService.setTodoList(JSON.stringify(this.todos));
+  }
+
   insertTodo() {
     if (!this.insertText) {
       // 입력해주세요.
@@ -25,14 +29,19 @@ export class TodoPage {
     this.todos.push({
       name: this.insertText,
       isDone: false,
-      isStart: false
+      isStar: true
     });
-    this.localStorageService.setTodoList(JSON.stringify(this.todos));
+    this.setStorage();
     this.insertText = '';
   }
 
   deleteTodo(index) {
     this.todos.splice(index, 1);
-    this.localStorageService.setTodoList(JSON.stringify(this.todos));
+    this.setStorage();
+  }
+
+  checkStar(todo) {
+    todo.isStar = !todo.isStar;
+    this.setStorage();
   }
 }

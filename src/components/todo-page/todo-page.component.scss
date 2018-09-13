@@ -24,6 +24,26 @@
     border: 1px solid #eee;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+
+    .todo-star {
+      height: 100%;
+      width: 1.5%;
+    }
+
+    .todo-star-check {
+      background-color: #f0b7cb;
+    }
+
+    .todo-check {
+      width: 5%;
+    }
+
+    .todo-name {
+      width: 80%;
+    }
+
+    .todo-delete-btn {
+      width: 10%;
+    }
   }
 }
