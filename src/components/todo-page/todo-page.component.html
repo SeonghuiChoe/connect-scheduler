@@ -1,7 +1,7 @@
 <div class="todo-wrap">
   <div class="insert-text-box">
     <input type="text" class="insert-text" [(ngModel)]="insertText" (keyup.enter)="insertTodo()">
-    <input type="button" class="insert-btn" value="ok" (click)="insertTodo()">
+    <div class="insert-btn" (click)="insertTodo()">ok</div>
   </div>
   <div *ngFor="let todo of todos; index as i;" class="todo-box">
     <div
@@ -10,6 +10,6 @@
       (click)="checkStar(todo)"></div>
     <input type="checkbox" class="form-control todo-check" [(ngModel)]="todo.isDone">
     <span class="todo-name">{{todo.name}}</span>
-    <input type="button" class="todo-delete-btn" value="x" (click)="deleteTodo(i)">
+    <div class="todo-delete-btn" (click)="deleteTodo(i)">x</div>
   </div>
 </div>
