@@ -10,6 +10,8 @@ html, body {
   -ms-user-select: none;       /* Internet Explorer/Edge */
   user-select: none;           /* Non-prefixed version, currently */
   margin: 0;
+  color: #777;
+  font-weight: 300;
 }
 
 mat-tab-group {
@@ -18,10 +20,23 @@ mat-tab-group {
   /* 탭 해더 */
   .mat-tab-header {
     width: 100%;
+    min-width: 25px;
+
+    .icon {
+      font-size: 1.5em;
+    }
+
+    .title {
+      font-size: 1em;
+      font-weight: 300;
+    }
+
+    .mat-tab-label {
+      height: 4em;
+    }
 
     /* Styles for the active tab label */
     .mat-tab-label.mat-tab-label-active {
-      // min-width: 25px;
       color: #e1786e;
     }
 

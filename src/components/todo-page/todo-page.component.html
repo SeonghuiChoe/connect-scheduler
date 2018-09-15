@@ -1,15 +1,23 @@
 <div class="todo-wrap">
   <div class="insert-text-box">
     <input type="text" class="insert-text" [(ngModel)]="insertText" (keyup.enter)="insertTodo()">
-    <div class="insert-btn" (click)="insertTodo()">ok</div>
+    <div class="insert-btn" (click)="insertTodo()">
+      <mat-icon class="icon">subdirectory_arrow_left</mat-icon>
+    </div>
   </div>
   <div *ngFor="let todo of todos; index as i;" class="todo-box">
     <div
       class="todo-star"
       [ngClass]="{'todo-star-check': todo.isStar}"
       (click)="checkStar(todo)"></div>
-    <input type="checkbox" class="form-control todo-check" [(ngModel)]="todo.isDone">
-    <span class="todo-name">{{todo.name}}</span>
-    <div class="todo-delete-btn" (click)="deleteTodo(i)">x</div>
+    <div class="todo-check">
+      <input type="checkbox" class="form-control" [(ngModel)]="todo.isDone">
+    </div>
+    <div class="todo-name">
+      <span>{{todo.name}}</span>
+    </div>
+    <div class="todo-delete-btn" (click)="deleteTodo(i)">
+        <mat-icon class="icon">clear</mat-icon>
+    </div>
   </div>
 </div>

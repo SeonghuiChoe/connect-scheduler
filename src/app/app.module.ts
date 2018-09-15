@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 // Components
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { LocalStorageService } from '../services/local-storage.service';
     BrowserAnimationsModule,
     FormsModule,
     MatTabsModule,
+    MatIconModule,
   ],
   providers: [
     LocalStorageService,

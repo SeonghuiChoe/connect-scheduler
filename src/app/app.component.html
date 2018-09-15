@@ -2,13 +2,21 @@
 <mat-tab-group
   (selectedTabChange)="tabChanged($event)"
   headerPosition="below">
-  <mat-tab label="Todo">
+  <mat-tab label="할일">
+    <ng-template mat-tab-label>
+        <div class="title">할일</div>
+      </ng-template>
     <todo-page></todo-page>
   </mat-tab>
-  <mat-tab label="Day">
+  <mat-tab label="달력">
+    <ng-template mat-tab-label>
+      <div class="title">달력</div>
+    </ng-template>
     <day-page></day-page>
   </mat-tab>
-  <mat-tab label="My">
-    me
+  <mat-tab label="자신">
+    <ng-template mat-tab-label>
+        <div class="title">자신</div>
+      </ng-template>
   </mat-tab>
 </mat-tab-group>
