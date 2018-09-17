@@ -14,6 +14,18 @@ html, body {
   font-weight: 300;
 }
 
+/* 체크박스 크기 */
+.mat-checkbox
+.mat-checkbox-layout
+.mat-checkbox-inner-container {
+  height: 1em;
+  width: 1em;
+
+  .mat-checkbox-frame {
+    border-width: 1px;
+  }
+}
+
 mat-tab-group {
   height: 100%;
 

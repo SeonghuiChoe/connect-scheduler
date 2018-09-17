@@ -1,7 +1,7 @@
 .todo-wrap {
   height: 100%;
 
-  .insert-text-box {
+  .insert-box {
     display: flex;
     height: 6%;
     padding: .5em;
@@ -15,11 +15,14 @@
 
     .insert-btn {
       width: 14%;
+      min-width: 14%;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       border: 1px solid #eee;
       margin-left: 1%;
+      line-height: 0%;
 
       .icon {
         color: #e1786e;
@@ -55,7 +58,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0 0.2em;
+      padding: 0 .2em .1em .5em;
     }
 
     .todo-name {
@@ -64,6 +67,7 @@
       display: flex;
       align-items: center;
       padding: 0 0.2em;
+      font-size: .9em;
     }
 
     .todo-delete-btn {
