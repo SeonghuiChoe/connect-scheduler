@@ -1,14 +1,13 @@
 <div class="todo-wrap">
   <div class="insert-box">
     <input type="text" class="insert-text" [(ngModel)]="insertText" (keyup.enter)="insertTodo()">
-    <!-- <div class="insert-btn" (click)="insertTodo()"> -->
-    <!-- <mat-icon class="icon">subdirectory_arrow_left</mat-icon> -->
-    <!-- </div> -->
     <button mat-button class="insert-btn" (click)="insertTodo()" type="submit">
       <mat-icon class="icon">subdirectory_arrow_left</mat-icon>
     </button>
   </div>
-  <div *ngFor="let todo of todos; index as i;" class="todo-box">
+  <div
+    *ngFor="let todo of todos; index as i;"
+    class="todo-box">
     <div
       class="todo-star"
       [ngClass]="{'todo-star-check': todo.isStar}"
