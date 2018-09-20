@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'day-page',
@@ -7,5 +8,10 @@ import { Component } from "@angular/core";
 })
 
 export class dayPage {
+  selectMonth = '';
 
+  constructor() {
+    let now = moment();
+    this.selectMonth = now.format('MMMM YYYY');
+  }
 }
