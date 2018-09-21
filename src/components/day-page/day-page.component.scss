@@ -1,3 +1,9 @@
+%flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .day-page-wrap {
   height: 100%;
 
@@ -8,23 +14,21 @@
     display: flex;
 
     .day-header-pre {
+      @extend %flex-center;
       width: 20%;
       height: 100%;
-      background-color: skyblue;
     }
 
     .day-header-curr {
+      @extend %flex-center;
       width: 80%;
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
     .day-header-next {
+      @extend %flex-center;
       width: 20%;
       height: 100%;
-      background-color: skyblue;
     }
   }
 }
