@@ -13,8 +13,12 @@ export class TodoPage {
 
   todos: Array<Object> = [];
   constructor(private localStorageService: LocalStorageService) {
-    this.todos = JSON.parse(localStorageService.getTodoList());
     // tag정보
+    if (localStorageService.getTodoList()) {
+      this.todos = JSON.parse(localStorageService.getTodoList());
+    } else {
+      this.setStorage();
+    }
   }
 
   private setStorage() {
