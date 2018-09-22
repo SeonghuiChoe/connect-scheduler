@@ -8,8 +8,8 @@
   height: 100%;
 
   .day-page-header {
-    height: 6%;
-    padding: .5em;
+    height: 8%;
+    padding: 0 .5em;
     background-color: pink;
     display: flex;
 
@@ -29,6 +29,23 @@
       @extend %flex-center;
       width: 20%;
       height: 100%;
+    }
+  }
+
+  .day-page-weeks {
+    @extend %flex-center;
+    height: 7%;
+    border: 1px solid #eee;
+
+    .day-page-week {
+      @extend %flex-center;
+      font-size: .7em;
+      height: 100%;
+      width: calc(100% / 7);
+    }
+
+    .day-page-weekend {
+      color: #bababa;
     }
   }
 }

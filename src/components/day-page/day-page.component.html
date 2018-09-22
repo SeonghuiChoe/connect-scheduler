@@ -1,11 +1,23 @@
 <div class="day-page-wrap">
   <div class="day-page-header">
-    <div class="day-header-pre">
+    <div class="day-header-pre" (click)="goPreMonth()">
       <i class="fas fa-angle-left"></i>
     </div>
-    <div class="day-header-curr">{{selectMonth}}</div>
-    <div class="day-header-next">
+    <div
+      class="day-header-curr"
+      (click)="goCurrentMonth()">
+      {{currentDate.format('MMMM YYYY')}}
+    </div>
+    <div class="day-header-next" (click)="goNextMonth()">
       <i class="fas fa-angle-right"></i>
+    </div>
+  </div>
+  <div class="day-page-weeks">
+    <div
+      *ngFor="let week of weekdays"
+      [ngClass]="{'day-page-weekend': week.isWeekend}"
+      class="day-page-week">
+      {{week.name}}
     </div>
   </div>
 </div>
