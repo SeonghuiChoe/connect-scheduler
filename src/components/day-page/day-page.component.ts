@@ -25,15 +25,23 @@ export class dayPage {
 
   constructor() {}
 
+  private changeMonth() {
+    const firstDay = this.currentDate.date(1).day();
+    console.log(firstDay);
+  }
+
   goPreMonth() {
     this.currentDate = this.currentDate.add(-1, 'months');
+    this.changeMonth();
   }
 
   goNextMonth() {
     this.currentDate = this.currentDate.add(1, 'months');
+    this.changeMonth();
   }
 
   goCurrentMonth() {
     this.currentDate = moment(new Date());
+    this.changeMonth();
   }
 }
