@@ -1,16 +1,18 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <mat-tab-group
   (selectedTabChange)="tabChanged($event)"
-  headerPosition="below">
+  headerPosition="below"
+  [selectedIndex]="1">
   <mat-tab label="할일">
     <ng-template mat-tab-label>
-        <div class="title">할일</div>
+        <!-- <div class="title">할일</div> -->
+        <i class="far fa-calendar-check"></i>
       </ng-template>
     <todo-page></todo-page>
   </mat-tab>
   <mat-tab label="달력">
     <ng-template mat-tab-label>
-      <div class="title">달력</div>
+      <!-- <div class="title">달력</div> -->
+      <i class="far fa-calendar-alt"></i>
     </ng-template>
     <day-page></day-page>
   </mat-tab>
