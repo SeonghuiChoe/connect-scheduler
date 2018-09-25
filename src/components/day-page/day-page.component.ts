@@ -13,6 +13,10 @@ export class dayPage {
    */
   currentDate = moment(new Date());
 
+  firstDay = 0;
+
+  daysInMonth = 0;
+
   weekdays = [
     {name: 'Sun', isWeekend: true},
     {name: 'Mon', isWeekend: false},
@@ -23,11 +27,27 @@ export class dayPage {
     {name: 'Sat', isWeekend: true}
   ];
 
-  constructor() {}
+  days: = [];
+
+  constructor() {
+    this.changeMonth();
+  }
 
   private changeMonth() {
-    const firstDay = this.currentDate.date(1).day();
-    console.log(firstDay);
+    this.firstDay = this.currentDate.date(1).day();
+    this.daysInMonth = this.currentDate.daysInMonth();
+    var selectMonths = [];
+    for (let j = 0; j < this.firstDay; j++) {
+      selectMonths.push({});
+    }
+    for (let i = 1; i <= this.daysInMonth; i ++) {
+      selectMonths.push({
+        num: i,
+        isWeekend: this.currentDate.date(i).day() === 0;
+      });
+    }
+
+    this.days = selectMonths;
   }
 
   goPreMonth() {

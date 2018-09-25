@@ -43,9 +43,20 @@
       height: 100%;
       width: calc(100% / 7);
     }
+  }
 
-    .day-page-weekend {
-      color: #bababa;
+  .day-page-weekend {
+    color: #bababa;
+  }
+
+  .day-page-days {
+    height: 85%;
+
+    .day-page-day {
+      @extend %flex-center;
+      height: 10%;
+      width: 14%;
+      float: left;
     }
   }
 }

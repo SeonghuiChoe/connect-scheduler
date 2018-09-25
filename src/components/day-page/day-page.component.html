@@ -20,4 +20,12 @@
       {{week.name}}
     </div>
   </div>
+  <div class="day-page-days">
+    <div
+      *ngFor="let day of days"
+      [ngClass]="{'day-page-weekend': day.isWeekend}"
+      class="day-page-day">
+      {{day.num}}
+    </div>
+  </div>
 </div>
