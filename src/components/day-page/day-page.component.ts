@@ -8,6 +8,9 @@ import * as moment from 'moment';
 })
 
 export class dayPage {
+
+  private totalDays = 42;
+
   /**
    * 선택된 날짜
    */
@@ -37,13 +40,28 @@ export class dayPage {
     this.firstDay = this.currentDate.date(1).day();
     this.daysInMonth = this.currentDate.daysInMonth();
     var selectMonths = [];
+    const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
+    const nextDaysInMonth = this.currentDate.clone().add(1, 'months').daysInMonth();
     for (let j = 0; j < this.firstDay; j++) {
-      selectMonths.push({});
+      selectMonths.unshift({
+        num: preDaysInMonth - j,
+        isweekend: false,
+        isNotCurrentMonthDays: true
+      });
     }
     for (let i = 1; i <= this.daysInMonth; i ++) {
       selectMonths.push({
         num: i,
-        isWeekend: this.currentDate.date(i).day() === 0;
+        isWeekend: this.currentDate.date(i).day() === 0,
+        isPreMonthDays: false
+      });
+    }
+    const nextMonthCount = this.totalDays - selectMonths.length;
+    for (let z = 1; z <= nextMonthCount; z++) {
+      selectMonths.push({
+        num: z,
+        isweekend: false,
+        isNotCurrentMonthDays: true
       });
     }
 

@@ -23,7 +23,7 @@
   <div class="day-page-days">
     <div
       *ngFor="let day of days"
-      [ngClass]="{'day-page-weekend': day.isWeekend}"
+      [ngClass]="{'day-page-weekend': day.isWeekend, 'day-page-noday': day.isNotCurrentMonthDays}"
       class="day-page-day">
       {{day.num}}
     </div>
