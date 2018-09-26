@@ -35,13 +35,14 @@
   }
 
   .todo-box {
-    height: 2em;
+    min-height: 2em;
     padding: .3em .5em;
     margin: .5em;
     margin-top: 0;
     border: 1px solid #eee;
     display: flex;
     align-items: center;
+    word-break: break-all;
 
     .todo-star {
       height: 100%;
