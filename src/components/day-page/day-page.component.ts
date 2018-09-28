@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { formatCurrency } from "@angular/common";
 import * as moment from 'moment';
 
 @Component({
@@ -9,12 +10,14 @@ import * as moment from 'moment';
 
 export class dayPage {
 
-  private totalDays = 42;
+  private TOTAL_DATYS = 42;
 
   /**
    * 선택된 날짜
    */
   currentDate = moment(new Date());
+
+  today = moment(new Date());
 
   firstDay = 0;
 
@@ -37,31 +40,38 @@ export class dayPage {
   }
 
   private changeMonth() {
-    this.firstDay = this.currentDate.date(1).day();
-    this.daysInMonth = this.currentDate.daysInMonth();
+    const firstDay = this.currentDate.date(1).day();
+    const daysInMonth = this.currentDate.daysInMonth();
     var selectMonths = [];
     const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
     const nextDaysInMonth = this.currentDate.clone().add(1, 'months').daysInMonth();
-    for (let j = 0; j < this.firstDay; j++) {
+    for (let j = 0; j < firstDay; j++) {
       selectMonths.unshift({
         num: preDaysInMonth - j,
         isweekend: false,
-        isNotCurrentMonthDays: true
+        isNotCurrentMonthDays: true,
+        isToday: false,
       });
     }
-    for (let i = 1; i <= this.daysInMonth; i ++) {
+    console.log(this.today.format('YYYYMM'));
+    for (let i = 1; i <= daysInMonth; i ++) {
+      const isToday =
+        (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
+        (this.today.format('DD') == i)
       selectMonths.push({
         num: i,
         isWeekend: this.currentDate.date(i).day() === 0,
-        isPreMonthDays: false
+        isPreMonthDays: false,
+        isToday: isToday,
       });
     }
-    const nextMonthCount = this.totalDays - selectMonths.length;
+    const nextMonthCount = this.TOTAL_DATYS - selectMonths.length;
     for (let z = 1; z <= nextMonthCount; z++) {
       selectMonths.push({
         num: z,
         isweekend: false,
-        isNotCurrentMonthDays: true
+        isNotCurrentMonthDays: true,
+        isToday: false,
       });
     }
 
