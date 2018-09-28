@@ -39,43 +39,53 @@ export class dayPage {
     this.changeMonth();
   }
 
-  private changeMonth() {
+  private insertPreMonth(month) {
     const firstDay = this.currentDate.date(1).day();
-    const daysInMonth = this.currentDate.daysInMonth();
-    var selectMonths = [];
     const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
-    const nextDaysInMonth = this.currentDate.clone().add(1, 'months').daysInMonth();
     for (let j = 0; j < firstDay; j++) {
-      selectMonths.unshift({
+      month.unshift({
         num: preDaysInMonth - j,
         isweekend: false,
         isNotCurrentMonthDays: true,
         isToday: false,
       });
     }
-    console.log(this.today.format('YYYYMM'));
+  }
+
+  private insertCurrentMonth(month) {
+    const daysInMonth = this.currentDate.daysInMonth();
+    const nextDaysInMonth = this.currentDate.clone().add(1, 'months').daysInMonth();
     for (let i = 1; i <= daysInMonth; i ++) {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
         (this.today.format('DD') == i)
-      selectMonths.push({
+        month.push({
         num: i,
         isWeekend: this.currentDate.date(i).day() === 0,
         isPreMonthDays: false,
         isToday: isToday,
       });
     }
-    const nextMonthCount = this.TOTAL_DATYS - selectMonths.length;
+  }
+
+  private insertNextMonth(month) {
+    const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
-      selectMonths.push({
+      month.push({
         num: z,
         isweekend: false,
         isNotCurrentMonthDays: true,
         isToday: false,
       });
     }
+  }
 
-    this.days = selectMonths;
+  private changeMonth() {
+    var totalMonth = [];
+    this.insertPreMonth(totalMonth);
+    this.insertCurrentMonth(totalMonth);
+    this.insertNextMonth(totalMonth);
+    this.days = totalMonth;
   }
 
   goPreMonth() {
