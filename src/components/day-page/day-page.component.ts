@@ -35,23 +35,31 @@ export class dayPage {
 
   days: = [];
 
+  holidays = [{
+    day: '2018-10-3',
+    startTime: '9',
+    endTime: '22',
+    name: '개천절',
+    color: 'red'
+  }];
+
   constructor() {
     this.changeMonth();
   }
 
-  private pushMonth(month, num, isweekend, isNotCurrentMonthDays, isToday) {
-    month.push({num, isweekend, isNotCurrentMonthDays, isToday});
+  private pushMonth(month, num, isweekend, isNotCurrentMonthDays, isToday, holiday) {
+    month.push({num, isweekend, isNotCurrentMonthDays, isToday, holiday});
   }
 
-  private unshiftMonth(month, num, isweekend, isNotCurrentMonthDays, isToday) {
-    month.unshift({num, isweekend, isNotCurrentMonthDays, isToday});
+  private unshiftMonth(month, num, isweekend, isNotCurrentMonthDays, isToday, holiday) {
+    month.unshift({num, isweekend, isNotCurrentMonthDays, isToday, holiday});
   }
 
   private insertPreMonth(month) {
     const firstDay = this.currentDate.date(1).day();
     const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
     for (let j = 0; j < firstDay; j++) {
-      this.unshiftMonth(month, preDaysInMonth - j, false, true, false);
+      this.unshiftMonth(month, preDaysInMonth - j, false, true, false, []);
     }
   }
 
@@ -62,14 +70,15 @@ export class dayPage {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
         (this.today.format('DD') == i);
-      this.pushMonth(month, i, this.currentDate.date(i).day() === 0, false, isToday);
+      const holidays = this.holidays.filter(h => h.day === `${this.currentDate.format('YYYY-MM-')}${i}`) || [];
+      this.pushMonth(month, i, this.currentDate.date(i).day() === 0, false, isToday, holidays);
     }
   }
 
   private insertNextMonth(month) {
     const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
-      this.pushMonth(month, z, false, true, false);
+      this.pushMonth(month, z, false, true, false, []);
     }
   }
 

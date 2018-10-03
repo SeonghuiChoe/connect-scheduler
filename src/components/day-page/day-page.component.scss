@@ -70,6 +70,8 @@
       height: 10%;
       width: 14%;
       float: left;
+      display: flex;
+      flex-direction: column;
     }
   }
 }

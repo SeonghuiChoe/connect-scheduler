@@ -27,7 +27,9 @@
         'day-page-noday': day.isNotCurrentMonthDays,
         'day-page-today': day.isToday}"
       class="day-page-day">
-      <span class="day">{{day.num}}</span>
+      <div class="day">{{day.num}}</div>
+      <div
+        *ngFor="let hol of day.holiday">{{hol.name}}</div>
     </div>
   </div>
 </div>
