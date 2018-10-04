@@ -40,7 +40,7 @@ export class dayPage {
     startTime: '9',
     endTime: '22',
     name: '개천절',
-    color: 'red'
+    color: '#dcdcdc'
   }];
 
   constructor() {

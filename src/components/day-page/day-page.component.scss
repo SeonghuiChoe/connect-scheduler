@@ -35,7 +35,8 @@
   .day-page-weeks {
     @extend %flex-center;
     height: 7%;
-    border: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-bottom: .5em;
 
     .day-page-week {
       @extend %flex-center;
@@ -49,11 +50,10 @@
     color: #bababa;
   }
 
-  .day-page-today .day {
+  .day-page-today .day span {
     background: #e1786e;
     border-radius: 2em;
     color: #fff;
-    padding: .2em;
     width: 1.1em;
     text-align: center;
   }
@@ -72,6 +72,22 @@
       float: left;
       display: flex;
       flex-direction: column;
+
+      .day {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .holiday-box {
+        height: 60%;
+        width: 100%;
+        font-size: .7em;
+
+        .holiday {
+          width:100%;
+        }
+      }
     }
   }
 }
