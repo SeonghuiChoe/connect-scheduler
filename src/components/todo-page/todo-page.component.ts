@@ -33,7 +33,7 @@ export class TodoPage {
     this.todos.push({
       name: this.insertText,
       isDone: false,
-      isStar: false
+      isStar: true
     });
     this.setStorage();
     this.insertText = '';

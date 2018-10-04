@@ -10,8 +10,10 @@
     class="todo-box">
     <div
       class="todo-star"
-      [ngClass]="{'todo-star-check': todo.isStar}"
-      (click)="checkStar(todo)"></div>
+      (click)="checkStar(todo)">
+      <i *ngIf="todo.isStar" class="fas fa-lightbulb"></i>
+      <i *ngIf="!todo.isStar" class="far fa-lightbulb"></i>
+    </div>
     <div class="todo-check">
       <mat-checkbox
         [(ngModel)]="todo.isDone"
