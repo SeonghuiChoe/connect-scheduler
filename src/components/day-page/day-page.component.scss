@@ -50,12 +50,12 @@
     color: #bababa;
   }
 
-  .day-page-today .day span {
+  .day-page-today .day .day-num {
     background: #e1786e;
     border-radius: 2em;
     color: #fff;
-    width: 1.1em;
-    text-align: center;
+    width: 1em;
+    margin: 0 auto;
   }
 
   .day-page-noday {
@@ -68,24 +68,26 @@
     .day-page-day {
       @extend %flex-center;
       height: 10%;
-      width: 14%;
+      width: 14.28%;
       float: left;
       display: flex;
       flex-direction: column;
 
       .day {
         width: 100%;
-        display: flex;
-        justify-content: flex-end;
+        text-align: center;
       }
 
       .holiday-box {
         height: 60%;
         width: 100%;
-        font-size: .7em;
 
         .holiday {
-          width:100%;
+          width: 90%;
+          font-size: .6em;
+          margin: 0 5%;
+          padding-top: .1em;
+          text-align: center;
         }
       }
     }
