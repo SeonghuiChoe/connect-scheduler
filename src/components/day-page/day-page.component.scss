@@ -71,6 +71,7 @@
       float: left;
       display: flex;
       flex-direction: column;
+      padding: .5em .2em;
 
       .day {
         width: 100%;
@@ -82,9 +83,8 @@
         width: 100%;
 
         .holiday {
-          width: 90%;
+          width: 100%;
           font-size: .6em;
-          margin: 0 5%;
           padding-top: .1em;
           text-align: center;
         }
@@ -95,6 +95,7 @@
       height: 41%;
       float: left;
       width: 100%;
+      padding: .5em;
     }
   }
 }

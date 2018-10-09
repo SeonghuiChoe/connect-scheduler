@@ -14,6 +14,10 @@ html, body {
   user-select: none;           /* Non-prefixed version, currently */
 }
 
+html, body, head, div {
+  box-sizing: border-box;
+}
+
 /* 체크박스 크기 */
 .mat-checkbox
 .mat-checkbox-layout
