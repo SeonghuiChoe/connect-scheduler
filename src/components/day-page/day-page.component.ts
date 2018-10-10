@@ -35,12 +35,17 @@ export class dayPage {
 
   days = [];
 
+  // 음력, 색표시, 시간설정, 반복설정 제대로
   holidays = [{
     day: '2018-10-3',
-    startTime: '9',
-    endTime: '22',
     name: '개천절',
-    color: '#dcdcdc'
+    color: '#dcdcdc',
+    repeat: '10-3'
+  }, {
+    day: '2018-10-9',
+    name: '한글날',
+    color: '#dcdcdc',
+    repeat: '10-9'
   }];
 
   constructor() {
@@ -70,7 +75,9 @@ export class dayPage {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
         (this.today.format('DD') == i.toString());
-      const holidays = this.holidays.filter(h => h.day === `${this.currentDate.format('YYYY-MM-')}${i}`) || [];
+      const holidays = this.holidays.filter(h => h.repeat ?
+        h.repeat === `${this.currentDate.format('MM-')}${i}` :
+        (h.day === `${this.currentDate.format('YYYY-MM-')}${i}`) || []);
       this.pushMonth(month, i, this.currentDate.date(i).day() === 0, false, isToday, holidays);
     }
   }
