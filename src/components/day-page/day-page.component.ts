@@ -33,7 +33,7 @@ export class dayPage {
     {name: 'Sat', isWeekend: true}
   ];
 
-  days: = [];
+  days = [];
 
   holidays = [{
     day: '2018-10-3',
@@ -69,7 +69,7 @@ export class dayPage {
     for (let i = 1; i <= daysInMonth; i ++) {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
-        (this.today.format('DD') == i);
+        (this.today.format('DD') == i.toString());
       const holidays = this.holidays.filter(h => h.day === `${this.currentDate.format('YYYY-MM-')}${i}`) || [];
       this.pushMonth(month, i, this.currentDate.date(i).day() === 0, false, isToday, holidays);
     }
