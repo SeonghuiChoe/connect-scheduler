@@ -52,12 +52,12 @@ export class dayPage {
     this.changeMonth();
   }
 
-  private pushMonth(month, num, isweekend, isNotCurrentMonthDays, isToday, holiday) {
-    month.push({num, isweekend, isNotCurrentMonthDays, isToday, holiday});
+  private pushMonth(month, num, isWeekend, isNotCurrentMonthDays, isToday, holiday) {
+    month.push({num, isWeekend, isNotCurrentMonthDays, isToday, holiday});
   }
 
-  private unshiftMonth(month, num, isweekend, isNotCurrentMonthDays, isToday, holiday) {
-    month.unshift({num, isweekend, isNotCurrentMonthDays, isToday, holiday});
+  private unshiftMonth(month, num, isWeekend, isNotCurrentMonthDays, isToday, holiday) {
+    month.unshift({num, isWeekend, isNotCurrentMonthDays, isToday, holiday});
   }
 
   private insertPreMonth(month) {
@@ -70,7 +70,6 @@ export class dayPage {
 
   private insertCurrentMonth(month) {
     const daysInMonth = this.currentDate.daysInMonth();
-    const nextDaysInMonth = this.currentDate.clone().add(1, 'months').daysInMonth();
     for (let i = 1; i <= daysInMonth; i ++) {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
@@ -78,7 +77,8 @@ export class dayPage {
       const holidays = this.holidays.filter(h => h.repeat ?
         h.repeat === `${this.currentDate.format('MM-')}${i}` :
         (h.day === `${this.currentDate.format('YYYY-MM-')}${i}`) || []);
-      this.pushMonth(month, i, this.currentDate.date(i).day() === 0, false, isToday, holidays);
+      const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
+      this.pushMonth(month, i, isWeekend, false, isToday, holidays);
     }
   }
 
