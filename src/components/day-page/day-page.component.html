@@ -27,7 +27,7 @@
         'day-page-noday': day.isNotCurrentMonthDays,
         'day-page-today': day.isToday}"
       class="day-page-day">
-      <div class="day">
+      <div class="day" (click)="detailDay(day)">
         <div class="day-num">{{day.num}}</div>
       </div>
       <div class="holiday-box">
@@ -35,7 +35,8 @@
       </div>
     </div>
     <div class="day-page-body">
-      Detail
+      Detail {{selectDay.num}}
+      <div *ngFor="let hol of selectDay.holiday" class="holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>
     </div>
   </div>
 </div>

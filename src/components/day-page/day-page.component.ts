@@ -35,6 +35,8 @@ export class dayPage {
 
   days = [];
 
+  selectDay = {};
+
   // 음력, 색표시, 시간설정
   holidays = [{
     day: new Date('2018-10-3'),
@@ -115,5 +117,9 @@ export class dayPage {
   goCurrentMonth() {
     this.currentDate = moment(new Date());
     this.changeMonth();
+  }
+
+  detailDay(day) {
+    this.selectDay = day;
   }
 }
