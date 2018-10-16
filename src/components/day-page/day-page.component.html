@@ -35,8 +35,8 @@
       </div>
     </div>
     <div class="day-page-body">
-      Detail {{selectDay.num}}
-      <div *ngFor="let hol of selectDay.holiday" class="holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>
+      <div class="body-num">{{selectDay.num}}</div>
+      <div *ngFor="let hol of selectDay.holiday" class="body-holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>
     </div>
   </div>
 </div>
