@@ -26,16 +26,23 @@
       [ngClass]="{'day-page-weekend': day.isWeekend,
         'day-page-noday': day.isNotCurrentMonthDays,
         'day-page-today': day.isToday}"
-      class="day-page-day">
-      <div class="day" (click)="detailDay(day)">
+      class="day-page-day"
+      (click)="detailDay(day)">
+      <div class="day">
         <div class="day-num">{{day.num}}</div>
       </div>
       <div class="holiday-box">
-        <div *ngFor="let hol of day.holiday" class="holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>
+        <div *ngFor="let hol of day.holiday; let i=index">
+          <div class="holiday" [ngStyle]="{'background-color': hol.color}" *ngIf="i<2">{{hol.name}}</div>
+          <div class="more" *ngIf="i==2">{{day.holiday.length - 2}} more...</div>
+        </div>
       </div>
     </div>
     <div class="day-page-body">
-      <div class="body-num">{{selectDay.num}}</div>
+      <div class="body-num">
+        <span>{{selectDay.num}}</span>
+        <span>{{selectDay.date}}</span>
+      </div>
       <div *ngFor="let hol of selectDay.holiday" class="body-holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>
     </div>
   </div>

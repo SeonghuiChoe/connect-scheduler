@@ -67,7 +67,7 @@
 
     .day-page-day {
       @extend %flex-center;
-      height: 10%;
+      height: 13%;
       width: 14.28%;
       float: left;
       display: flex;
@@ -88,22 +88,32 @@
           font-size: .5em;
           padding: .2em;
           text-align: center;
+          margin-bottom: .2em;
+        }
+
+        .more {
+          width: 100%;
+          font-size: .5em;
+          text-align: center;
+          margin-bottom: .2em;
         }
       }
     }
 
     .day-page-body {
-      height: 41%;
       float: left;
       width: 100%;
       padding: .5em;
 
       .body-num {
         padding-bottom: .5em;
+        display: flex;
+        justify-content: space-between;
       }
 
       .body-holiday {
         font-size: .8em;
+        margin-bottom: .2em;
       }
     }
   }

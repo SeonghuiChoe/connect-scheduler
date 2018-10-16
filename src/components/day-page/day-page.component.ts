@@ -121,5 +121,6 @@ export class dayPage {
 
   detailDay(day) {
     this.selectDay = day;
+    this.selectDay['date'] = this.currentDate.format('MMMM YYYY');
   }
 }
