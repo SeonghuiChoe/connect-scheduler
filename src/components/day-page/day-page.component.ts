@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { formatCurrency } from "@angular/common";
 import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'day-page',
@@ -38,25 +38,21 @@ export class dayPage {
   selectDay = {};
 
   // 음력, 색표시, 시간설정
-  holidays = [{
-    day: new Date('2018-10-3'),
-    name: '개천절',
-    color: '#dcdcdc',
-    repeat: true
-  }, {
-    day: new Date('2018-10-9'),
-    name: '한글날',
-    color: '#dcdcdc',
-    repeat: true
-  }, {
-    day: new Date('2018-10-31'),
-    name: '실업인정일',
-    color: '#b2d8ff',
-    repeat: false
-  }];
+  holidays = [];
 
-  constructor() {
-    this.changeMonth();
+  constructor(private http: HttpClient) {
+    this.getHolidays();
+  }
+
+  getHolidays() {
+    this.http.get('./src/data/holidays.json')
+      .subscribe((holidays: Array<Object>) => {
+        this.holidays = holidays.map((holiday: Object) => {
+          holiday['day'] = new Date(holiday['day']);
+          return holiday;
+        });
+        this.changeMonth();
+      });
   }
 
   private pushMonth(month, num, isWeekend, isNotCurrentMonthDays, isToday, holiday) {

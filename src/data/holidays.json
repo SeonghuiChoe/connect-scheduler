@@ -1,0 +1,21 @@
+[{
+  "day": "2018-10-3",
+  "name": "개천절",
+  "color": "#dcdcdc",
+  "repeat": "true"
+}, {
+  "day": "2018-10-9",
+  "name": "한글날",
+  "color": "#dcdcdc",
+  "repeat": "true"
+}, {
+  "day": "2018-10-31",
+  "name": "실업인정일",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-10-20",
+  "name": "단잡설명회",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}]

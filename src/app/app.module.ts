@@ -5,6 +5,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { AppComponent } from './app.component';
@@ -28,6 +29,7 @@ import { LocalStorageService } from '../services/local-storage.service';
     MatIconModule,
     MatButtonModule,
     MatCheckboxModule,
+    HttpClientModule,
   ],
   exports: [
     MatButtonModule,
