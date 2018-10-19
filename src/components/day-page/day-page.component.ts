@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./day-page.component.scss']
 })
 
-export class dayPage {
+export class DayPage {
 
   private TOTAL_DATYS = 42;
 

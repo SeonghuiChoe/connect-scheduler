@@ -2,6 +2,13 @@
   (selectedTabChange)="tabChanged($event)"
   headerPosition="below"
   [selectedIndex]="1">
+  <mat-tab label="오늘할">
+    <ng-template mat-tab-label>
+        <!-- <div class="title">할일</div> -->
+        <i class="far fa-calendar"></i>
+      </ng-template>
+    <today-page></today-page>
+  </mat-tab>
   <mat-tab label="할일">
     <ng-template mat-tab-label>
         <!-- <div class="title">할일</div> -->

@@ -10,7 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 // Components
 import { AppComponent } from './app.component';
 import { TodoPage } from '../components/todo-page/todo-page.component';
-import { dayPage } from '../components/day-page/day-page.component';
+import { DayPage } from '../components/day-page/day-page.component';
+import { TodayPage } from '../components/today-page/today-page.component';
 
 // Services
 import { LocalStorageService } from '../services/local-storage.service';
@@ -19,7 +20,8 @@ import { LocalStorageService } from '../services/local-storage.service';
   declarations: [
     AppComponent,
     TodoPage,
-    dayPage,
+    DayPage,
+    TodayPage,
   ],
   imports: [
     BrowserModule,
