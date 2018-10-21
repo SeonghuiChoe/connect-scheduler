@@ -1,26 +1,33 @@
 <mat-tab-group
   (selectedTabChange)="tabChanged($event)"
   headerPosition="below"
-  [selectedIndex]="1">
-  <mat-tab label="오늘할">
+  [selectedIndex]="2">
+  <mat-tab label="todayTodo">
     <ng-template mat-tab-label>
         <!-- <div class="title">할일</div> -->
         <i class="far fa-calendar"></i>
       </ng-template>
     <today-page></today-page>
   </mat-tab>
-  <mat-tab label="할일">
+  <mat-tab label="todo">
     <ng-template mat-tab-label>
         <!-- <div class="title">할일</div> -->
         <i class="far fa-calendar-check"></i>
       </ng-template>
     <todo-page></todo-page>
   </mat-tab>
-  <mat-tab label="달력">
+  <mat-tab label="calendar">
     <ng-template mat-tab-label>
       <!-- <div class="title">달력</div> -->
       <i class="far fa-calendar-alt"></i>
     </ng-template>
     <day-page></day-page>
   </mat-tab>
+  <mat-tab label="bucketlist">
+      <ng-template mat-tab-label>
+          <!-- <div class="title">할일</div> -->
+          <i class="fab fa-angellist"></i>
+        </ng-template>
+      <bucket-page></bucket-page>
+    </mat-tab>
 </mat-tab-group>
