@@ -49,6 +49,7 @@ export class DayPage {
       .subscribe((holidays: Array<Object>) => {
         this.holidays = holidays.map((holiday: Object) => {
           holiday['day'] = new Date(holiday['day']);
+          holiday['repeat'] = holiday['repeat'] == "true";
           return holiday;
         });
         this.changeMonth();
@@ -77,9 +78,11 @@ export class DayPage {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
         (this.today.format('DD') == i.toString());
-      const holidays = this.holidays.filter(h => h.repeat ?
+      const holidays = this.holidays.filter(h => {
+        return h.repeat ?
         `${(h.day.getMonth() + 1)}-${h.day.getDate()}` === `${this.currentDate.format('MM-')}${i}` :
-        `${h.day.getFullYear()}-${(h.day.getMonth() + 1)}-${h.day.getDate()}` === `${this.currentDate.format('YYYY-MM-')}${i}`);
+        `${h.day.getFullYear()}-${(h.day.getMonth() + 1)}-${h.day.getDate()}` === `${this.currentDate.format('YYYY-MM-')}${i}`;
+      });
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
       this.pushMonth(month, i, isWeekend, false, isToday, holidays);
     }

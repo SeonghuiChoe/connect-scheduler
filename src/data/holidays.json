@@ -1,10 +1,10 @@
 [{
-  "day": "2018-10-3",
+  "day": "2018-10-03",
   "name": "개천절",
   "color": "#dcdcdc",
   "repeat": "true"
 }, {
-  "day": "2018-10-9",
+  "day": "2018-10-09",
   "name": "한글날",
   "color": "#dcdcdc",
   "repeat": "true"
@@ -17,5 +17,30 @@
   "day": "2018-10-20",
   "name": "단잡설명회",
   "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-10-22",
+  "name": "여권사진, 여권만들기",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-10-23",
+  "name": "필라테스등록",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-10-27",
+  "name": "은혜님청첩장",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2019-04-01",
+  "name": "미국비자발급",
+  "color": "#ffb2dd",
+  "repeat": "false"
+}, {
+  "day": "2019-10-01",
+  "name": "미국일할수있는 날짜",
+  "color": "#ffb2dd",
   "repeat": "false"
 }]
