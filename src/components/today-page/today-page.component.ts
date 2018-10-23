@@ -33,7 +33,7 @@ export class TodayPage {
     this.todos.push({
       name: this.insertText,
       isDone: false,
-      isStar: true
+      isStar: false
     });
     this.setStorage();
     this.insertText = '';
