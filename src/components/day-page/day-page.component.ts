@@ -79,9 +79,10 @@ export class DayPage {
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
         (this.today.format('DD') == i.toString());
       const holidays = this.holidays.filter(h => {
+        const zeroMonth = (h.day.getMonth() + 1) < 10 ? '0' + (h.day.getMonth() + 1) : (h.day.getMonth() + 1);
         return h.repeat ?
-        `${(h.day.getMonth() + 1)}-${h.day.getDate()}` === `${this.currentDate.format('MM-')}${i}` :
-        `${h.day.getFullYear()}-${(h.day.getMonth() + 1)}-${h.day.getDate()}` === `${this.currentDate.format('YYYY-MM-')}${i}`;
+        `${zeroMonth}-${h.day.getDate()}` === `${this.currentDate.format('MM-')}${i}` :
+        `${h.day.getFullYear()}-${zeroMonth}-${h.day.getDate()}` === `${this.currentDate.format('YYYY-MM-')}${i}`;
       });
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
       this.pushMonth(month, i, isWeekend, false, isToday, holidays);
