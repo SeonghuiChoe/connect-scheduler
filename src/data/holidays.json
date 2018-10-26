@@ -49,6 +49,11 @@
   "color": "#ffb2dd",
   "repeat": "false"
 }, {
+  "day": "2018-10-28",
+  "name": "식물원",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
   "day": "2018-10-29",
   "name": "1종운전면허",
   "color": "#b2d8ff",
@@ -66,6 +71,11 @@
 }, {
   "day": "2018-11-02",
   "name": "필라테스시작",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-11-10",
+  "name": "GDG DevFest seoul 2018",
   "color": "#b2d8ff",
   "repeat": "false"
 }]

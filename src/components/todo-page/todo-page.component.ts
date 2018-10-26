@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
@@ -9,20 +9,24 @@ import { LocalStorageService } from '../../services/local-storage.service';
 
 export class TodoPage {
 
+  @Input('storage') storage: string;
+
   insertText = '';
 
   todos: Array<Object> = [];
-  constructor(private localStorageService: LocalStorageService) {
+  constructor(private localStorageService: LocalStorageService) {}
+
+  ngOnInit() {
     // tag정보
-    if (localStorageService.getTodoList()) {
-      this.todos = JSON.parse(localStorageService.getTodoList());
+    if (this.localStorageService.getTodoList(this.storage)) {
+      this.todos = JSON.parse(this.localStorageService.getTodoList(this.storage));
     } else {
       this.setStorage();
     }
   }
 
   private setStorage() {
-    this.localStorageService.setTodoList(JSON.stringify(this.todos));
+    this.localStorageService.setTodoList(JSON.stringify(this.todos), this.storage);
   }
 
   insertTodo() {

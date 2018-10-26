@@ -7,27 +7,30 @@
         <!-- <div class="title">할일</div> -->
         <i class="far fa-calendar"></i>
       </ng-template>
-    <today-page></today-page>
+    <todo-page storage="todayTodoList"></todo-page>
   </mat-tab>
   <mat-tab label="todo">
     <ng-template mat-tab-label>
-        <!-- <div class="title">할일</div> -->
         <i class="far fa-calendar-check"></i>
       </ng-template>
-    <todo-page></todo-page>
+    <todo-page storage="todoList"></todo-page>
   </mat-tab>
   <mat-tab label="calendar">
     <ng-template mat-tab-label>
-      <!-- <div class="title">달력</div> -->
       <i class="far fa-calendar-alt"></i>
     </ng-template>
     <day-page></day-page>
   </mat-tab>
   <mat-tab label="bucketlist">
-      <ng-template mat-tab-label>
-          <!-- <div class="title">할일</div> -->
-          <i class="fab fa-angellist"></i>
-        </ng-template>
-      <bucket-page></bucket-page>
-    </mat-tab>
+    <ng-template mat-tab-label>
+        <i class="fab fa-angellist"></i>
+      </ng-template>
+    <todo-page storage="bucketList"></todo-page>
+  </mat-tab>
+  <mat-tab label="commit">
+    <ng-template mat-tab-label>
+        <i class="fab fa-git"></i>
+      </ng-template>
+    <todo-page storage="commitList"></todo-page>
+  </mat-tab>
 </mat-tab-group>
