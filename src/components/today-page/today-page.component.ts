@@ -48,4 +48,8 @@ export class TodayPage {
     todo.isStar = !todo.isStar;
     this.setStorage();
   }
+
+  checkDone() {
+    this.setStorage();
+  }
 }

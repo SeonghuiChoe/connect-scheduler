@@ -48,4 +48,8 @@ export class BucketPage {
     todo.isStar = !todo.isStar;
     this.setStorage();
   }
+
+  checkDone() {
+    this.setStorage();
+  }
 }

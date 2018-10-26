@@ -36,11 +36,36 @@
 }, {
   "day": "2019-04-01",
   "name": "미국비자발급",
-  "color": "#ffb2dd",
+  "color": "#b2d8ff",
   "repeat": "false"
 }, {
   "day": "2019-10-01",
   "name": "미국일할수있는 날짜",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-10-28",
+  "name": "통기타",
   "color": "#ffb2dd",
+  "repeat": "false"
+}, {
+  "day": "2018-10-29",
+  "name": "1종운전면허",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-10-30",
+  "name": "수영 마지막",
+  "color": "#ffb2dd",
+  "repeat": "false"
+}, {
+  "day": "2018-10-26",
+  "name": "여권만들기",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-11-02",
+  "name": "필라테스시작",
+  "color": "#b2d8ff",
   "repeat": "false"
 }]

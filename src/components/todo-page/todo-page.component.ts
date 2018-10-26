@@ -48,4 +48,8 @@ export class TodoPage {
     todo.isStar = !todo.isStar;
     this.setStorage();
   }
+
+  checkDone() {
+    this.setStorage();
+  }
 }

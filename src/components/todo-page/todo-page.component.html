@@ -19,7 +19,8 @@
         [(ngModel)]="todo.isDone"
         value=""
         color="warn"
-        name="isDoneCheckbox">
+        name="isDoneCheckbox"
+        (change)="checkDone()">
       </mat-checkbox>
     </div>
     <div class="todo-name">
