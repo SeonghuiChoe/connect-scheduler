@@ -51,11 +51,8 @@
 
   .day-page-today .day .day-num {
     background: #e1786e;
-    border-radius: 2em;
+    border-radius: 50%;
     color: #fff;
-    width: 1.4em;
-    height: 1.2em;
-    margin: 0 auto;
   }
 
   .day-page-noday {
@@ -76,7 +73,18 @@
 
       .day {
         width: 100%;
-        text-align: center;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        padding-bottom: .5em;
+
+        .day-num {
+          width: 1.5em;
+          height: 1.5em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
 
       .holiday-box {
