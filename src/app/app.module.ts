@@ -11,8 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { TodoPage } from '../components/todo-page/todo-page.component';
 import { DayPage } from '../components/day-page/day-page.component';
-import { TodayPage } from '../components/today-page/today-page.component';
-import { BucketPage } from '../components/bucket-page/bucket-page.component';
 
 // Services
 import { LocalStorageService } from '../services/local-storage.service';
@@ -22,8 +20,6 @@ import { LocalStorageService } from '../services/local-storage.service';
     AppComponent,
     TodoPage,
     DayPage,
-    TodayPage,
-    BucketPage,
   ],
   imports: [
     BrowserModule,
