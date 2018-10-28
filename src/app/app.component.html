@@ -31,6 +31,9 @@
     <ng-template mat-tab-label>
         <i class="fab fa-git"></i>
       </ng-template>
-    <todo-page storage="commitList"></todo-page>
+    <todo-page
+      [showStar]="false"
+      [showCheckbox]="false"
+      storage="commitList"></todo-page>
   </mat-tab>
 </mat-tab-group>

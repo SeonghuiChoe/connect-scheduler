@@ -11,6 +11,10 @@ export class TodoPage {
 
   @Input('storage') storage: string;
 
+  @Input('showStar') showStar: boolean = true;
+
+  @Input('showCheckbox') showCheckbox: boolean = true;
+
   insertText = '';
 
   todos: Array<Object> = [];
