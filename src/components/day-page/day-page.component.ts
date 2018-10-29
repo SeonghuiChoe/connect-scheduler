@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import * as moment from 'moment';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -39,6 +39,8 @@ export class DayPage {
 
   // 음력, 색표시, 시간설정
   holidays = [];
+
+  dDay = '';
 
   constructor(private http: HttpClient) {
     this.getHolidays();
@@ -121,6 +123,17 @@ export class DayPage {
 
   detailDay(day) {
     this.selectDay = day;
-    this.selectDay['date'] = this.currentDate.format('MMMM YYYY');
+    this.selectDay['day'] = day && day.num;
+    this.selectDay['yearMonth'] = this.currentDate.format('MMMM YYYY');
+    this.selectDay['date'] = moment(new Date())
+      .set('year', this.currentDate.get('year'))
+      .set('month', this.currentDate.get('month'))
+      .set('date', this.selectDay['day']);
+
+    const diff = this.selectDay['date'].
+      startOf('day').
+      diff(this.today.startOf('day'), 'days');
+
+    this.dDay = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
   }
 }
