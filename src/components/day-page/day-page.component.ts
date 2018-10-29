@@ -70,7 +70,9 @@ export class DayPage {
     const firstDay = this.currentDate.date(1).day();
     const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
     for (let j = 0; j < firstDay; j++) {
-      this.unshiftMonth(month, preDaysInMonth - j, false, true, false, []);
+      const num = preDaysInMonth - j;
+      const holidays = this.makeHolidays(moment().add(-1, 'months'), num);
+      this.unshiftMonth(month, num, false, true, false, holidays);
     }
   }
 
@@ -80,12 +82,7 @@ export class DayPage {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
         (this.today.format('DD') == i.toString());
-      const holidays = this.holidays.filter(h => {
-        const zeroMonth = (h.day.getMonth() + 1) < 10 ? '0' + (h.day.getMonth() + 1) : (h.day.getMonth() + 1);
-        return h.repeat ?
-        `${zeroMonth}-${h.day.getDate()}` === `${this.currentDate.format('MM-')}${i}` :
-        `${h.day.getFullYear()}-${zeroMonth}-${h.day.getDate()}` === `${this.currentDate.format('YYYY-MM-')}${i}`;
-      });
+      const holidays = this.makeHolidays(this.currentDate, i);
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
       this.pushMonth(month, i, isWeekend, false, isToday, holidays);
     }
@@ -94,8 +91,19 @@ export class DayPage {
   private insertNextMonth(month) {
     const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
-      this.pushMonth(month, z, false, true, false, []);
+      const holidays = this.makeHolidays(moment().add(1, 'months'), z);
+      this.pushMonth(month, z, false, true, false, holidays);
     }
+  }
+
+  private makeHolidays(month, num) {
+    return this.holidays.filter(h => {
+      const zeroMonth = (h.day.getMonth() + 1) < 10 ? '0' + (h.day.getMonth() + 1) : (h.day.getMonth() + 1);
+      return h.repeat ?
+        `${zeroMonth}-${h.day.getDate()}` === `${month.format('MM-')}${num}` :
+        `${h.day.getFullYear()}-${zeroMonth}-${h.day.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
+    });
+
   }
 
   private changeMonth() {
@@ -107,12 +115,12 @@ export class DayPage {
   }
 
   goPreMonth() {
-    this.currentDate = this.currentDate.add(-1, 'months');
+    this.currentDate.add(-1, 'months');
     this.changeMonth();
   }
 
   goNextMonth() {
-    this.currentDate = this.currentDate.add(1, 'months');
+    this.currentDate.add(1, 'months');
     this.changeMonth();
   }
 
