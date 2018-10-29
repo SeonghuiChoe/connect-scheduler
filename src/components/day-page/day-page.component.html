@@ -34,7 +34,7 @@
       <div class="holiday-box">
         <div *ngFor="let hol of day.holiday; let i=index">
           <div class="holiday" [ngStyle]="{'background-color': hol.color}" *ngIf="i<2">{{hol.name}}</div>
-          <div class="more" *ngIf="i==2">{{day.holiday.length - 2}} more...</div>
+          <div class="more" *ngIf="i==2">+{{day.holiday.length - 2}}</div>
         </div>
       </div>
     </div>
