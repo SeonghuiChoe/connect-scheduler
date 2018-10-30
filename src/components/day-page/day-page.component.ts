@@ -58,12 +58,12 @@ export class DayPage {
       });
   }
 
-  private pushMonth(month, num, isWeekend, isNotCurrentMonthDays, isToday, holiday) {
-    month.push({num, isWeekend, isNotCurrentMonthDays, isToday, holiday});
+  private pushMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, holiday) {
+    month.push({date, isWeekend, isNotCurrentMonthDays, isToday, holiday});
   }
 
-  private unshiftMonth(month, num, isWeekend, isNotCurrentMonthDays, isToday, holiday) {
-    month.unshift({num, isWeekend, isNotCurrentMonthDays, isToday, holiday});
+  private unshiftMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, holiday) {
+    month.unshift({date, isWeekend, isNotCurrentMonthDays, isToday, holiday});
   }
 
   private insertPreMonth(month) {
@@ -71,8 +71,8 @@ export class DayPage {
     const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
     for (let j = 0; j < firstDay; j++) {
       const num = preDaysInMonth - j;
-      const holidays = this.makeHolidays(moment().add(-1, 'months'), num);
-      this.unshiftMonth(month, num, false, true, false, holidays);
+      const holidays = this.makeHolidays(this.currentDate.clone().add(-1, 'months'), num);
+      this.unshiftMonth(month, this.currentDate.clone().add(-1, 'months').set('date', num), false, true, false, holidays);
     }
   }
 
@@ -84,15 +84,15 @@ export class DayPage {
         (this.today.format('DD') == i.toString());
       const holidays = this.makeHolidays(this.currentDate, i);
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
-      this.pushMonth(month, i, isWeekend, false, isToday, holidays);
+      this.pushMonth(month, this.currentDate.clone().set('date', i), isWeekend, false, isToday, holidays);
     }
   }
 
   private insertNextMonth(month) {
     const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
-      const holidays = this.makeHolidays(moment().add(1, 'months'), z);
-      this.pushMonth(month, z, false, true, false, holidays);
+      const holidays = this.makeHolidays(this.currentDate.clone().add(1, 'months'), z);
+      this.pushMonth(month, this.currentDate.clone().add(1, 'months').set('date', z), false, true, false, holidays);
     }
   }
 
@@ -133,10 +133,7 @@ export class DayPage {
     this.selectDay = day;
     this.selectDay['day'] = day && day.num;
     this.selectDay['yearMonth'] = this.currentDate.format('MMMM YYYY');
-    this.selectDay['date'] = moment(new Date())
-      .set('year', this.currentDate.get('year'))
-      .set('month', this.currentDate.get('month'))
-      .set('date', this.selectDay['day']);
+    this.selectDay['date'] = day.date;
 
     const diff = this.selectDay['date'].
       startOf('day').
