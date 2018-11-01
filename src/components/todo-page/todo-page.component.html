@@ -27,7 +27,8 @@
       </mat-checkbox>
     </div>
     <div class="todo-name">
-      <span>{{todo.name}}</span>
+      <span *ngIf="!todo.editable" (click)="editable(todo)">{{todo.name}}</span>
+      <input *ngIf="todo.editable" (keyup.enter)="updateTodo(todo)" [(ngModel)]="todo.name">
     </div>
     <div class="todo-delete-btn" (click)="deleteTodo(i)">
         <mat-icon class="icon">clear</mat-icon>

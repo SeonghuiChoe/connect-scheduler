@@ -49,16 +49,6 @@
   "color": "#ffb2dd",
   "repeat": "false"
 }, {
-  "day": "2018-11-01",
-  "name": "식물원",
-  "color": "#b2d8ff",
-  "repeat": "false"
-}, {
-  "day": "2018-10-29",
-  "name": "1종운전면허",
-  "color": "#b2d8ff",
-  "repeat": "false"
-}, {
   "day": "2018-10-30",
   "name": "수영 마지막",
   "color": "#ffb2dd",
@@ -74,6 +64,11 @@
   "color": "#ffb2dd",
   "repeat": "false"
 }, {
+  "day": "2018-10-31",
+  "name": "영화",
+  "color": "#ffb2dd",
+  "repeat": "false"
+}, {
   "day": "2018-11-02",
   "name": "필라테스시작",
   "color": "#b2d8ff",
@@ -81,6 +76,31 @@
 }, {
   "day": "2018-11-10",
   "name": "GDG DevFest seoul 2018",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-10-31",
+  "name": "실업급여기업은행",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-11-01",
+  "name": "병원",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-11-02",
+  "name": "강민호",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-11-03",
+  "name": "언니랑영화",
+  "color": "#b2d8ff",
+  "repeat": "false"
+}, {
+  "day": "2018-11-04",
+  "name": "통기타",
   "color": "#b2d8ff",
   "repeat": "false"
 }]

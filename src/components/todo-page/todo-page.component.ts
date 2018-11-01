@@ -41,7 +41,8 @@ export class TodoPage {
     this.todos.push({
       name: this.insertText,
       isDone: false,
-      isStar: false
+      isStar: false,
+      editable: false
     });
     this.setStorage();
     this.insertText = '';
@@ -59,5 +60,15 @@ export class TodoPage {
 
   checkDone() {
     this.setStorage();
+  }
+
+  editable(todo) {
+    todo.editable = !todo.editable;
+    this.setStorage();
+  }
+
+  updateTodo(todo) {
+    this.setStorage();
+    todo.editable = false;
   }
 }
