@@ -71,4 +71,8 @@ export class TodoPage {
     this.setStorage();
     todo.editable = false;
   }
+
+  outFocus(todo) {
+    console.log(todo);
+  }
 }

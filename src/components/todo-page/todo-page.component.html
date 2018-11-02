@@ -28,7 +28,11 @@
     </div>
     <div class="todo-name">
       <span *ngIf="!todo.editable" (click)="editable(todo)">{{todo.name}}</span>
-      <input *ngIf="todo.editable" (keyup.enter)="updateTodo(todo)" [(ngModel)]="todo.name">
+      <input
+        *ngIf="todo.editable"
+        [(ngModel)]="todo.name"
+        (keyup.enter)="updateTodo(todo)"
+        (blur)="updateTodo(todo)">
     </div>
     <div class="todo-delete-btn" (click)="deleteTodo(i)">
         <mat-icon class="icon">clear</mat-icon>
