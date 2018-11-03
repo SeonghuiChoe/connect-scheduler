@@ -15,9 +15,13 @@ import { DayPage } from '../components/day-page/day-page.component';
 // Services
 import { LocalStorageService } from '../services/local-storage.service';
 
+// Directive
+import { AutofocusDirective } from '../directive/auto-focus.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
+    AutofocusDirective,
     TodoPage,
     DayPage,
   ],

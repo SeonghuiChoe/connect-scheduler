@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
@@ -62,17 +62,13 @@ export class TodoPage {
     this.setStorage();
   }
 
-  editable(todo) {
-    todo.editable = !todo.editable;
+  onEditable(todo) {
+    todo.editable = true;
     this.setStorage();
   }
 
-  updateTodo(todo) {
-    this.setStorage();
+  OffEditable(todo) {
     todo.editable = false;
-  }
-
-  outFocus(todo) {
-    console.log(todo);
+    this.setStorage();
   }
 }
