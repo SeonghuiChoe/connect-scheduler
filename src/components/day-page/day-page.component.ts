@@ -46,16 +46,8 @@ export class DayPage {
     this.getHolidays();
   }
 
-  getHolidays() {
-    this.http.get('./src/data/holidays.json')
-      .subscribe((holidays: Array<Object>) => {
-        this.holidays = holidays.map((holiday: Object) => {
-          holiday['day'] = new Date(holiday['day']);
-          holiday['repeat'] = holiday['repeat'] == "true";
-          return holiday;
-        });
-        this.changeMonth();
-      });
+  private addZero(target) {
+    return target < 10 ? '0' + target : target;
   }
 
   private pushMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, holiday) {
@@ -81,7 +73,7 @@ export class DayPage {
     for (let i = 1; i <= daysInMonth; i ++) {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
-        (this.today.format('DD') == i.toString());
+        (this.today.format('DD') == this.addZero(i));
       const holidays = this.makeHolidays(this.currentDate, i);
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
       this.pushMonth(month, this.currentDate.clone().set('date', i), isWeekend, false, isToday, holidays);
@@ -98,7 +90,7 @@ export class DayPage {
 
   private makeHolidays(month, num) {
     return this.holidays.filter(h => {
-      const zeroMonth = (h.day.getMonth() + 1) < 10 ? '0' + (h.day.getMonth() + 1) : (h.day.getMonth() + 1);
+      const zeroMonth = this.addZero(h.day.getMonth() + 1);
       return h.repeat ?
         `${zeroMonth}-${h.day.getDate()}` === `${month.format('MM-')}${num}` :
         `${h.day.getFullYear()}-${zeroMonth}-${h.day.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
@@ -112,6 +104,18 @@ export class DayPage {
     this.insertCurrentMonth(totalMonth);
     this.insertNextMonth(totalMonth);
     this.days = totalMonth;
+  }
+
+  getHolidays() {
+    this.http.get('./src/data/holidays.json')
+      .subscribe((holidays: Array<Object>) => {
+        this.holidays = holidays.map((holiday: Object) => {
+          holiday['day'] = new Date(holiday['day']);
+          holiday['repeat'] = holiday['repeat'] == "true";
+          return holiday;
+        });
+        this.changeMonth();
+      });
   }
 
   goPreMonth() {
