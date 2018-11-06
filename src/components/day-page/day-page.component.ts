@@ -89,13 +89,13 @@ export class DayPage {
   }
 
   private makeHolidays(month, num) {
-    return this.holidays.filter(h => {
+    const holidays = this.holidays.filter(h => {
       const zeroMonth = this.addZero(h.day.getMonth() + 1);
       return h.repeat ?
         `${zeroMonth}-${h.day.getDate()}` === `${month.format('MM-')}${num}` :
         `${h.day.getFullYear()}-${zeroMonth}-${h.day.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
     });
-
+    return holidays.sort((a, b) => a.time - b.time);
   }
 
   private changeMonth() {
