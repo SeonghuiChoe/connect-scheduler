@@ -71,4 +71,8 @@ export class TodoPage {
     todo.editable = false;
     this.setStorage();
   }
+
+  dragTodo(todo) {
+    console.log(todo);
+  }
 }
