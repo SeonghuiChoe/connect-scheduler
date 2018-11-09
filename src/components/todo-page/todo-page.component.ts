@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
