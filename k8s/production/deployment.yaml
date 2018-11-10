@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connect-scheduler
+spec:
+  selector:
+    matchLabels:
+      tier: frontend
+      app: connect-scheduler
+      env: production
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        app: connect-scheduler
+        env: production
+    spec:
+      containers:
+      - name: connect-scheduler
+        image: connect-scheduler
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+  replicas: 3
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1

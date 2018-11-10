@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: connect-scheduler-frontend
+spec:
+  type: NodePort
+  selector:
+    tier: frontend
+    app: connect-scheduler
+    env: production
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 80
