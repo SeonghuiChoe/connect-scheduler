@@ -14,6 +14,7 @@ import { DayPage } from '../components/day-page/day-page.component';
 
 // Services
 import { LocalStorageService } from '../services/local-storage.service';
+import { HolidaysService } from '../services/holidays.service';
 
 // Directive
 import { AutofocusDirective } from '../directive/auto-focus.directive';
@@ -41,6 +42,7 @@ import { AutofocusDirective } from '../directive/auto-focus.directive';
   ],
   providers: [
     LocalStorageService,
+    HolidaysService,
   ],
   bootstrap: [AppComponent]
 })

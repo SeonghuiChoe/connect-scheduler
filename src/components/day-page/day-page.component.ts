@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HolidaysService } from '../../services/holidays.service';
 
 @Component({
   selector: 'day-page',
@@ -42,7 +43,7 @@ export class DayPage {
 
   dDay = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private holidaysService: HolidaysService) {
     this.getHolidays();
   }
 
@@ -107,15 +108,14 @@ export class DayPage {
   }
 
   getHolidays() {
-    this.http.get('./src/data/holidays.json')
-      .subscribe((holidays: Array<Object>) => {
-        this.holidays = holidays.map((holiday: Object) => {
-          holiday['day'] = new Date(holiday['day']);
-          holiday['repeat'] = holiday['repeat'] == "true";
-          return holiday;
-        });
-        this.changeMonth();
+    this.holidays = this.holidaysService.
+      getHolidays().
+      map((holiday: Object) => {
+        holiday['day'] = new Date(holiday['day']);
+        holiday['repeat'] = holiday['repeat'] == "true";
+        return holiday;
       });
+    this.changeMonth();
   }
 
   goPreMonth() {
