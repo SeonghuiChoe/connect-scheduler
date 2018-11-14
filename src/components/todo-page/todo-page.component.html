@@ -7,8 +7,7 @@
   </div>
   <div
     *ngFor="let todo of todos; index as i;"
-    class="todo-box"
-    (click)="dragTodo(todo)">
+    class="todo-box">
     <div
       class="todo-star"
       *ngIf="showStar"
