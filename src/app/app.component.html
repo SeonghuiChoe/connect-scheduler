@@ -13,7 +13,10 @@
     <ng-template mat-tab-label>
         <i class="far fa-calendar-check"></i>
       </ng-template>
-    <todo-page storage="todoList"></todo-page>
+    <todo-page
+      [showStar]="false"
+      [showCheckbox]="false"
+      storage="todoList"></todo-page>
   </mat-tab>
   <mat-tab label="calendar">
     <ng-template mat-tab-label>
@@ -25,7 +28,9 @@
     <ng-template mat-tab-label>
         <i class="fas fa-globe-americas"></i>
       </ng-template>
-    <todo-page storage="bucketList"></todo-page>
+    <todo-page
+      [showCheckbox]="false"
+      storage="bucketList"></todo-page>
   </mat-tab>
   <mat-tab label="commit">
     <ng-template mat-tab-label>
