@@ -1,6 +1,5 @@
 import * as moment from 'moment';
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { HolidaysService } from '../../services/holidays.service';
 
 @Component({
@@ -43,7 +42,7 @@ export class DayPage {
 
   dDay = '';
 
-  constructor(private http: HttpClient, private holidaysService: HolidaysService) {
+  constructor(private holidaysService: HolidaysService) {
     this.getHolidays();
   }
 
@@ -144,5 +143,9 @@ export class DayPage {
       diff(this.today.startOf('day'), 'days');
 
     this.dDay = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
+  }
+
+  insertSchedule() {
+    console.log('The dialog open');
   }
 }

@@ -21,7 +21,6 @@ export class TodoPage {
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit() {
-    // tag정보
     if (this.localStorageService.getTodoList(this.storage)) {
       this.todos = JSON.parse(this.localStorageService.getTodoList(this.storage));
     } else {
