@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HolidaysService } from '../../services/holidays.service';
 
 @Component({
@@ -42,7 +43,9 @@ export class DayPage {
 
   dDay = '';
 
-  constructor(private holidaysService: HolidaysService) {
+  constructor(
+    private holidaysService: HolidaysService,
+    public dialog: MatDialog) {
     this.getHolidays();
   }
 
@@ -146,6 +149,14 @@ export class DayPage {
   }
 
   insertSchedule() {
-    console.log('The dialog open');
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '250px',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
   }
 }
