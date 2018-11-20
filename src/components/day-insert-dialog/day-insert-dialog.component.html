@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{day.date}}</h1>
+<div mat-dialog-content>
+  <p>What's your schedule?</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="schedule">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="schedule" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">cancel</button>
+</div>

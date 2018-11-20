@@ -1,7 +1,9 @@
 import * as moment from 'moment';
 import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HolidaysService } from '../../services/holidays.service';
+import { MatDialog } from '@angular/material';
+import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.component';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'day-page',
@@ -41,11 +43,14 @@ export class DayPage {
   // 음력, 색표시, 시간설정
   holidays = [];
 
+  schedule = [];
+
   dDay = '';
 
   constructor(
     private holidaysService: HolidaysService,
-    public dialog: MatDialog) {
+    private dialog: MatDialog,
+    private localStorageService: LocalStorageService) {
     this.getHolidays();
   }
 
@@ -53,12 +58,12 @@ export class DayPage {
     return target < 10 ? '0' + target : target;
   }
 
-  private pushMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, holiday) {
-    month.push({date, isWeekend, isNotCurrentMonthDays, isToday, holiday});
+  private pushMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, holidays) {
+    month.push({date, isWeekend, isNotCurrentMonthDays, isToday, holidays});
   }
 
-  private unshiftMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, holiday) {
-    month.unshift({date, isWeekend, isNotCurrentMonthDays, isToday, holiday});
+  private unshiftMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, holidays) {
+    month.unshift({date, isWeekend, isNotCurrentMonthDays, isToday, holidays});
   }
 
   private insertPreMonth(month) {
@@ -66,8 +71,15 @@ export class DayPage {
     const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
     for (let j = 0; j < firstDay; j++) {
       const num = preDaysInMonth - j;
-      const holidays = this.makeHolidays(this.currentDate.clone().add(-1, 'months'), num);
-      this.unshiftMonth(month, this.currentDate.clone().add(-1, 'months').set('date', num), false, true, false, holidays);
+      const holidays = this.makeHolidays(this.currentDate.clone().add(-1, 'months'), num).concat();
+      const schedule = this.makeSchedule(this.currentDate.clone().add(-1, 'months'), num);
+      this.unshiftMonth(
+        month,
+        this.currentDate.clone().add(-1, 'months').set('date', num),
+        false,
+        true,
+        false,
+        holidays.concat(schedule));
     }
   }
 
@@ -78,8 +90,15 @@ export class DayPage {
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
         (this.today.format('DD') == this.addZero(i));
       const holidays = this.makeHolidays(this.currentDate, i);
+      const schedule = this.makeSchedule(this.currentDate, i);
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
-      this.pushMonth(month, this.currentDate.clone().set('date', i), isWeekend, false, isToday, holidays);
+      this.pushMonth(
+        month,
+        this.currentDate.clone().set('date', i),
+        isWeekend,
+        false,
+        isToday,
+        holidays.concat(schedule));
     }
   }
 
@@ -87,10 +106,18 @@ export class DayPage {
     const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
       const holidays = this.makeHolidays(this.currentDate.clone().add(1, 'months'), z);
-      this.pushMonth(month, this.currentDate.clone().add(1, 'months').set('date', z), false, true, false, holidays);
+      const schedule = this.makeSchedule(this.currentDate.clone().add(1, 'months'), z);
+      this.pushMonth(
+        month,
+        this.currentDate.clone().add(1, 'months').set('date', z),
+        false,
+        true,
+        false,
+        holidays.concat(schedule));
     }
   }
 
+  // 중복제거
   private makeHolidays(month, num) {
     const holidays = this.holidays.filter(h => {
       const zeroMonth = this.addZero(h.day.getMonth() + 1);
@@ -101,6 +128,17 @@ export class DayPage {
     return holidays.sort((a, b) => a.time - b.time);
   }
 
+  // 중복제거
+  private makeSchedule(month, num) {
+    const schedule = this.schedule.filter(h => {
+      const zeroMonth = this.addZero(h.day.getMonth() + 1);
+      return h.repeat ?
+        `${zeroMonth}-${h.day.getDate()}` === `${month.format('MM-')}${num}` :
+        `${h.day.getFullYear()}-${zeroMonth}-${h.day.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
+    });
+    return schedule.sort((a, b) => a.time - b.time);
+  }
+
   private changeMonth() {
     var totalMonth = [];
     this.insertPreMonth(totalMonth);
@@ -109,7 +147,14 @@ export class DayPage {
     this.days = totalMonth;
   }
 
+  private setSchedule() {
+    this.localStorageService.setSchedule(JSON.stringify(this.schedule));
+  }
+
   getHolidays() {
+    // 공휴일을 가져온다.
+    // 공휴일 정보가 있다면 가져오지 않는다.
+    // 공휴일 정보를 가져온지 한달이 지났다면 다시 한번 가져온다.
     this.holidays = this.holidaysService.
       getHolidays().
       map((holiday: Object) => {
@@ -117,6 +162,19 @@ export class DayPage {
         holiday['repeat'] = holiday['repeat'] == "true";
         return holiday;
       });
+
+    // 스케줄을 가져온다.
+    if (this.localStorageService.getSchedule()) {
+      this.schedule = JSON.parse(this.localStorageService.getSchedule()).
+        map((holiday: Object) => {
+          holiday['day'] = new Date(holiday['day']);
+          holiday['repeat'] = holiday['repeat'] == "true";
+          return holiday;
+        });
+    } {
+      this.setSchedule();
+    }
+
     this.changeMonth();
   }
 
@@ -148,15 +206,31 @@ export class DayPage {
     this.dDay = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
   }
 
-  insertSchedule() {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+  insertSchedule(day) {
+    //holidays
+    const dialogRef = this.dialog.open(DayInsertDialog, {
       width: '250px',
-      data: {name: this.name, animal: this.animal}
+      data: {
+        date: day.date.format('YYYY-MM-DD'),
+        holidays: day.holidays,
+        isNotCurrentMonthDays: day.isNotCurrentMonthDays,
+        isToday: day.isToday,
+        isWeekend: day.isWeekend,
+      }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+    dialogRef.afterClosed().subscribe(schedule => {
+      if (!schedule) return;
+      confirm
+      this.schedule.push({
+        "day": day.date.format('YYYY-MM-DD'),
+        "time": "12",
+        "name": schedule,
+        "color": "#dcdcdc",
+        "repeat": "false"
+      })
+      this.localStorageService.setSchedule(JSON.stringify(this.schedule));
     });
   }
 }
+
