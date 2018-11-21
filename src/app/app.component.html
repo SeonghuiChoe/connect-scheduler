@@ -1,21 +1,12 @@
 <mat-tab-group
   (selectedTabChange)="tabChanged($event)"
   headerPosition="below"
-  [selectedIndex]="2">
+  [selectedIndex]="1">
   <mat-tab label="todayTodo">
-    <ng-template mat-tab-label>
-        <i class="far fa-calendar"></i>
-      </ng-template>
-    <todo-page storage="todayTodoList"></todo-page>
-  </mat-tab>
-  <mat-tab label="todo">
     <ng-template mat-tab-label>
         <i class="far fa-calendar-check"></i>
       </ng-template>
-    <todo-page
-      [showStar]="false"
-      [showCheckbox]="false"
-      storage="todoList"></todo-page>
+    <todo-page storage="todayTodoList"></todo-page>
   </mat-tab>
   <mat-tab label="calendar">
     <ng-template mat-tab-label>
