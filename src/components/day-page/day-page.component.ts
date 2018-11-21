@@ -221,7 +221,6 @@ export class DayPage {
 
     dialogRef.afterClosed().subscribe(schedule => {
       if (!schedule) return;
-      confirm
       this.schedule.push({
         "day": day.date.format('YYYY-MM-DD'),
         "time": "12",
