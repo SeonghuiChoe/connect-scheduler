@@ -221,13 +221,21 @@ export class DayPage {
 
     dialogRef.afterClosed().subscribe(schedule => {
       if (!schedule) return;
+      const pick = this.days.find(item => item.date === day.date);
+      pick.holidays.push({
+        "day": day.date.format('YYYY-MM-DD'),
+        "time": "12",
+        "name": schedule,
+        "color": "#dcdcdc",
+        "repeat": "false"
+      });
       this.schedule.push({
         "day": day.date.format('YYYY-MM-DD'),
         "time": "12",
         "name": schedule,
         "color": "#dcdcdc",
         "repeat": "false"
-      })
+      });
       this.localStorageService.setSchedule(JSON.stringify(this.schedule));
     });
   }
