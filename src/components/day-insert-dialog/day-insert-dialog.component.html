@@ -13,3 +13,8 @@
   <button mat-button [mat-dialog-close]="schedule">Ok</button>
   <button mat-button (click)="cancel()">cancel</button>
 </div>
+<div class="holiday-box">
+  <div *ngFor="let hol of day.holidays; let i=index">
+    <div class="holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>
+  </div>
+</div>

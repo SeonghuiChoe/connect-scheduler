@@ -13,6 +13,7 @@ export interface DayData {
 @Component({
   selector: 'day-insert-dialog.',
   templateUrl: 'day-insert-dialog.component.html',
+  styleUrls: ['./day-insert-dialog.component.scss'],
 })
 export class DayInsertDialog {
 

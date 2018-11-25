@@ -8,7 +8,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'day-page',
   templateUrl: './day-page.component.html',
-  styleUrls: ['./day-page.component.scss']
+  styleUrls: ['./day-page.component.scss'],
 })
 
 export class DayPage {
@@ -207,7 +207,7 @@ export class DayPage {
   }
 
   insertSchedule(day) {
-    //holidays
+    // holidays
     const dialogRef = this.dialog.open(DayInsertDialog, {
       width: '250px',
       data: {
