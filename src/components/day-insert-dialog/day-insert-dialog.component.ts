@@ -20,8 +20,8 @@ export class DayInsertDialog {
     public dialogRef: MatDialogRef<DayInsertDialog>,
     @Inject(MAT_DIALOG_DATA) public day: DayData) {}
 
-  ok(): void {
-    this.dialogRef.close(this.day.holiday);
+  ok(schedule): void {
+    this.dialogRef.close(schedule);
   }
 
   cancel(): void {
