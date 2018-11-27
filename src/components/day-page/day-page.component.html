@@ -27,8 +27,7 @@
         'day-page-noday': day.isNotCurrentMonthDays,
         'day-page-today': day.isToday}"
       class="day-page-day"
-      (dblclick)="detailDay(day)"
-      (click)="insertSchedule(day)">
+      (click)="detailDay(day)">
       <div class="day">
         <div class="day-num">{{day.date.format('D')}}</div>
       </div>

@@ -204,9 +204,11 @@ export class DayPage {
       diff(this.today.startOf('day'), 'days');
 
     this.dDay = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
+
+    this.insertSchedule(day);
   }
 
-  insertSchedule(day) {
+  private insertSchedule(day) {
     // holidays
     const dialogRef = this.dialog.open(DayInsertDialog, {
       width: '250px',

@@ -30,6 +30,6 @@ export class DayInsertDialog {
   }
 
   deleteHoliday(holiday, i) {
-    console.log(holiday, i);
+    this.day.holidays.splice(i, 1);
   }
 }
