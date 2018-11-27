@@ -15,6 +15,9 @@
 </div>
 <div class="holiday-box">
   <div *ngFor="let hol of day.holidays; let i=index">
-    <div class="holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>
+    <div class="holiday" [ngStyle]="{'background-color': hol.color}">
+      <span>{{hol.name}}</span>
+      <span (click)="deleteHoliday(hol, i)">x</span>
+    </div>
   </div>
 </div>

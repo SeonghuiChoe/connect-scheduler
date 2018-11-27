@@ -28,4 +28,8 @@ export class DayInsertDialog {
   cancel(): void {
     this.dialogRef.close();
   }
+
+  deleteHoliday(holiday, i) {
+    console.log(holiday, i);
+  }
 }

@@ -5,13 +5,11 @@
   margin-top: 24px;
 
   .holiday {
-    width: 100%;
     font-size: .8em;
-    padding: .1em;
-    text-align: center;
-    margin-top: 1px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding: .4em 1em;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid #fff;
   }
 }
