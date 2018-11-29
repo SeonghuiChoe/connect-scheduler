@@ -151,6 +151,35 @@ export class DayPage {
     this.localStorageService.setSchedule(JSON.stringify(this.schedule));
   }
 
+  private insertSchedule(day) {
+    // holidays
+    const dialogRef = this.dialog.open(DayInsertDialog, {
+      width: '250px',
+      data: {
+        date: day.date.format('YYYY-MM-DD'),
+        holidays: day.holidays,
+        isNotCurrentMonthDays: day.isNotCurrentMonthDays,
+        isToday: day.isToday,
+        isWeekend: day.isWeekend,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(schedule => {
+      if (!schedule) return;
+      const pick = this.days.find(item => item.date === day.date);
+      const data = {
+        "day": day.date.format('YYYY-MM-DD'),
+        "time": "12",
+        "name": schedule,
+        "color": "#dcdcdc",
+        "repeat": "false"
+      };
+      pick.holidays.push(data);
+      this.schedule.push(data);
+      this.localStorageService.setSchedule(JSON.stringify(this.schedule));
+    });
+  }
+
   getHolidays() {
     // 공휴일을 가져온다.
     // 공휴일 정보가 있다면 가져오지 않는다.
@@ -206,35 +235,6 @@ export class DayPage {
     this.dDay = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
 
     this.insertSchedule(day);
-  }
-
-  private insertSchedule(day) {
-    // holidays
-    const dialogRef = this.dialog.open(DayInsertDialog, {
-      width: '250px',
-      data: {
-        date: day.date.format('YYYY-MM-DD'),
-        holidays: day.holidays,
-        isNotCurrentMonthDays: day.isNotCurrentMonthDays,
-        isToday: day.isToday,
-        isWeekend: day.isWeekend,
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(schedule => {
-      if (!schedule) return;
-      const pick = this.days.find(item => item.date === day.date);
-      const data = {
-        "day": day.date.format('YYYY-MM-DD'),
-        "time": "12",
-        "name": schedule,
-        "color": "#dcdcdc",
-        "repeat": "false"
-      };
-      pick.holidays.push(data);
-      this.schedule.push(data);
-      this.localStorageService.setSchedule(JSON.stringify(this.schedule));
-    });
   }
 }
 
