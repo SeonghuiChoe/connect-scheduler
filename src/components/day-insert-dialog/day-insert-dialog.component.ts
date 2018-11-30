@@ -22,14 +22,14 @@ export class DayInsertDialog {
     @Inject(MAT_DIALOG_DATA) public day: DayData) {}
 
   ok(schedule): void {
-    this.dialogRef.close(schedule);
+    this.dialogRef.close([this.day, schedule]);
   }
 
-  cancel(): void {
-    this.dialogRef.close();
+  cancel(schedule): void {
+    this.dialogRef.close([this.day, schedule]);
   }
 
-  deleteHoliday(holiday, i) {
+  deleteHoliday(i) {
     this.day.holidays.splice(i, 1);
   }
 }

@@ -164,18 +164,18 @@ export class DayPage {
       }
     });
 
-    dialogRef.afterClosed().subscribe(schedule => {
-      if (!schedule) return;
+    dialogRef.afterClosed().subscribe(data => {
+      if (!data || !Array.isArray(data) || !data[1]) return;
       const pick = this.days.find(item => item.date === day.date);
-      const data = {
+      const newSchedule = {
         "day": day.date.format('YYYY-MM-DD'),
         "time": "12",
-        "name": schedule,
+        "name": data[1],
         "color": "#dcdcdc",
         "repeat": "false"
       };
-      pick.holidays.push(data);
-      this.schedule.push(data);
+      pick.holidays.push(newSchedule);
+      this.schedule.push(newSchedule);
       this.localStorageService.setSchedule(JSON.stringify(this.schedule));
     });
   }

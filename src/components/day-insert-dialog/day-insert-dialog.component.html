@@ -11,13 +11,13 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="schedule">Ok</button>
-  <button mat-button (click)="cancel()">cancel</button>
+  <button mat-button (click)="cancel(schedule)">cancel</button>
 </div>
 <div class="holiday-box">
   <div *ngFor="let hol of day.holidays; let i=index">
     <div class="holiday" [ngStyle]="{'background-color': hol.color}">
       <span>{{hol.name}}</span>
-      <span (click)="deleteHoliday(hol, i)">x</span>
+      <span (click)="deleteHoliday(i)">x</span>
     </div>
   </div>
 </div>
