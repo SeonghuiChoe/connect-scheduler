@@ -165,8 +165,8 @@ export class DayPage {
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if (!data || !Array.isArray(data) || !data[1]) return;
-      const pick = this.days.find(item => item.date === day.date);
+      if (!data || !Array.isArray(data)) return;
+      if (!data[1]) return;
       const newSchedule = {
         "day": day.date.format('YYYY-MM-DD'),
         "time": "12",
@@ -174,9 +174,9 @@ export class DayPage {
         "color": "#dcdcdc",
         "repeat": "false"
       };
-      pick.holidays.push(newSchedule);
+      day.holidays.push(newSchedule);
       this.schedule.push(newSchedule);
-      this.localStorageService.setSchedule(JSON.stringify(this.schedule));
+      this.setSchedule();
     });
   }
 
