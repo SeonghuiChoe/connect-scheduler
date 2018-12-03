@@ -165,7 +165,16 @@ export class DayPage {
     });
 
     dialogRef.afterClosed().subscribe(data => {
+      // 입력데이터와 변경된 day정보를 갖고오기 때문에 배열
       if (!data || !Array.isArray(data)) return;
+      // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
+      const filtered = this.schedule.
+        filter(item => moment(item.day).format('YYYY-MM-DD') !== data[0].date);
+      // 스케줄에 현재 스케줄을 제외한 정보에 변경된 정보를 추가
+      this.schedule = filtered.concat(data[0].holidays);
+      // 스케줄 로컬에 저장
+      this.setSchedule();
+      // 입력 데이터가 없다면 아무 변화 없음
       if (!data[1]) return;
       const newSchedule = {
         "day": day.date.format('YYYY-MM-DD'),
@@ -174,8 +183,11 @@ export class DayPage {
         "color": "#dcdcdc",
         "repeat": "false"
       };
+      // 현제 날짜에 schedule 추가
       day.holidays.push(newSchedule);
+      // 스케줄만 모와놓은 자료에도 추가
       this.schedule.push(newSchedule);
+      // 스케줄 로컬에 저장
       this.setSchedule();
     });
   }
