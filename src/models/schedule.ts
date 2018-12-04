@@ -1,6 +1,7 @@
 enum ColorStatus {
   DEFALTE,
 }
+
 export class Schedule {
 
   /**
