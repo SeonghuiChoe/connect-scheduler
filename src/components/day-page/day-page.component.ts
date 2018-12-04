@@ -130,6 +130,7 @@ export class DayPage {
 
   // 중복제거
   private makeSchedule(month, num) {
+    // 스케줄 입력으로 인해 day가 문자열로 들어감
     const schedule = this.schedule.filter(h => {
       const zeroMonth = this.addZero(h.day.getMonth() + 1);
       return h.repeat ?
@@ -177,7 +178,7 @@ export class DayPage {
       // 입력 데이터가 없다면 아무 변화 없음
       if (!data[1]) return;
       const newSchedule = {
-        "day": day.date.format('YYYY-MM-DD'),
+        "day": day.date,
         "time": "12",
         "name": data[1],
         "color": "#dcdcdc",
@@ -212,7 +213,6 @@ export class DayPage {
           holiday['repeat'] = holiday['repeat'] == "true";
           return holiday;
         });
-    } {
       this.setSchedule();
     }
 
