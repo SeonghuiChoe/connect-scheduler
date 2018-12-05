@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import { Component } from '@angular/core';
 import { HolidaysService } from '../../services/holidays.service';
 import { MatDialog } from '@angular/material';
@@ -178,11 +178,11 @@ export class DayPage {
       // 입력 데이터가 없다면 아무 변화 없음
       if (!data[1]) return;
       const newSchedule = {
-        "day": day.date,
-        "time": "12",
-        "name": data[1],
-        "color": "#dcdcdc",
-        "repeat": "false"
+        day: day.date,
+        time: "12",
+        name: data[1],
+        color: "#dcdcdc",
+        repeat: "false"
       };
       // 현제 날짜에 schedule 추가
       day.holidays.push(newSchedule);
