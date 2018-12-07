@@ -25,5 +25,11 @@ export class Day {
    */
   private isWeeked: boolean = false;
 
-  constructor() {}
+  constructor(date, events, isNotCurrentMonthDays, isToday, isWeeked) {
+    this.date = date;
+    this.events = events;
+    this.isNotCurrentMonthDays = isNotCurrentMonthDays;
+    this.isToday = isToday;
+    this.isWeeked = isWeeked;
+  }
 }

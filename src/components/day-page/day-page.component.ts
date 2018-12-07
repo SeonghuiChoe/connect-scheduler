@@ -4,6 +4,7 @@ import { HolidaysService } from '../../services/holidays.service';
 import { MatDialog } from '@angular/material';
 import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.component';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Day } from '../../models/day';
 
 @Component({
   selector: 'day-page',
@@ -58,12 +59,14 @@ export class DayPage {
     return target < 10 ? '0' + target : target;
   }
 
-  private pushMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, holidays) {
-    month.push({date, isWeekend, isNotCurrentMonthDays, isToday, holidays});
+  private pushMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, events) {
+    const day = new Day(date, events, isNotCurrentMonthDays, isToday, isWeekend);
+    month.push(day);
   }
 
-  private unshiftMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, holidays) {
-    month.unshift({date, isWeekend, isNotCurrentMonthDays, isToday, holidays});
+  private unshiftMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, events) {
+    const day = new Day(date, events, isNotCurrentMonthDays, isToday, isWeekend);
+    month.unshift(day);
   }
 
   private insertPreMonth(month) {

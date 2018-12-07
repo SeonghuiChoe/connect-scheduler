@@ -32,7 +32,7 @@
         <div class="day-num">{{day.date.format('D')}}</div>
       </div>
       <div class="holiday-box">
-        <div *ngFor="let hol of day.holidays; let i=index">
+        <div *ngFor="let hol of day.events; let i=index">
           <div class="holiday" [ngStyle]="{'background-color': hol.color}" *ngIf="i<2">{{hol.name}}</div>
           <div class="more" *ngIf="i==2">+{{day.holidays.length - 2}}</div>
         </div>
