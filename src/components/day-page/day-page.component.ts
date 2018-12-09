@@ -52,21 +52,27 @@ export class DayPage {
     private holidaysService: HolidaysService,
     private dialog: MatDialog,
     private localStorageService: LocalStorageService) {
-    this.getHolidays();
+    // this.getHolidays();
+    this.changeMonth();
   }
 
   private addZero(target) {
     return target < 10 ? '0' + target : target;
   }
 
-  private pushMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, events) {
+  /**
+   * 보여질 날들의 목록에 날을 추가
+   * @param {Array<Day>} month 추가할 날들의 배열
+   * @param {moment} date 날짜
+   * @param {Array<Object>} events 이벤트 목록
+   * @param {boolean} isNotCurrentMonthDays 지금달이 아닌지 여부
+   * @param {boolean} isToday 오늘 여부
+   * @param {boolean} isWeekend 주말 여부
+   * @param {boolean} isFront 앞에 추가할건지 여부
+   */
+  private pushMonth(month, date, events, isNotCurrentMonthDays, isToday, isWeekend, isFront) {
     const day = new Day(date, events, isNotCurrentMonthDays, isToday, isWeekend);
-    month.push(day);
-  }
-
-  private unshiftMonth(month, date, isWeekend, isNotCurrentMonthDays, isToday, events) {
-    const day = new Day(date, events, isNotCurrentMonthDays, isToday, isWeekend);
-    month.unshift(day);
+    isFront ? month.push(day) : month.unshift(day);
   }
 
   private insertPreMonth(month) {
@@ -76,13 +82,14 @@ export class DayPage {
       const num = preDaysInMonth - j;
       const holidays = this.makeHolidays(this.currentDate.clone().add(-1, 'months'), num).concat();
       const schedule = this.makeSchedule(this.currentDate.clone().add(-1, 'months'), num);
-      this.unshiftMonth(
+      this.pushMonth(
         month,
         this.currentDate.clone().add(-1, 'months').set('date', num),
-        false,
+        holidays.concat(schedule),
         true,
         false,
-        holidays.concat(schedule));
+        false,
+        false);
     }
   }
 
@@ -98,10 +105,11 @@ export class DayPage {
       this.pushMonth(
         month,
         this.currentDate.clone().set('date', i),
-        isWeekend,
+        holidays.concat(schedule),
         false,
         isToday,
-        holidays.concat(schedule));
+        isWeekend,
+        true);
     }
   }
 
@@ -113,10 +121,11 @@ export class DayPage {
       this.pushMonth(
         month,
         this.currentDate.clone().add(1, 'months').set('date', z),
-        false,
+        holidays.concat(schedule),
         true,
         false,
-        holidays.concat(schedule));
+        false,
+        true);
     }
   }
 
