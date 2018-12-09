@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { Component } from '@angular/core';
 import { HolidaysService } from '../../services/holidays.service';
 import { MatDialog } from '@angular/material';
@@ -63,14 +63,14 @@ export class DayPage {
   /**
    * 보여질 날들의 목록에 날을 추가
    * @param {Array<Day>} month 추가할 날들의 배열
-   * @param {moment} date 날짜
+   * @param {Moment} date 날짜
    * @param {Array<Object>} events 이벤트 목록
    * @param {boolean} isNotCurrentMonthDays 지금달이 아닌지 여부
    * @param {boolean} isToday 오늘 여부
    * @param {boolean} isWeekend 주말 여부
    * @param {boolean} isFront 앞에 추가할건지 여부
    */
-  private pushMonth(month, date, events, isNotCurrentMonthDays, isToday, isWeekend, isFront) {
+  private pushMonth(month: Array<Day>, date: Moment, events: Array<object>, isNotCurrentMonthDays: boolean, isToday: boolean, isWeekend: boolean, isFront: boolean) {
     const day = new Day(date, events, isNotCurrentMonthDays, isToday, isWeekend);
     isFront ? month.push(day) : month.unshift(day);
   }
@@ -129,7 +129,7 @@ export class DayPage {
     }
   }
 
-  // 중복제거
+  // 중복제거 holiday and schdule
   private makeHolidays(month, num) {
     const holidays = this.holidays.filter(h => {
       const zeroMonth = this.addZero(h.day.getMonth() + 1);
@@ -140,7 +140,6 @@ export class DayPage {
     return holidays.sort((a, b) => a.time - b.time);
   }
 
-  // 중복제거
   private makeSchedule(month, num) {
     // 스케줄 입력으로 인해 day가 문자열로 들어감
     const schedule = this.schedule.filter(h => {
@@ -164,6 +163,10 @@ export class DayPage {
     this.localStorageService.setSchedule(JSON.stringify(this.schedule));
   }
 
+  /**
+   * 더블클릭시 입력하도록
+   * @param day
+   */
   private insertSchedule(day) {
     // holidays
     const dialogRef = this.dialog.open(DayInsertDialog, {
@@ -246,19 +249,21 @@ export class DayPage {
     this.changeMonth();
   }
 
-  detailDay(day) {
+  /**
+   * 선택된 날의 대한 정보 하단에 표시
+   */
+  detailDay(day: Day) {
+    console.log(day);
     this.selectDay = day;
-    this.selectDay['day'] = day && day.num;
-    this.selectDay['yearMonth'] = this.currentDate.format('MMMM YYYY');
+    // date를 가져오도록 만들어야함
     this.selectDay['date'] = day.date;
+    this.selectDay['yearMonth'] = this.currentDate.format('MMMM YYYY');
 
     const diff = this.selectDay['date'].
       startOf('day').
       diff(this.today.startOf('day'), 'days');
 
     this.dDay = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
-
-    this.insertSchedule(day);
   }
 }
 

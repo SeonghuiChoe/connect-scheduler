@@ -40,7 +40,7 @@
     </div>
     <div class="day-page-body">
       <div class="body-num">
-        <span>{{selectDay.day}} {{dDay}}</span>
+        <span>{{selectDay.date.format('DD')}} {{dDay}}</span>
         <span>{{selectDay.yearMonth}}</span>
       </div>
       <div *ngFor="let hol of selectDay.holidays" class="body-holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>
