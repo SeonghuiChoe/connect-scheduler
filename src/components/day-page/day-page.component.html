@@ -29,7 +29,7 @@
       class="day-page-day"
       (click)="detailDay(day)">
       <div class="day">
-        <div class="day-num">{{day.date.format('D')}}</div>
+        <div class="day-num">{{day.num}}</div>
       </div>
       <div class="holiday-box">
         <div *ngFor="let hol of day.events; let i=index">
@@ -40,7 +40,7 @@
     </div>
     <div class="day-page-body">
       <div class="body-num">
-        <span>{{selectDay.date.format('DD')}} {{dDay}}</span>
+        <span>{{selectDay.num}} {{dDay}}</span>
         <span>{{selectDay.yearMonth}}</span>
       </div>
       <div *ngFor="let hol of selectDay.holidays" class="body-holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>

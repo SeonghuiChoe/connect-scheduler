@@ -71,7 +71,8 @@ export class DayPage {
    * @param {boolean} isFront 앞에 추가할건지 여부
    */
   private pushMonth(month: Array<Day>, date: Moment, events: Array<object>, isNotCurrentMonthDays: boolean, isToday: boolean, isWeekend: boolean, isFront: boolean) {
-    const day = new Day(date, events, isNotCurrentMonthDays, isToday, isWeekend);
+    const makeDateType = new Date(date.toString());
+    const day = new Day(makeDateType, events, isNotCurrentMonthDays, isToday, isWeekend);
     isFront ? month.push(day) : month.unshift(day);
   }
 
@@ -253,10 +254,9 @@ export class DayPage {
    * 선택된 날의 대한 정보 하단에 표시
    */
   detailDay(day: Day) {
-    console.log(day);
     this.selectDay = day;
-    // date를 가져오도록 만들어야함
-    this.selectDay['date'] = day.date;
+    this.selectDay['num'] = day.getNum();
+    this.selectDay['date'] = moment(day.getOriginDate());
     this.selectDay['yearMonth'] = this.currentDate.format('MMMM YYYY');
 
     const diff = this.selectDay['date'].

@@ -1,5 +1,7 @@
 export class Day {
 
+  private num: number = 0;
+
   /**
    * 날짜
    */
@@ -31,5 +33,17 @@ export class Day {
     this.isNotCurrentMonthDays = isNotCurrentMonthDays;
     this.isToday = isToday;
     this.isWeeked = isWeeked;
+    this.num = this.date.getDate();
+  }
+
+  /**
+   * set으로 변경해야함
+   */
+  getOriginDate() {
+    return this.date;
+  }
+
+  getNum() {
+    return this.num;
   }
 }
