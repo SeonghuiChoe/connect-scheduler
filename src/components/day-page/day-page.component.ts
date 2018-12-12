@@ -14,20 +14,20 @@ import { Day } from '../../models/day';
 
 export class DayPage {
 
-  private TOTAL_DATYS = 42;
+  private TOTAL_DATYS: number = 42;
 
   /**
    * 선택된 날짜
    */
-  currentDate = moment(new Date());
+  currentDate: Moment = moment(new Date());
 
-  today = moment(new Date());
+  today: Moment = moment(new Date());
 
-  firstDay = 0;
+  firstDay: number = 0;
 
-  daysInMonth = 0;
+  daysInMonth: number = 0;
 
-  weekdays = [
+  weekdays: Array<Object> = [
     {name: 'Sun', isWeekend: true},
     {name: 'Mon', isWeekend: false},
     {name: 'Tue', isWeekend: false},
@@ -37,16 +37,16 @@ export class DayPage {
     {name: 'Sat', isWeekend: true}
   ];
 
-  days = [];
+  days: Array<Day> = [];
 
-  selectDay = {};
+  selectDay: Object = {};
 
   // 음력, 색표시, 시간설정
-  holidays = [];
+  holidays: Array<Object> = [];
 
-  schedule = [];
+  schedule: Array<Object> = [];
 
-  dDay = '';
+  dDay: string = '';
 
   constructor(
     private holidaysService: HolidaysService,
@@ -56,6 +56,10 @@ export class DayPage {
     this.changeMonth();
   }
 
+  /**
+   * 10미만 앞에 0추가ㄴ
+   * @param {number} target
+   */
   private addZero(target) {
     return target < 10 ? '0' + target : target;
   }
@@ -71,11 +75,15 @@ export class DayPage {
    * @param {boolean} isFront 앞에 추가할건지 여부
    */
   private pushMonth(month: Array<Day>, date: Moment, events: Array<object>, isNotCurrentMonthDays: boolean, isToday: boolean, isWeekend: boolean, isFront: boolean) {
-    const makeDateType = new Date(date.toString());
-    const day = new Day(makeDateType, events, isNotCurrentMonthDays, isToday, isWeekend);
+    const makeDateType: Date = new Date(date.toString());
+    const day: Day = new Day(makeDateType, events, isNotCurrentMonthDays, isToday, isWeekend);
     isFront ? month.push(day) : month.unshift(day);
   }
 
+  /**
+   * 전달 추가
+   * @param {Array<Day>} month
+   */
   private insertPreMonth(month) {
     const firstDay = this.currentDate.date(1).day();
     const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
@@ -94,6 +102,10 @@ export class DayPage {
     }
   }
 
+  /**
+   * 현재달 출력
+   * @param {Array<Day>} month
+   */
   private insertCurrentMonth(month) {
     const daysInMonth = this.currentDate.daysInMonth();
     for (let i = 1; i <= daysInMonth; i ++) {
@@ -114,6 +126,10 @@ export class DayPage {
     }
   }
 
+  /**
+   * 다음 달 추가
+   * @param {Array<Day>} month
+   */
   private insertNextMonth(month) {
     const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
