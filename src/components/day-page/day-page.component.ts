@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Day } from '../../models/day';
+import { Schedule } from '../../models/schedule';
 
 @Component({
   selector: 'day-page',
@@ -42,9 +43,9 @@ export class DayPage {
   selectDay: Object = {};
 
   // 음력, 색표시, 시간설정
-  holidays: Array<Object> = [];
+  holidays: Array<Schedule> = [];
 
-  schedule: Array<Object> = [];
+  schedule: Array<Schedule> = [];
 
   dDay: string = '';
 
@@ -57,10 +58,9 @@ export class DayPage {
   }
 
   /**
-   * 10미만 앞에 0추가ㄴ
-   * @param {number} target
+   * 10미만 앞에 0추가
    */
-  private addZero(target) {
+  private addZero(target: number) {
     return target < 10 ? '0' + target : target;
   }
 
@@ -82,9 +82,8 @@ export class DayPage {
 
   /**
    * 전달 추가
-   * @param {Array<Day>} month
    */
-  private insertPreMonth(month) {
+  private insertPreMonth(month: Array<Day>) {
     const firstDay = this.currentDate.date(1).day();
     const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
     for (let j = 0; j < firstDay; j++) {
@@ -104,9 +103,8 @@ export class DayPage {
 
   /**
    * 현재달 출력
-   * @param {Array<Day>} month
    */
-  private insertCurrentMonth(month) {
+  private insertCurrentMonth(month: Array<Day>) {
     const daysInMonth = this.currentDate.daysInMonth();
     for (let i = 1; i <= daysInMonth; i ++) {
       const isToday =
@@ -128,9 +126,8 @@ export class DayPage {
 
   /**
    * 다음 달 추가
-   * @param {Array<Day>} month
    */
-  private insertNextMonth(month) {
+  private insertNextMonth(month: Array<Day>) {
     const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
       const holidays = this.makeHolidays(this.currentDate.clone().add(1, 'months'), z);
@@ -146,26 +143,26 @@ export class DayPage {
     }
   }
 
-  // 중복제거 holiday and schdule
+  // holiday and schdule를 어떻게 나눠야되는지 모르겠다.
   private makeHolidays(month, num) {
     const holidays = this.holidays.filter(h => {
-      const zeroMonth = this.addZero(h.day.getMonth() + 1);
-      return h.repeat ?
-        `${zeroMonth}-${h.day.getDate()}` === `${month.format('MM-')}${num}` :
-        `${h.day.getFullYear()}-${zeroMonth}-${h.day.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
+      const zeroMonth = this.addZero(h.date.getMonth() + 1);
+      return h.isRepeat ?
+        `${zeroMonth}-${h.date.getDate()}` === `${month.format('MM-')}${num}` :
+        `${h.date.getFullYear()}-${zeroMonth}-${h.date.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
     });
-    return holidays.sort((a, b) => a.time - b.time);
+    return holidays.sort((a, b) => a.date.getTime() - b.date.getTime());
   }
 
   private makeSchedule(month, num) {
     // 스케줄 입력으로 인해 day가 문자열로 들어감
     const schedule = this.schedule.filter(h => {
-      const zeroMonth = this.addZero(h.day.getMonth() + 1);
-      return h.repeat ?
-        `${zeroMonth}-${h.day.getDate()}` === `${month.format('MM-')}${num}` :
-        `${h.day.getFullYear()}-${zeroMonth}-${h.day.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
+      const zeroMonth = this.addZero(h.date.getMonth() + 1);
+      return h.isRepeat ?
+        `${zeroMonth}-${h.date.getDate()}` === `${month.format('MM-')}${num}` :
+        `${h.date.getFullYear()}-${zeroMonth}-${h.date.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
     });
-    return schedule.sort((a, b) => a.time - b.time);
+    return schedule.sort((a, b) => a.date.getTime() - b.date.getTime());
   }
 
   private changeMonth() {
@@ -202,20 +199,19 @@ export class DayPage {
       if (!data || !Array.isArray(data)) return;
       // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
       const filtered = this.schedule.
-        filter(item => moment(item.day).format('YYYY-MM-DD') !== data[0].date);
+        filter(item => moment(item.date).format('YYYY-MM-DD') !== data[0].date);
       // 스케줄에 현재 스케줄을 제외한 정보에 변경된 정보를 추가
       this.schedule = filtered.concat(data[0].holidays);
       // 스케줄 로컬에 저장
       this.setSchedule();
       // 입력 데이터가 없다면 아무 변화 없음
       if (!data[1]) return;
-      const newSchedule = {
-        day: day.date,
-        time: "12",
-        name: data[1],
-        color: "#dcdcdc",
-        repeat: "false"
-      };
+      const newSchedule: Schedule = new Schedule(
+        day.date,
+        data[1],
+        Schedule.COLORS.DEFALTE,
+        false
+      );
       // 현제 날짜에 schedule 추가
       day.holidays.push(newSchedule);
       // 스케줄만 모와놓은 자료에도 추가
@@ -229,13 +225,13 @@ export class DayPage {
     // 공휴일을 가져온다.
     // 공휴일 정보가 있다면 가져오지 않는다.
     // 공휴일 정보를 가져온지 한달이 지났다면 다시 한번 가져온다.
-    this.holidays = this.holidaysService.
-      getHolidays().
-      map((holiday: Object) => {
-        holiday['day'] = new Date(holiday['day']);
-        holiday['repeat'] = holiday['repeat'] == "true";
-        return holiday;
-      });
+    // this.holidays = this.holidaysService.
+    //   getHolidays().
+    //   map((holiday: Object) => {
+    //     holiday['day'] = new Date(holiday['day']);
+    //     holiday['repeat'] = holiday['repeat'] == "true";
+    //     return holiday;
+    //   });
 
     // 스케줄을 가져온다.
     if (this.localStorageService.getSchedule()) {
@@ -282,4 +278,3 @@ export class DayPage {
     this.dDay = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
   }
 }
-

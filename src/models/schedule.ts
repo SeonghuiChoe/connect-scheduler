@@ -12,22 +12,35 @@ export class Schedule {
   /**
    * 날짜
    */
-  private date: Date = new Date();
+  private _date: Date = new Date();
 
   /**
    * 내용
    */
-  private note: String = '';
+  private _note: String = '';
 
   /**
    * 색
    */
-  private color: ColorStatus = ColorStatus.DEFALTE;
+  private _color: ColorStatus = ColorStatus.DEFALTE;
 
   /**
    * 반복설정
    */
-  private isRepeat: boolean = false;
+  private _isRepeat: boolean = false;
 
-  constructor() {}
+  constructor(date, name, color, isRepeat) {
+    this._date = date,
+    this._note = name,
+    this._color, color,
+    this._isRepeat = isRepeat;
+  }
+
+  get date() {
+    return this._date;
+  }
+
+  get isRepeat() {
+    return this.isRepeat;
+  };
 }

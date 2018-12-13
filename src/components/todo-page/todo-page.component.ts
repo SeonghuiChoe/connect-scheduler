@@ -15,7 +15,7 @@ export class TodoPage {
 
   @Input('showCheckbox') showCheckbox: boolean = true;
 
-  insertText = '';
+  insertText: string = '';
 
   todos: Array<Object> = [];
   constructor(private localStorageService: LocalStorageService) {}
