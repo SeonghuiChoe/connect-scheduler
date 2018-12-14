@@ -53,7 +53,7 @@ export class DayPage {
     private holidaysService: HolidaysService,
     private dialog: MatDialog,
     private localStorageService: LocalStorageService) {
-    // this.getHolidays();
+    this.getHolidays();
     this.changeMonth();
   }
 
@@ -225,20 +225,22 @@ export class DayPage {
     // 공휴일을 가져온다.
     // 공휴일 정보가 있다면 가져오지 않는다.
     // 공휴일 정보를 가져온지 한달이 지났다면 다시 한번 가져온다.
-    // this.holidays = this.holidaysService.
-    //   getHolidays().
-    //   map((holiday: Object) => {
-    //     holiday['day'] = new Date(holiday['day']);
-    //     holiday['repeat'] = holiday['repeat'] == "true";
-    //     return holiday;
-    //   });
+    this.holidays = this.holidaysService.
+      getHolidays().
+      map((holiday: Object) =>
+        new Schedule(
+          new Date(holiday['date']),
+          holiday['note'],
+          holiday['color'],
+          holiday['isRepeat'] == true
+        ));
 
     // 스케줄을 가져온다.
     if (this.localStorageService.getSchedule()) {
       this.schedule = JSON.parse(this.localStorageService.getSchedule()).
         map((holiday: Object) => {
-          holiday['day'] = new Date(holiday['day']);
-          holiday['repeat'] = holiday['repeat'] == "true";
+          holiday['date'] = new Date(holiday['date']);
+          holiday['isRepeat'] = holiday['isRepeat'] == true;
           return holiday;
         });
       this.setSchedule();

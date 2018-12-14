@@ -33,8 +33,8 @@
       </div>
       <div class="holiday-box">
         <div *ngFor="let hol of day.events; let i=index">
-          <div class="holiday" [ngStyle]="{'background-color': hol.color}" *ngIf="i<2">{{hol.name}}</div>
-          <div class="more" *ngIf="i==2">+{{day.holidays.length - 2}}</div>
+          <div class="holiday" [ngStyle]="{'background-color': hol.color}" *ngIf="i<2">{{hol.note}}</div>
+          <div class="more" *ngIf="i==2">+{{day.events.length - 2}}</div>
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
         <span>{{selectDay.num}} {{dDay}}</span>
         <span>{{selectDay.yearMonth}}</span>
       </div>
-      <div *ngFor="let hol of selectDay.holidays" class="body-holiday" [ngStyle]="{'background-color': hol.color}">{{hol.name}}</div>
+      <div *ngFor="let hol of selectDay.events" class="body-holiday" [ngStyle]="{'background-color': hol.color}">{{hol.note}}</div>
     </div>
   </div>
 </div>

@@ -41,6 +41,6 @@ export class Schedule {
   }
 
   get isRepeat() {
-    return this.isRepeat;
+    return this._isRepeat;
   };
 }
