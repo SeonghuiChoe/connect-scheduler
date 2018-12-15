@@ -1,5 +1,5 @@
 enum ColorStatus {
-  DEFALTE,
+  DEFALTE = '#eee',
 }
 
 export class Schedule {
@@ -38,6 +38,14 @@ export class Schedule {
 
   get date() {
     return this._date;
+  }
+
+  get note() {
+    return this._note;
+  }
+
+  get color() {
+    return this._color;
   }
 
   get isRepeat() {
