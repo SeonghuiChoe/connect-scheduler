@@ -76,7 +76,7 @@ export class DayPage {
    */
   private pushMonth(month: Array<Day>, date: Moment, events: Array<object>, isNotCurrentMonthDays: boolean, isToday: boolean, isWeekend: boolean, isFront: boolean) {
     const makeDateType: Date = new Date(date.toString());
-    const day: Day = new Day(makeDateType, events, isNotCurrentMonthDays, isToday, isWeekend);
+    const day: Day = new Day(makeDateType, events, isNotCurrentMonthDays, isToday, isWeekend, false);
     isFront ? month.push(day) : month.unshift(day);
   }
 
@@ -210,7 +210,8 @@ export class DayPage {
         day.date,
         data[1],
         Schedule.COLORS.DEFALTE,
-        false
+        false,
+        day.detail
       );
       // 현제 날짜에 schedule 추가
       day.holidays.push(newSchedule);
@@ -232,7 +233,8 @@ export class DayPage {
           new Date(holiday['date']),
           holiday['note'],
           holiday['color'],
-          holiday['isRepeat'] == true
+          holiday['isRepeat'] == true,
+          holiday['detail']
         ));
 
     // 스케줄을 가져온다.
@@ -268,12 +270,14 @@ export class DayPage {
    * 선택된 날의 대한 정보 하단에 표시
    */
   detailDay(day: Day) {
+    this.days.forEach(day => day.isSelected = false);
+    day.isSelected = true;
+
     this.selectDay = day;
-    this.selectDay['num'] = day.getNum();
-    this.selectDay['date'] = moment(day.getOriginDate());
+    this.selectDay['dayNum'] = day.num;
     this.selectDay['yearMonth'] = this.currentDate.format('MMMM YYYY');
 
-    const diff = this.selectDay['date'].
+    const diff = moment(day.date).
       startOf('day').
       diff(this.today.startOf('day'), 'days');
 

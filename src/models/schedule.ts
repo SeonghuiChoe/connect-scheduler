@@ -20,6 +20,11 @@ export class Schedule {
   private _note: String = '';
 
   /**
+   * 상세
+   */
+  private _detail: String = '';
+
+  /**
    * 색
    */
   private _color: ColorStatus = ColorStatus.DEFALTE;
@@ -29,11 +34,12 @@ export class Schedule {
    */
   private _isRepeat: boolean = false;
 
-  constructor(date, name, color, isRepeat) {
+  constructor(date, name, color, isRepeat, detail) {
     this._date = date,
     this._note = name,
     this._color, color,
     this._isRepeat = isRepeat;
+    this._detail = detail
   }
 
   get date() {
@@ -51,4 +57,8 @@ export class Schedule {
   get isRepeat() {
     return this._isRepeat;
   };
+
+  get detail() {
+    return this._detail;
+  }
 }

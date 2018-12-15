@@ -1,11 +1,11 @@
 export class Day {
 
-  private num: number = 0;
+  private _num: number = 0;
 
   /**
    * 날짜
    */
-  private date: Date = new Date();
+  private _date: Date = new Date();
 
   /**
    * 공휴일 및 스케줄
@@ -27,23 +27,34 @@ export class Day {
    */
   private isWeeked: boolean = false;
 
-  constructor(date, events, isNotCurrentMonthDays, isToday, isWeeked) {
-    this.date = date;
+  /**
+   * 선택 여부
+   */
+  private _isSelected: boolean = false;
+
+  constructor(date, events, isNotCurrentMonthDays, isToday, isWeeked, isSelected) {
+    this._date = date;
     this.events = events;
     this.isNotCurrentMonthDays = isNotCurrentMonthDays;
     this.isToday = isToday;
     this.isWeeked = isWeeked;
-    this.num = this.date.getDate();
+    this._num = this._date.getDate();
+    this._isSelected = isSelected;
   }
 
-  /**
-   * set으로 변경해야함
-   */
-  getOriginDate() {
-    return this.date;
+  get date() {
+    return this._date;
   }
 
-  getNum() {
-    return this.num;
+  get num() {
+    return this._num;
+  }
+
+  get isSelected() {
+    return this._isSelected;
+  }
+
+  set isSelected(bool) {
+    this._isSelected = bool;
   }
 }
