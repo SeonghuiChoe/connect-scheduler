@@ -47,8 +47,6 @@ export class DayPage {
 
   schedule: Array<Schedule> = [];
 
-  dDay: string = '';
-
   constructor(
     private holidaysService: HolidaysService,
     private dialog: MatDialog,
@@ -166,7 +164,8 @@ export class DayPage {
   }
 
   private changeMonth() {
-    var totalMonth = [];
+    this.selectDay = {};
+    const totalMonth = [];
     this.insertPreMonth(totalMonth);
     this.insertCurrentMonth(totalMonth);
     this.insertNextMonth(totalMonth);
@@ -281,6 +280,6 @@ export class DayPage {
       startOf('day').
       diff(this.today.startOf('day'), 'days');
 
-    this.dDay = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
+    this.selectDay['dDay'] = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
   }
 }
