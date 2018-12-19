@@ -20,10 +20,26 @@ export class Todo {
    */
   private _editable: boolean = false;
 
-  constructor(name, isDone, isStar, editable) {
+  constructor(name, isDone = false, isStar = false, editable = false) {
     this._name = name;
     this._isDone = isDone;
     this._isStar = isStar;
     this._editable = editable;
   };
+
+  get name() {
+    return this._name;
+  }
+
+  get isDone() {
+    return this._isDone;
+  }
+
+  get isStar() {
+    return this._isStar;
+  }
+
+  get editable() {
+    return this._editable;
+  }
 };

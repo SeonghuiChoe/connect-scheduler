@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Todo } from '../../models/todo';
 
 @Component({
   selector: 'todo-page',
@@ -37,12 +38,8 @@ export class TodoPage {
       // 입력해주세요.
       return;
     }
-    this.todos.push({
-      name: this.insertText,
-      isDone: false,
-      isStar: false,
-      editable: false
-    });
+    const todo = new Todo(this.insertText);
+    this.todos.push(todo);
     this.setStorage();
     this.insertText = '';
   }
