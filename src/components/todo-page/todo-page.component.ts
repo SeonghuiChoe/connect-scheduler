@@ -47,7 +47,7 @@ export class TodoPage {
     this.insertText = '';
   }
 
-  deleteTodo(index) {
+  deleteTodo(index: number) {
     this.todos.splice(index, 1);
     this.setStorage();
   }
