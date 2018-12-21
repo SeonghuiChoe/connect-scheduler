@@ -21,6 +21,9 @@ export class TodoPage {
   todos: Array<Object> = [];
   constructor(private localStorageService: LocalStorageService) {}
 
+  /**
+   * Storage에서 가져오기
+   */
   ngOnInit() {
     if (this.localStorageService.getTodoList(this.storage)) {
       this.todos = JSON.parse(this.localStorageService
@@ -36,10 +39,16 @@ export class TodoPage {
     }
   }
 
+  /**
+   * Storage에 저장
+   */
   private setStorage() {
     this.localStorageService.setTodoList(JSON.stringify(this.todos), this.storage);
   }
 
+  /**
+   * 일정 등록
+   */
   insertTodo() {
     if (!this.insertText) {
       // 입력해주세요.
@@ -51,25 +60,45 @@ export class TodoPage {
     this.insertText = '';
   }
 
+  /**
+   * 일정 삭제
+   * @param index 삭제할 todo index
+   */
   deleteTodo(index: number) {
     this.todos.splice(index, 1);
     this.setStorage();
   }
 
+  /**
+   * 중요 여부 변경
+   * @param {Todo} todo
+   */
   checkStar(todo) {
     todo.isStar = !todo.isStar;
     this.setStorage();
   }
 
+  /**
+   * 완려 여부 변경
+   * ng-model이기 때문에 storage만 변경
+   */
   checkDone() {
     this.setStorage();
   }
 
+  /**
+   * 변경 가능으로 수정
+   * @param {Todo} todo
+   */
   onEditable(todo) {
     todo.editable = true;
     this.setStorage();
   }
 
+  /**
+   * 변경 불가능으로 수정
+   * @param {Todo} todo
+   */
   OffEditable(todo) {
     todo.editable = false;
     this.setStorage();
