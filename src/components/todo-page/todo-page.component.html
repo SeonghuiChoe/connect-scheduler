@@ -26,12 +26,12 @@
         (change)="checkDone()">
       </mat-checkbox>
     </div>
-    <div class="todo-name" (click)="onEditable(todo)">
-      <span *ngIf="!todo.editable">{{todo.name}}</span>
+    <div class="todo-content" (click)="onEditable(todo)">
+      <span *ngIf="!todo.editable">{{todo.content}}</span>
       <input
         autoFocus
         *ngIf="todo.editable"
-        [(ngModel)]="todo.name"
+        [(ngModel)]="todo.content"
         (keyup.enter)="OffEditable(todo)"
         (blur)="OffEditable(todo)">
     </div>

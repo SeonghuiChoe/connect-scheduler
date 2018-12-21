@@ -3,7 +3,7 @@ export class Todo {
   /**
    * 할일
    */
-  private _name: string = '';
+  private _content: string = '';
 
   /**
    * 종료 여부
@@ -20,15 +20,15 @@ export class Todo {
    */
   private _editable: boolean = false;
 
-  constructor(name, isDone = false, isStar = false, editable = false) {
-    this._name = name;
+  constructor(content, isDone = false, isStar = false, editable = false) {
+    this._content = content;
     this._isDone = isDone;
     this._isStar = isStar;
     this._editable = editable;
   };
 
-  get name() {
-    return this._name;
+  get content() {
+    return this._content;
   }
 
   get isDone() {
@@ -39,7 +39,23 @@ export class Todo {
     return this._isStar;
   }
 
+  set content(bool) {
+    this._content = bool;
+  }
+
   get editable() {
     return this._editable;
+  }
+
+  set isDone(bool) {
+    this._isDone = bool;
+  }
+
+  set isStar(bool) {
+    this._isStar = bool;
+  }
+
+  set editable(bool) {
+    this._editable = bool;
   }
 };

@@ -23,7 +23,14 @@ export class TodoPage {
 
   ngOnInit() {
     if (this.localStorageService.getTodoList(this.storage)) {
-      this.todos = JSON.parse(this.localStorageService.getTodoList(this.storage));
+      this.todos = JSON.parse(this.localStorageService
+        .getTodoList(this.storage))
+        .map(todo => new Todo(
+          todo._content,
+          todo._isDone,
+          todo._isStar,
+          todo._editable
+        ));
     } else {
       this.setStorage();
     }
