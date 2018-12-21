@@ -62,7 +62,6 @@ export class TodoPage {
 
   /**
    * 일정 삭제
-   * @param index 삭제할 todo index
    */
   deleteTodo(index: number) {
     this.todos.splice(index, 1);
@@ -71,9 +70,8 @@ export class TodoPage {
 
   /**
    * 중요 여부 변경
-   * @param {Todo} todo
    */
-  checkStar(todo) {
+  checkStar(todo: Todo) {
     todo.isStar = !todo.isStar;
     this.setStorage();
   }
@@ -88,18 +86,16 @@ export class TodoPage {
 
   /**
    * 변경 가능으로 수정
-   * @param {Todo} todo
    */
-  onEditable(todo) {
+  onEditable(todo: Todo) {
     todo.editable = true;
     this.setStorage();
   }
 
   /**
    * 변경 불가능으로 수정
-   * @param {Todo} todo
    */
-  OffEditable(todo) {
+  OffEditable(todo: Todo) {
     todo.editable = false;
     this.setStorage();
   }

@@ -87,11 +87,10 @@ export class DayPage {
     for (let j = 0; j < firstDay; j++) {
       const num = preDaysInMonth - j;
       const holidays = this.makeHolidays(this.currentDate.clone().add(-1, 'months'), num).concat();
-      const schedule = this.makeSchedule(this.currentDate.clone().add(-1, 'months'), num);
       this.pushMonth(
         month,
         this.currentDate.clone().add(-1, 'months').set('date', num),
-        holidays.concat(schedule),
+        holidays,
         true,
         false,
         false,
@@ -109,12 +108,11 @@ export class DayPage {
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
         (this.today.format('DD') == this.addZero(i));
       const holidays = this.makeHolidays(this.currentDate, i);
-      const schedule = this.makeSchedule(this.currentDate, i);
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
       this.pushMonth(
         month,
         this.currentDate.clone().set('date', i),
-        holidays.concat(schedule),
+        holidays,
         false,
         isToday,
         isWeekend,
@@ -129,11 +127,10 @@ export class DayPage {
     const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
       const holidays = this.makeHolidays(this.currentDate.clone().add(1, 'months'), z);
-      const schedule = this.makeSchedule(this.currentDate.clone().add(1, 'months'), z);
       this.pushMonth(
         month,
         this.currentDate.clone().add(1, 'months').set('date', z),
-        holidays.concat(schedule),
+        holidays,
         true,
         false,
         false,
@@ -141,7 +138,6 @@ export class DayPage {
     }
   }
 
-  // holiday and schdule를 어떻게 나눠야되는지 모르겠다.
   private makeHolidays(month, num) {
     const holidays = this.holidays.filter(h => {
       const zeroMonth = this.addZero(h.date.getMonth() + 1);
@@ -150,17 +146,6 @@ export class DayPage {
         `${h.date.getFullYear()}-${zeroMonth}-${h.date.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
     });
     return holidays.sort((a, b) => a.date.getTime() - b.date.getTime());
-  }
-
-  private makeSchedule(month, num) {
-    // 스케줄 입력으로 인해 day가 문자열로 들어감
-    const schedule = this.schedule.filter(h => {
-      const zeroMonth = this.addZero(h.date.getMonth() + 1);
-      return h.isRepeat ?
-        `${zeroMonth}-${h.date.getDate()}` === `${month.format('MM-')}${num}` :
-        `${h.date.getFullYear()}-${zeroMonth}-${h.date.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
-    });
-    return schedule.sort((a, b) => a.date.getTime() - b.date.getTime());
   }
 
   private changeMonth() {
