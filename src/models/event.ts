@@ -2,7 +2,7 @@ enum ColorStatus {
   DEFALTE = '#eee',
 }
 
-export class Schedule {
+export class Event {
 
   /**
    * 색

@@ -1,8 +1,6 @@
 export class LocalStorageService {
 
-  private LOCAL_HOLIDAYS = 'LOCAL_HOLIDAYS';
-
-  private LOCAL_SCHEDULE = 'LOCAL_SCHEDULE';
+  private LOCAL_EVENTS = 'LOCAL_EVENTS';
 
   setTodoList(list: string, storage: string) {
     localStorage.setItem(storage, list);
@@ -12,19 +10,11 @@ export class LocalStorageService {
     return localStorage.getItem(storage);
   }
 
-  setHolidays(holidays: string) {
-    localStorage.setItem(this.LOCAL_HOLIDAYS, holidays);
+  setEvents(events: string) {
+    localStorage.setItem(this.LOCAL_EVENTS, events);
   }
 
-  getHolidays() {
-    return localStorage.getItem(this.LOCAL_HOLIDAYS);
-  }
-
-  setSchedule(schedule: string) {
-    localStorage.setItem(this.LOCAL_SCHEDULE, schedule);
-  }
-
-  getSchedule() {
-    return localStorage.getItem(this.LOCAL_SCHEDULE);
+  getEvents() {
+    return localStorage.getItem(this.LOCAL_EVENTS);
   }
 }

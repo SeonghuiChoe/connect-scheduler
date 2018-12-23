@@ -1,11 +1,11 @@
 import moment, { Moment } from 'moment';
 import { Component } from '@angular/core';
-import { HolidaysService } from '../../services/holidays.service';
+import { EventService } from '../../services/events.service';
 import { MatDialog } from '@angular/material';
 import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Day } from '../../models/day';
-import { Schedule } from '../../models/schedule';
+import { Event } from '../../models/event';
 
 @Component({
   selector: 'day-page',
@@ -43,12 +43,10 @@ export class DayPage {
   selectDay: Object = {};
 
   // 음력, 색표시, 시간설정
-  holidays: Array<Schedule> = [];
-
-  schedule: Array<Schedule> = [];
+  events: Array<Event> = [];
 
   constructor(
-    private holidaysService: HolidaysService,
+    private eventService: EventService,
     private dialog: MatDialog,
     private localStorageService: LocalStorageService) {
     this.getHolidays();
@@ -139,7 +137,7 @@ export class DayPage {
   }
 
   private makeHolidays(month, num) {
-    const holidays = this.holidays.filter(h => {
+    const holidays = this.events.filter(h => {
       const zeroMonth = this.addZero(h.date.getMonth() + 1);
       return h.isRepeat ?
         `${zeroMonth}-${h.date.getDate()}` === `${month.format('MM-')}${num}` :
@@ -157,8 +155,8 @@ export class DayPage {
     this.days = totalMonth;
   }
 
-  private setSchedule() {
-    this.localStorageService.setSchedule(JSON.stringify(this.schedule));
+  private setEvents() {
+    this.localStorageService.setEvents(JSON.stringify(this.events));
   }
 
   /**
@@ -182,27 +180,27 @@ export class DayPage {
       // 입력데이터와 변경된 day정보를 갖고오기 때문에 배열
       if (!data || !Array.isArray(data)) return;
       // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
-      const filtered = this.schedule.
+      const filtered = this.events.
         filter(item => moment(item.date).format('YYYY-MM-DD') !== data[0].date);
       // 스케줄에 현재 스케줄을 제외한 정보에 변경된 정보를 추가
-      this.schedule = filtered.concat(data[0].holidays);
+      this.events = filtered.concat(data[0].holidays);
       // 스케줄 로컬에 저장
-      this.setSchedule();
+      this.setEvents();
       // 입력 데이터가 없다면 아무 변화 없음
       if (!data[1]) return;
-      const newSchedule: Schedule = new Schedule(
+      const newEvents: Event = new Event(
         day.date,
         data[1],
-        Schedule.COLORS.DEFALTE,
+        Event.COLORS.DEFALTE,
         false,
         day.detail
       );
       // 현제 날짜에 schedule 추가
-      day.holidays.push(newSchedule);
+      day.holidays.push(newEvents);
       // 스케줄만 모와놓은 자료에도 추가
-      this.schedule.push(newSchedule);
+      this.events.push(newEvents);
       // 스케줄 로컬에 저장
-      this.setSchedule();
+      this.setEvents();
     });
   }
 
@@ -210,26 +208,26 @@ export class DayPage {
     // 공휴일을 가져온다.
     // 공휴일 정보가 있다면 가져오지 않는다.
     // 공휴일 정보를 가져온지 한달이 지났다면 다시 한번 가져온다.
-    this.holidays = this.holidaysService.
-      getHolidays().
-      map((holiday: Object) =>
-        new Schedule(
-          new Date(holiday['date']),
-          holiday['note'],
-          holiday['color'],
-          holiday['isRepeat'] == true,
-          holiday['detail']
+    this.events = this.eventService.
+      getEvents().
+      map((event: Object) =>
+        new Event(
+          new Date(event['date']),
+          event['note'],
+          event['color'],
+          event['isRepeat'] == true,
+          event['detail']
         ));
 
     // 스케줄을 가져온다.
-    if (this.localStorageService.getSchedule()) {
-      this.schedule = JSON.parse(this.localStorageService.getSchedule()).
+    if (this.localStorageService.getEvents()) {
+      this.events = JSON.parse(this.localStorageService.getEvents()).
         map((holiday: Object) => {
           holiday['date'] = new Date(holiday['date']);
           holiday['isRepeat'] = holiday['isRepeat'] == true;
           return holiday;
         });
-      this.setSchedule();
+      this.setEvents();
     }
 
     this.changeMonth();
