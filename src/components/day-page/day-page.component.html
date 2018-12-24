@@ -32,9 +32,9 @@
       <div class="day">
         <div class="day-num">{{day.num}}</div>
       </div>
-      <div class="holiday-box">
+      <div class="event-box">
         <div *ngFor="let hol of day.events; let i=index">
-          <div class="holiday" [ngStyle]="{'background-color': hol.color}" *ngIf="i<2">{{hol.note}}</div>
+          <div class="event" [ngStyle]="{'background-color': hol.color}" *ngIf="i<2">{{hol.note}}</div>
           <div class="more" *ngIf="i==2">+{{day.events.length - 2}}</div>
         </div>
       </div>
@@ -46,7 +46,7 @@
       </div>
       <div
         *ngFor="let hol of selectDay.events"
-        class="body-holiday"
+        class="body-event"
         [ngStyle]="{'background-color': hol.color}">{{hol.note}}
           <span *ngIf="hol.detail"> - {{hol.detail}}</span>
       </div>
