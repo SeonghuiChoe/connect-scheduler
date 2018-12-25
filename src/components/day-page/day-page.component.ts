@@ -15,6 +15,9 @@ import { Event } from '../../models/event';
 
 export class DayPage {
 
+  /**
+   * 한 화면에 보여지는 날의 수
+   */
   private TOTAL_DATYS: number = 42;
 
   /**
@@ -62,17 +65,17 @@ export class DayPage {
 
   /**
    * 보여질 날들의 목록에 날을 추가
-   * @param {Array<Day>} month 추가할 날들의 배열
-   * @param {Moment} date 날짜
-   * @param {Array<Object>} events 이벤트 목록
-   * @param {boolean} isNotCurrentMonthDays 지금달이 아닌지 여부
-   * @param {boolean} isToday 오늘 여부
-   * @param {boolean} isWeekend 주말 여부
-   * @param {boolean} isFront 앞에 추가할건지 여부
    */
-  private pushMonth(month: Array<Day>, date: Moment, events: Array<object>, isNotCurrentMonthDays: boolean, isToday: boolean, isWeekend: boolean, isFront: boolean) {
-    const makeDateType: Date = new Date(date.toString());
-    const day: Day = new Day(makeDateType, events, isNotCurrentMonthDays, isToday, isWeekend, false);
+  private pushMonth = (
+    month: Array<Day>, // 추가할 날들의 배열
+    date: Date, // 날짜
+    events: Array<object>, // 이벤트 목록
+    isNotCurrentMonthDays: boolean, // 지금달이 아닌지 여부
+    isToday: boolean, // 오늘 여부
+    isWeekend: boolean, // 주말 여부
+    isFront: boolean // 앞에 추가할건지 여부
+  ) => {
+    const day: Day = new Day(date, events, isNotCurrentMonthDays, isToday, isWeekend, false);
     isFront ? month.push(day) : month.unshift(day);
   }
 
@@ -85,9 +88,10 @@ export class DayPage {
     for (let j = 0; j < firstDay; j++) {
       const num = preDaysInMonth - j;
       const holidays = this.makeHolidays(this.currentDate.clone().add(-1, 'months'), num).concat();
+      const date = new Date(this.currentDate.clone().add(-1, 'months').set('date', num).toString());
       this.pushMonth(
         month,
-        this.currentDate.clone().add(-1, 'months').set('date', num),
+        date,
         holidays,
         true,
         false,
@@ -107,9 +111,10 @@ export class DayPage {
         (this.today.format('DD') == this.addZero(i));
       const holidays = this.makeHolidays(this.currentDate, i);
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
+      const date = new Date(this.currentDate.clone().set('date', i).toString());
       this.pushMonth(
         month,
-        this.currentDate.clone().set('date', i),
+        date,
         holidays,
         false,
         isToday,
@@ -125,9 +130,10 @@ export class DayPage {
     const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
       const holidays = this.makeHolidays(this.currentDate.clone().add(1, 'months'), z);
+      const date = new Date(this.currentDate.clone().add(1, 'months').set('date', z).toString());
       this.pushMonth(
         month,
-        this.currentDate.clone().add(1, 'months').set('date', z),
+        date,
         holidays,
         true,
         false,
@@ -136,7 +142,10 @@ export class DayPage {
     }
   }
 
-  private makeHolidays(month, num) {
+  /**
+   * 날에 맞는 휴일 가져오기
+   */
+  private makeHolidays(month: Moment, num: Number) {
     const holidays = this.events.filter(h => {
       const zeroMonth = this.addZero(h.date.getMonth() + 1);
       return h.isRepeat ?
