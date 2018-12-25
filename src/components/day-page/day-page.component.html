@@ -41,8 +41,8 @@
     </div>
     <div class="day-page-body">
       <div class="body-num">
-        <span>{{selectDay.dayNum}} {{selectDay.dDay}}</span>
-        <span>{{selectDay.yearMonth}}</span>
+        <span>{{selectDay.num}} {{selectDay.dDay}}</span>
+        <span *ngIf="selectDay.num">{{this.currentDate.format('MMMM YYYY')}}</span>
       </div>
       <div
         *ngFor="let hol of selectDay.events"

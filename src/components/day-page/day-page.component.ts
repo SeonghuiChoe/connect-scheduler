@@ -155,6 +155,9 @@ export class DayPage {
     return holidays.sort((a, b) => a.date.getTime() - b.date.getTime());
   }
 
+  /**
+   * 달이 변경될때
+   */
   private changeMonth() {
     this.selectDay = {};
     const totalMonth = [];
@@ -164,6 +167,9 @@ export class DayPage {
     this.days = totalMonth;
   }
 
+  /**
+   * 저장소에 저장하기
+   */
   private setEvents() {
     this.localStorageService.setEvents(JSON.stringify(this.events));
   }
@@ -261,17 +267,26 @@ export class DayPage {
    * 선택된 날의 대한 정보 하단에 표시
    */
   detailDay(day: Day) {
+    // 선택되어있던 날을 비 활성화
     this.days.forEach(day => day.isSelected = false);
+    // 선택한날에 활성화
     day.isSelected = true;
-
     this.selectDay = day;
-    this.selectDay['dayNum'] = day.num;
-    this.selectDay['yearMonth'] = this.currentDate.format('MMMM YYYY');
 
-    const diff = moment(day.date).
+    /**
+     * 선택한 날짜와 오늘과의 차이
+     */
+    const diff: Number = moment(day.date).
       startOf('day').
       diff(this.today.startOf('day'), 'days');
 
-    this.selectDay['dDay'] = diff === 0 ? 'D-day' : diff < 0 ? `(D${diff})` : `(D+${diff})`;
+    /**
+     * 오늘이라면 D-day로 표현하고
+     * 음수라면 음수를 그대로 표현하고
+     * 양수라면 +를 포함해서 표현한다.
+     */
+    this.selectDay['dDay'] = diff === 0
+      ? 'D-day' : diff < 0
+      ? `(D${diff})` : `(D+${diff})`;
   }
 }
