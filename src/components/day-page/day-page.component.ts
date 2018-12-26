@@ -145,7 +145,7 @@ export class DayPage {
   /**
    * 날에 맞는 휴일 가져오기
    */
-  private makeHolidays(month: Moment, num: Number) {
+  private makeHolidays(month: Moment, num: number) {
     const holidays = this.events.filter(h => {
       const zeroMonth = this.addZero(h.date.getMonth() + 1);
       return h.isRepeat ?
@@ -248,18 +248,16 @@ export class DayPage {
     this.changeMonth();
   }
 
-  goPreMonth() {
-    this.currentDate.add(-1, 'months');
-    this.changeMonth();
-  }
-
-  goNextMonth() {
-    this.currentDate.add(1, 'months');
-    this.changeMonth();
-  }
-
-  goCurrentMonth() {
-    this.currentDate = moment(new Date());
+  /**
+   * 해당 달로 이동
+   * 해당 달이 없을 경우 현재달로 변경
+   */
+  geMonth(month: number) {
+    if (!month) {
+      this.currentDate = moment(new Date());
+    } else {
+      this.currentDate.add(month, 'months');
+    }
     this.changeMonth();
   }
 
@@ -276,7 +274,7 @@ export class DayPage {
     /**
      * 선택한 날짜와 오늘과의 차이
      */
-    const diff: Number = moment(day.date).
+    const diff: number = moment(day.date).
       startOf('day').
       diff(this.today.startOf('day'), 'days');
 

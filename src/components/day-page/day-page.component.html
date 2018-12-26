@@ -1,14 +1,14 @@
 <div class="day-page-wrap">
   <div class="day-page-header">
-    <div class="day-header-pre" (click)="goPreMonth()">
+    <div class="day-header-pre" (click)="geMonth(-1)">
       <i class="fas fa-angle-left"></i>
     </div>
     <div
       class="day-header-curr"
-      (click)="goCurrentMonth()">
+      (click)="geMonth()">
       {{currentDate.format('MMMM YYYY')}}
     </div>
-    <div class="day-header-next" (click)="goNextMonth()">
+    <div class="day-header-next" (click)="geMonth(1)">
       <i class="fas fa-angle-right"></i>
     </div>
   </div>
