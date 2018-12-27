@@ -1,34 +1,17 @@
 <mat-tab-group
   (selectedTabChange)="tabChanged($event)"
   headerPosition="below"
-  [selectedIndex]="1">
-  <mat-tab label="todayTodo">
-    <ng-template mat-tab-label>
-        <i class="far fa-calendar-check"></i>
-      </ng-template>
-    <todo-page storage="todayTodoList"></todo-page>
-  </mat-tab>
+  [selectedIndex]="0">
   <mat-tab label="calendar">
     <ng-template mat-tab-label>
       <i class="far fa-calendar-alt"></i>
     </ng-template>
     <day-page></day-page>
   </mat-tab>
-  <mat-tab label="bucketlist">
+  <mat-tab label="todayTodo">
     <ng-template mat-tab-label>
-        <i class="fas fa-globe-americas"></i>
+        <i class="far fa-calendar-check"></i>
       </ng-template>
-    <todo-page
-      [showCheckbox]="false"
-      storage="bucketList"></todo-page>
-  </mat-tab>
-  <mat-tab label="commit">
-    <ng-template mat-tab-label>
-        <i class="fab fa-git"></i>
-      </ng-template>
-    <todo-page
-      [showStar]="false"
-      [showCheckbox]="false"
-      storage="commitList"></todo-page>
+    <todo-page storage="todayTodoList"></todo-page>
   </mat-tab>
 </mat-tab-group>
