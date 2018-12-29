@@ -10,34 +10,34 @@ export class Day {
   /**
    * 공휴일 및 스케줄
    */
-  private events: Array<Object> = [];
+  private _events: Array<Object> = [];
 
   /**
    * 현재 보고있는 달이 아닌지
    */
-  private isNotCurrentMonthDays: boolean = false;
+  private _isNotCurrentMonthDays: boolean = false;
 
   /**
    * 오늘 여부
    */
-  private isToday: boolean = false;
+  private _isToday: boolean = false;
 
   /**
    * 주말 여부
    */
-  private isWeeked: boolean = false;
+  private _isWeekend: boolean = false;
 
   /**
    * 선택 여부
    */
   private _isSelected: boolean = false;
 
-  constructor(date, events, isNotCurrentMonthDays, isToday, isWeeked, isSelected) {
+  constructor(date, events, isNotCurrentMonthDays, isToday, isWeekend, isSelected) {
     this._date = date;
-    this.events = events;
-    this.isNotCurrentMonthDays = isNotCurrentMonthDays;
-    this.isToday = isToday;
-    this.isWeeked = isWeeked;
+    this._events = events;
+    this._isNotCurrentMonthDays = isNotCurrentMonthDays;
+    this._isToday = isToday;
+    this._isWeekend = isWeekend;
     this._num = this._date.getDate();
     this._isSelected = isSelected;
   }
@@ -56,5 +56,37 @@ export class Day {
 
   set isSelected(bool) {
     this._isSelected = bool;
+  }
+
+  get events() {
+    return this._events;
+  }
+
+  set events(events) {
+    this._events = events;
+  }
+
+  get isNotCurrentMonthDays() {
+    return this._isNotCurrentMonthDays;
+  }
+
+  set isNotCurrentMonthDays(bool) {
+    this._isNotCurrentMonthDays = bool;
+  }
+
+  get isToday() {
+    return this._isToday;
+  }
+
+  set isToday(bool) {
+    this._isToday = bool;
+  }
+
+  get isWeekend() {
+    return this._isWeekend;
+  }
+
+  set isWeekend(bool) {
+    this._isWeekend = bool;
   }
 }

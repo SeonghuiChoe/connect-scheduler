@@ -175,16 +175,15 @@ export class DayPage {
   }
 
   /**
-   * 더블클릭시 입력하도록
-   * @param day
+   * 이벤트 등록
    */
-  private insertSchedule(day) {
+  private insertEvent(day: Day) {
     // holidays
     const dialogRef = this.dialog.open(DayInsertDialog, {
       width: '250px',
       data: {
-        date: day.date.format('YYYY-MM-DD'),
-        holidays: day.holidays,
+        date: moment(day.date).format('YYYY-MM-DD'),
+        holidays: day.events,
         isNotCurrentMonthDays: day.isNotCurrentMonthDays,
         isToday: day.isToday,
         isWeekend: day.isWeekend,
@@ -195,27 +194,27 @@ export class DayPage {
       // 입력데이터와 변경된 day정보를 갖고오기 때문에 배열
       if (!data || !Array.isArray(data)) return;
       // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
-      const filtered = this.events.
-        filter(item => moment(item.date).format('YYYY-MM-DD') !== data[0].date);
-      // 스케줄에 현재 스케줄을 제외한 정보에 변경된 정보를 추가
-      this.events = filtered.concat(data[0].holidays);
-      // 스케줄 로컬에 저장
-      this.setEvents();
-      // 입력 데이터가 없다면 아무 변화 없음
-      if (!data[1]) return;
-      const newEvents: Event = new Event(
-        day.date,
-        data[1],
-        Event.COLORS.DEFALTE,
-        false,
-        day.detail
-      );
-      // 현제 날짜에 schedule 추가
-      day.holidays.push(newEvents);
-      // 스케줄만 모와놓은 자료에도 추가
-      this.events.push(newEvents);
-      // 스케줄 로컬에 저장
-      this.setEvents();
+      // const filtered = this.events.
+      //   filter(item => moment(item.date).format('YYYY-MM-DD') !== data[0].date);
+      // // 스케줄에 현재 스케줄을 제외한 정보에 변경된 정보를 추가
+      // this.events = filtered.concat(data[0].holidays);
+      // // 스케줄 로컬에 저장
+      // this.setEvents();
+      // // 입력 데이터가 없다면 아무 변화 없음
+      // if (!data[1]) return;
+      // const newEvents: Event = new Event(
+      //   day.date,
+      //   data[1],
+      //   Event.COLORS.DEFALTE,
+      //   false,
+      //   day.detail
+      // );
+      // // 현제 날짜에 schedule 추가
+      // day.holidays.push(newEvents);
+      // // 스케줄만 모와놓은 자료에도 추가
+      // this.events.push(newEvents);
+      // // 스케줄 로컬에 저장
+      // this.setEvents();
     });
   }
 
@@ -234,16 +233,16 @@ export class DayPage {
           event['detail']
         ));
 
-    // 스케줄을 가져온다.
-    if (this.localStorageService.getEvents()) {
-      this.events = JSON.parse(this.localStorageService.getEvents()).
-        map((holiday: Object) => {
-          holiday['date'] = new Date(holiday['date']);
-          holiday['isRepeat'] = holiday['isRepeat'] == true;
-          return holiday;
-        });
-      this.setEvents();
-    }
+    // // 스케줄을 가져온다.
+    // if (this.localStorageService.getEvents()) {
+    //   this.events = JSON.parse(this.localStorageService.getEvents()).
+    //     map((holiday: Object) => {
+    //       holiday['date'] = new Date(holiday['date']);
+    //       holiday['isRepeat'] = holiday['isRepeat'] == true;
+    //       return holiday;
+    //     });
+    //   this.setEvents();
+    // }
 
     this.changeMonth();
   }
@@ -286,5 +285,18 @@ export class DayPage {
     this.selectDay['dDay'] = diff === 0
       ? 'D-day' : diff < 0
       ? `(D${diff})` : `(D+${diff})`;
+  }
+
+  /**
+   * 선택된 상태라면 이벤트 등록 아니라면 상세정보 표시
+   */
+  clickDay(day: Day) {
+    // 선택된 상태에서 클릭시 이벤트 등록
+    if (day.isSelected) {
+      this.insertEvent(day);
+      return;
+    }
+    // 선택되지 않았다면 선택 표시
+    this.detailDay(day);
   }
 }
