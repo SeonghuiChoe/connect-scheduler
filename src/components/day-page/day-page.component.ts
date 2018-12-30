@@ -1,11 +1,12 @@
 import moment, { Moment } from 'moment';
 import { Component } from '@angular/core';
-import { EventService } from '../../services/events.service';
+import { HolidayService } from '../../services/holiday.service';
 import { MatDialog } from '@angular/material';
 import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Day } from '../../models/day';
 import { Event } from '../../models/event';
+import { Holiday } from '../../models/holiday';
 
 @Component({
   selector: 'day-page',
@@ -45,15 +46,47 @@ export class DayPage {
 
   selectDay: Object = {};
 
-  // 음력, 색표시, 시간설정
+  // 사용자가 입력한 이벤트
   events: Array<Event> = [];
 
+  // 공휴일
+  holidays: Array<Holiday> = [];
+
   constructor(
-    private eventService: EventService,
+    private holidayService: HolidayService,
     private dialog: MatDialog,
     private localStorageService: LocalStorageService) {
+    // 공휴일 가져오기
     this.getHolidays();
+  }
+
+  private getHolidays() {
+    // 공휴일을 가져온다.
+    this.holidays = this.holidayService.
+      getHolidays().
+      map((event: Object) =>
+        new Holiday(
+          new Date(event['date']),
+          event['note'],
+          event['color'],
+          event['isRepeat'] == true,
+          event['detail']
+        ));
     this.changeMonth();
+  }
+
+  /**
+   * 달이 변경될때
+   */
+  private changeMonth() {
+    // 달이 변경될때 선택된 날 초기화
+    this.selectDay = {};
+
+    const days = [];
+    this.insertPreMonth(days);
+    this.insertCurrentMonth(days);
+    this.insertNextMonth(days);
+    this.days = days;
   }
 
   /**
@@ -69,13 +102,14 @@ export class DayPage {
   private pushMonth = (
     month: Array<Day>, // 추가할 날들의 배열
     date: Date, // 날짜
-    events: Array<object>, // 이벤트 목록
+    holidays: Array<Holiday>, // 공휴일 목록
+    events: Array<Event>, // 이벤트 목록
     isNotCurrentMonthDays: boolean, // 지금달이 아닌지 여부
     isToday: boolean, // 오늘 여부
     isWeekend: boolean, // 주말 여부
     isFront: boolean // 앞에 추가할건지 여부
   ) => {
-    const day: Day = new Day(date, events, isNotCurrentMonthDays, isToday, isWeekend, false);
+    const day: Day = new Day(date, holidays, events, isNotCurrentMonthDays, isToday, isWeekend, false);
     isFront ? month.push(day) : month.unshift(day);
   }
 
@@ -88,11 +122,13 @@ export class DayPage {
     for (let j = 0; j < firstDay; j++) {
       const num = preDaysInMonth - j;
       const holidays = this.makeHolidays(this.currentDate.clone().add(-1, 'months'), num).concat();
+      console.log(holidays);
       const date = new Date(this.currentDate.clone().add(-1, 'months').set('date', num).toString());
       this.pushMonth(
         month,
         date,
         holidays,
+        [],
         true,
         false,
         false,
@@ -116,6 +152,7 @@ export class DayPage {
         month,
         date,
         holidays,
+        [],
         false,
         isToday,
         isWeekend,
@@ -135,6 +172,7 @@ export class DayPage {
         month,
         date,
         holidays,
+        [],
         true,
         false,
         false,
@@ -146,25 +184,13 @@ export class DayPage {
    * 날에 맞는 휴일 가져오기
    */
   private makeHolidays(month: Moment, num: number) {
-    const holidays = this.events.filter(h => {
+    const holidays = this.holidays.filter(h => {
       const zeroMonth = this.addZero(h.date.getMonth() + 1);
       return h.isRepeat ?
         `${zeroMonth}-${h.date.getDate()}` === `${month.format('MM-')}${num}` :
         `${h.date.getFullYear()}-${zeroMonth}-${h.date.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
     });
     return holidays.sort((a, b) => a.date.getTime() - b.date.getTime());
-  }
-
-  /**
-   * 달이 변경될때
-   */
-  private changeMonth() {
-    this.selectDay = {};
-    const totalMonth = [];
-    this.insertPreMonth(totalMonth);
-    this.insertCurrentMonth(totalMonth);
-    this.insertNextMonth(totalMonth);
-    this.days = totalMonth;
   }
 
   /**
@@ -183,7 +209,7 @@ export class DayPage {
       width: '250px',
       data: {
         date: moment(day.date).format('YYYY-MM-DD'),
-        holidays: day.events,
+        events: day.events,
         isNotCurrentMonthDays: day.isNotCurrentMonthDays,
         isToday: day.isToday,
         isWeekend: day.isWeekend,
@@ -193,58 +219,31 @@ export class DayPage {
     dialogRef.afterClosed().subscribe(data => {
       // 입력데이터와 변경된 day정보를 갖고오기 때문에 배열
       if (!data || !Array.isArray(data)) return;
-      // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
+      // 입력 데이터가 없다면 아무 변화 없음
+      if (!data[1]) return;
+
+      // // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
       // const filtered = this.events.
       //   filter(item => moment(item.date).format('YYYY-MM-DD') !== data[0].date);
       // // 스케줄에 현재 스케줄을 제외한 정보에 변경된 정보를 추가
-      // this.events = filtered.concat(data[0].holidays);
+      // this.events = filtered.concat(data[0].events);
       // // 스케줄 로컬에 저장
       // this.setEvents();
-      // // 입력 데이터가 없다면 아무 변화 없음
-      // if (!data[1]) return;
+
       // const newEvents: Event = new Event(
       //   day.date,
-      //   data[1],
+      //   data[1].note,
       //   Event.COLORS.DEFALTE,
       //   false,
-      //   day.detail
+      //   data[1].detail,
       // );
       // // 현제 날짜에 schedule 추가
-      // day.holidays.push(newEvents);
+      // day.events.push(newEvents);
       // // 스케줄만 모와놓은 자료에도 추가
       // this.events.push(newEvents);
       // // 스케줄 로컬에 저장
       // this.setEvents();
     });
-  }
-
-  getHolidays() {
-    // 공휴일을 가져온다.
-    // 공휴일 정보가 있다면 가져오지 않는다.
-    // 공휴일 정보를 가져온지 한달이 지났다면 다시 한번 가져온다.
-    this.events = this.eventService.
-      getEvents().
-      map((event: Object) =>
-        new Event(
-          new Date(event['date']),
-          event['note'],
-          event['color'],
-          event['isRepeat'] == true,
-          event['detail']
-        ));
-
-    // // 스케줄을 가져온다.
-    // if (this.localStorageService.getEvents()) {
-    //   this.events = JSON.parse(this.localStorageService.getEvents()).
-    //     map((holiday: Object) => {
-    //       holiday['date'] = new Date(holiday['date']);
-    //       holiday['isRepeat'] = holiday['isRepeat'] == true;
-    //       return holiday;
-    //     });
-    //   this.setEvents();
-    // }
-
-    this.changeMonth();
   }
 
   /**

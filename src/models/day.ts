@@ -1,61 +1,39 @@
+import { Holiday } from './holiday';
+import { Event } from './event';
+
 export class Day {
 
-  private _num: number = 0;
+  // 날짜의 일
+  private _num: number = 1;
 
-  /**
-   * 날짜
-   */
-  private _date: Date = new Date();
-
-  /**
-   * 공휴일 및 스케줄
-   */
-  private _events: Array<Object> = [];
-
-  /**
-   * 현재 보고있는 달이 아닌지
-   */
-  private _isNotCurrentMonthDays: boolean = false;
-
-  /**
-   * 오늘 여부
-   */
-  private _isToday: boolean = false;
-
-  /**
-   * 주말 여부
-   */
-  private _isWeekend: boolean = false;
-
-  /**
-   * 선택 여부
-   */
-  private _isSelected: boolean = false;
-
-  constructor(date, events, isNotCurrentMonthDays, isToday, isWeekend, isSelected) {
-    this._date = date;
-    this._events = events;
-    this._isNotCurrentMonthDays = isNotCurrentMonthDays;
-    this._isToday = isToday;
-    this._isWeekend = isWeekend;
+  constructor(
+    // 날짜
+    private _date: Date = new Date(),
+    // 공휴일
+    private _holidays: Array<Holiday> = [],
+    // 이벤트
+    private _events: Array<Event> = [],
+    // 현재 선택된 달이 아닌지
+    private _isNotCurrentMonthDays: boolean = false,
+    // 오늘 여부
+    private _isToday: boolean = false,
+    // 주말 여부
+    private _isWeekend: boolean = false,
+    // 선택 여부
+    private _isSelected: boolean = false) {
     this._num = this._date.getDate();
-    this._isSelected = isSelected;
   }
 
   get date() {
     return this._date;
   }
 
-  get num() {
-    return this._num;
+  get holidays() {
+    return this._holidays;
   }
 
-  get isSelected() {
-    return this._isSelected;
-  }
-
-  set isSelected(bool) {
-    this._isSelected = bool;
+  set holidays(holidays) {
+    this._holidays = holidays;
   }
 
   get events() {
@@ -88,5 +66,17 @@ export class Day {
 
   set isWeekend(bool) {
     this._isWeekend = bool;
+  }
+
+  get isSelected() {
+    return this._isSelected;
+  }
+
+  set isSelected(bool) {
+    this._isSelected = bool;
+  }
+
+  get num() {
+    return this._num;
   }
 }

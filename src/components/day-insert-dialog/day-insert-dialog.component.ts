@@ -3,8 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface DayData {
   date: string;
-  holiday: string;
-  holidays: Array<Object>;
+  events: Array<Object>;
   isNotCurrentMonthDays: boolean;
   isToday: boolean;
   isWeekend: boolean;
@@ -17,19 +16,24 @@ export interface DayData {
 })
 export class DayInsertDialog {
 
+  private event = {
+    note: 'Event',
+    detail: '',
+  }
+
   constructor(
     public dialogRef: MatDialogRef<DayInsertDialog>,
     @Inject(MAT_DIALOG_DATA) public day: DayData) {}
 
-  ok(schedule): void {
-    this.dialogRef.close([this.day, schedule]);
+  ok(event): void {
+    this.dialogRef.close([this.day, event]);
   }
 
-  cancel(schedule): void {
-    this.dialogRef.close([this.day, schedule]);
+  cancel(event): void {
+    this.dialogRef.close([this.day, event]);
   }
 
-  deleteHoliday(i) {
-    this.day.holidays.splice(i, 1);
+  deleteEvent(i) {
+    this.day.events.splice(i, 1);
   }
 }
