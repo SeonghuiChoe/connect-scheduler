@@ -5,16 +5,15 @@
     <input
       matInput
       [(ngModel)]="event.note"
-      (keyup.enter)="ok(event)"
-      placeholder="Title">
+      cdkFocusInitial
+      >
   </mat-form-field>
   <mat-form-field>
     <input
       matInput
       [(ngModel)]="event.detail"
       (keyup.enter)="ok(event)"
-      placeholder="Detail"
-      cdkFocusInitial>
+      placeholder="Detail">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

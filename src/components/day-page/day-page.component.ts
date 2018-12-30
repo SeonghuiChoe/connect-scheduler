@@ -122,7 +122,6 @@ export class DayPage {
     for (let j = 0; j < firstDay; j++) {
       const num = preDaysInMonth - j;
       const holidays = this.makeHolidays(this.currentDate.clone().add(-1, 'months'), num).concat();
-      console.log(holidays);
       const date = new Date(this.currentDate.clone().add(-1, 'months').set('date', num).toString());
       this.pushMonth(
         month,

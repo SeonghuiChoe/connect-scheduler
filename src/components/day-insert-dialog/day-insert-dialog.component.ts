@@ -17,7 +17,7 @@ export interface DayData {
 export class DayInsertDialog {
 
   private event = {
-    note: 'Event',
+    note: '',
     detail: '',
   }
 
