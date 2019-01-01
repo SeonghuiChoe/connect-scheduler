@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material';
 import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Day } from '../../models/day';
-import { Event } from '../../models/event';
+import { Schedule } from '../../models/schedule';
 import { Holiday } from '../../models/holiday';
 
 @Component({
@@ -47,7 +47,7 @@ export class DayPage {
   selectDay: Object = {};
 
   // 사용자가 입력한 이벤트
-  events: Array<Event> = [];
+  schedules: Array<Schedule> = [];
 
   // 공휴일
   holidays: Array<Holiday> = [];
@@ -103,13 +103,13 @@ export class DayPage {
     month: Array<Day>, // 추가할 날들의 배열
     date: Date, // 날짜
     holidays: Array<Holiday>, // 공휴일 목록
-    events: Array<Event>, // 이벤트 목록
+    schedules: Array<Schedule>, // 이벤트 목록
     isNotCurrentMonthDays: boolean, // 지금달이 아닌지 여부
     isToday: boolean, // 오늘 여부
     isWeekend: boolean, // 주말 여부
     isFront: boolean // 앞에 추가할건지 여부
   ) => {
-    const day: Day = new Day(date, holidays, events, isNotCurrentMonthDays, isToday, isWeekend, false);
+    const day: Day = new Day(date, holidays, schedules, isNotCurrentMonthDays, isToday, isWeekend, false);
     isFront ? month.push(day) : month.unshift(day);
   }
 
@@ -196,19 +196,20 @@ export class DayPage {
    * 저장소에 저장하기
    */
   private setEvents() {
-    this.localStorageService.setEvents(JSON.stringify(this.events));
+    // this.localStorageService.setEvents(JSON.stringify(this.events));
   }
 
   /**
-   * 이벤트 등록
+   * 스케줄 등록
    */
-  private insertEvent(day: Day) {
+  private insertSchedule(day: Day) {
     // holidays
     const dialogRef = this.dialog.open(DayInsertDialog, {
       width: '250px',
       data: {
         date: moment(day.date).format('YYYY-MM-DD'),
-        events: day.holidays,
+        holidays: day.holidays,
+        schedules: day.schedules,
         isNotCurrentMonthDays: day.isNotCurrentMonthDays,
         isToday: day.isToday,
         isWeekend: day.isWeekend,
@@ -286,12 +287,12 @@ export class DayPage {
   }
 
   /**
-   * 선택된 상태라면 이벤트 등록 아니라면 상세정보 표시
+   * 선택된 상태라면 스케줄 등록 아니라면 상세정보 표시
    */
   clickDay(day: Day) {
-    // 선택된 상태에서 클릭시 이벤트 등록
+    // 선택된 상태에서 클릭시 스케줄 등록
     if (day.isSelected) {
-      this.insertEvent(day);
+      this.insertSchedule(day);
       return;
     }
     // 선택되지 않았다면 선택 표시

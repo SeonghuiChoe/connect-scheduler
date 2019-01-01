@@ -1,5 +1,5 @@
 import { Holiday } from './holiday';
-import { Event } from './event';
+import { Schedule } from './schedule';
 
 export class Day {
 
@@ -11,8 +11,8 @@ export class Day {
     private _date: Date = new Date(),
     // 공휴일
     private _holidays: Array<Holiday> = [],
-    // 이벤트
-    private _events: Array<Event> = [],
+    // 스케줄
+    private _schedules: Array<Schedule> = [],
     // 현재 선택된 달이 아닌지
     private _isNotCurrentMonthDays: boolean = false,
     // 오늘 여부
@@ -36,12 +36,12 @@ export class Day {
     this._holidays = holidays;
   }
 
-  get events() {
-    return this._events;
+  get schedules() {
+    return this._schedules;
   }
 
-  set events(events) {
-    this._events = events;
+  set schedules(schedules) {
+    this._schedules = schedules;
   }
 
   get isNotCurrentMonthDays() {
