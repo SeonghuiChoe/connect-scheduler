@@ -208,7 +208,7 @@ export class DayPage {
       width: '250px',
       data: {
         date: moment(day.date).format('YYYY-MM-DD'),
-        events: day.events,
+        events: day.holidays,
         isNotCurrentMonthDays: day.isNotCurrentMonthDays,
         isToday: day.isToday,
         isWeekend: day.isWeekend,
