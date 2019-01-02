@@ -69,7 +69,7 @@ export class DayPage {
           new Date(event['date']),
           event['note'],
           event['color'],
-          event['isRepeat'] == true,
+          event['isRepeat'] == 'true',
           event['detail']
         ));
     this.changeMonth();

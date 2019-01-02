@@ -144,6 +144,12 @@ const holidays = [{
   "detail": "은혜님 결혼식",
   "color": Holiday.COLORS.DEFALTE,
   "isRepeat": "false"
+}, {
+  "date": "2018-01-02",
+  "note": "신정",
+  "detail": "",
+  "color": Holiday.COLORS.DEFALTE,
+  "isRepeat": "true"
 }];
 
 export class HolidayService {
