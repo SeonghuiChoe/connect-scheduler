@@ -5,8 +5,7 @@ import { MatDialog } from '@angular/material';
 import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Day } from '../../models/day';
-import { Schedule } from '../../models/schedule';
-import { Holiday } from '../../models/holiday';
+import { Event } from '../../models/Event';
 
 @Component({
   selector: 'day-page',
@@ -47,10 +46,10 @@ export class DayPage {
   selectDay: Object = {};
 
   // 사용자가 입력한 이벤트
-  schedules: Array<Schedule> = [];
+  schedules: Array<Event> = [];
 
   // 공휴일
-  holidays: Array<Holiday> = [];
+  holidays: Array<Event> = [];
 
   constructor(
     private holidayService: HolidayService,
@@ -65,7 +64,7 @@ export class DayPage {
     this.holidays = this.holidayService.
       getHolidays().
       map((event: Object) =>
-        new Holiday(
+        new Event(
           new Date(event['date']),
           event['note'],
           event['color'],
@@ -102,8 +101,8 @@ export class DayPage {
   private pushMonth = (
     month: Array<Day>, // 추가할 날들의 배열
     date: Date, // 날짜
-    holidays: Array<Holiday>, // 공휴일 목록
-    schedules: Array<Schedule>, // 이벤트 목록
+    holidays: Array<Event>, // 공휴일 목록
+    schedules: Array<Event>, // 이벤트 목록
     isNotCurrentMonthDays: boolean, // 지금달이 아닌지 여부
     isToday: boolean, // 오늘 여부
     isWeekend: boolean, // 주말 여부

@@ -21,7 +21,7 @@
   <button mat-button (click)="cancel(event)">cancel</button>
 </div>
 <div class="event-box">
-  <div *ngFor="let event of day.events; let i=index">
+  <div *ngFor="let event of events; let i=index">
     <div class="event" [ngStyle]="{'background-color': event.color}">
       <span>{{event.note}}</span>
       <span (click)="deleteEvent(i)">x</span>

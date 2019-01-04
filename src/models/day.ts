@@ -1,5 +1,4 @@
-import { Holiday } from './holiday';
-import { Schedule } from './schedule';
+import { Event } from './Event';
 
 export class Day {
 
@@ -10,9 +9,9 @@ export class Day {
     // 날짜
     private _date: Date = new Date(),
     // 공휴일
-    private _holidays: Array<Holiday> = [],
+    private _holidays: Array<Event> = [],
     // 스케줄
-    private _schedules: Array<Schedule> = [],
+    private _schedules: Array<Event> = [],
     // 현재 선택된 달이 아닌지
     private _isNotCurrentMonthDays: boolean = false,
     // 오늘 여부
