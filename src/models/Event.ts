@@ -34,12 +34,20 @@ export class Event {
    */
   private _isRepeat: boolean = false;
 
-  constructor(date, name, color, isRepeat, detail) {
-    this._date = date,
-    this._note = name,
-    this._color, color,
+  /**
+   * 공휴일 여부
+   */
+  private _isHoliday: boolean = false;
+
+  constructor(
+    date, name, color, isRepeat, detail, isHoliday = false
+  ) {
+    this._date = date;
+    this._note = name;
+    this._color = color;
     this._isRepeat = isRepeat;
-    this._detail = detail
+    this._detail = detail;
+    this._isHoliday = isHoliday;
   }
 
   get date() {
@@ -60,5 +68,9 @@ export class Event {
 
   get detail() {
     return this._detail;
+  }
+
+  get isHoliday() {
+    return this._isHoliday;
   }
 }

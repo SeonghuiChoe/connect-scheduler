@@ -24,7 +24,7 @@
   <div *ngFor="let event of events; let i=index">
     <div class="event" [ngStyle]="{'background-color': event.color}">
       <span>{{event.note}}</span>
-      <span (click)="deleteEvent(i)">x</span>
+      <span *ngIf="!event.isHoliday" (click)="deleteEvent(i)">x</span>
     </div>
   </div>
 </div>
