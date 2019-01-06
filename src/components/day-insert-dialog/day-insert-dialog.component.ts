@@ -40,6 +40,6 @@ export class DayInsertDialog {
   }
 
   deleteEvent(i) {
-    // this.day.events.splice(i, 1);
+    this.day.schedules.splice(i, 1);
   }
 }
