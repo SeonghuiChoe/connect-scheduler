@@ -31,12 +31,12 @@ export class DayInsertDialog {
       this.events = day.holidays.concat(day.schedules);
     }
 
-  ok(event): void {
-    this.dialogRef.close([this.day, event]);
+  ok(schdule): void {
+    this.dialogRef.close([this.day, schdule]);
   }
 
-  cancel(event): void {
-    this.dialogRef.close([this.day, event]);
+  cancel(schdule): void {
+    this.dialogRef.close([this.day, schdule]);
   }
 
   deleteEvent(i) {

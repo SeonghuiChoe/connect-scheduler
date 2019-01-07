@@ -43,7 +43,10 @@ export class DayPage {
 
   days: Array<Day> = [];
 
-  selectDay: Object = {};
+  selectDay: Object = {
+    holidays: [],
+    schedules: [],
+  };
 
   // 사용자가 입력한 이벤트
   schedules: Array<Event> = [];
@@ -59,6 +62,7 @@ export class DayPage {
     this.getHolidays();
   }
 
+  // TODO: 매번 가져와야되는지 오프라인에서
   private getHolidays() {
     // 공휴일을 가져온다.
     this.holidays = this.holidayService.
@@ -72,6 +76,18 @@ export class DayPage {
           event['detail'],
           event['isHoliday'],
         ));
+
+    this.schedules = JSON.parse(this.localStorageService
+      .getSchedules())
+      .map((event: Object) =>
+      new Event(
+        new Date(event['_date']),
+        event['_note'],
+        event['_color'],
+        event['_isRepeat'] == 'true',
+        event['_detail'],
+        event['_isHoliday'],
+      ));
     this.changeMonth();
   }
 
@@ -80,8 +96,10 @@ export class DayPage {
    */
   private changeMonth() {
     // 달이 변경될때 선택된 날 초기화
-    this.selectDay = {};
-
+    this.selectDay = {
+      holidays: [],
+      schedules: [],
+    };
     const days = [];
     this.insertPreMonth(days);
     this.insertCurrentMonth(days);
@@ -121,13 +139,14 @@ export class DayPage {
     const preDaysInMonth = this.currentDate.clone().add(-1, 'months').daysInMonth();
     for (let j = 0; j < firstDay; j++) {
       const num = preDaysInMonth - j;
-      const holidays = this.makeHolidays(this.currentDate.clone().add(-1, 'months'), num).concat();
+      const holidays = this.makeEvent(this.holidays, this.currentDate.clone().add(-1, 'months'), num).concat();
+      const schedules = this.makeEvent(this.schedules, this.currentDate.clone().add(-1, 'months'), num).concat();
       const date = new Date(this.currentDate.clone().add(-1, 'months').set('date', num).toString());
       this.pushMonth(
         month,
         date,
         holidays,
-        [],
+        schedules,
         true,
         false,
         false,
@@ -144,14 +163,15 @@ export class DayPage {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
         (this.today.format('DD') == this.addZero(i));
-      const holidays = this.makeHolidays(this.currentDate, i);
+      const holidays = this.makeEvent(this.holidays, this.currentDate, i);
+      const schedules = this.makeEvent(this.schedules, this.currentDate, i);
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
       const date = new Date(this.currentDate.clone().set('date', i).toString());
       this.pushMonth(
         month,
         date,
         holidays,
-        [],
+        schedules,
         false,
         isToday,
         isWeekend,
@@ -165,13 +185,14 @@ export class DayPage {
   private insertNextMonth(month: Array<Day>) {
     const nextMonthCount = this.TOTAL_DATYS - month.length;
     for (let z = 1; z <= nextMonthCount; z++) {
-      const holidays = this.makeHolidays(this.currentDate.clone().add(1, 'months'), z);
+      const holidays = this.makeEvent(this.holidays, this.currentDate.clone().add(1, 'months'), z);
+      const schedules = this.makeEvent(this.schedules, this.currentDate.clone().add(1, 'months'), z);
       const date = new Date(this.currentDate.clone().add(1, 'months').set('date', z).toString());
       this.pushMonth(
         month,
         date,
         holidays,
-        [],
+        schedules,
         true,
         false,
         false,
@@ -182,21 +203,21 @@ export class DayPage {
   /**
    * 날에 맞는 휴일 가져오기
    */
-  private makeHolidays(month: Moment, num: number) {
-    const holidays = this.holidays.filter(h => {
+  private makeEvent(events, month: Moment, num: number) {
+    const filtered = events.filter(h => {
       const zeroMonth = this.addZero(h.date.getMonth() + 1);
       return h.isRepeat ?
         `${zeroMonth}-${h.date.getDate()}` === `${month.format('MM-')}${num}` :
         `${h.date.getFullYear()}-${zeroMonth}-${h.date.getDate()}` === `${month.format('YYYY-MM-')}${num}`;
     });
-    return holidays.sort((a, b) => a.date.getTime() - b.date.getTime());
+    return filtered.sort((a, b) => a.date.getTime() - b.date.getTime());
   }
 
   /**
    * 저장소에 저장하기
    */
-  private setEvents() {
-    // this.localStorageService.setEvents(JSON.stringify(this.events));
+  private setSchedules() {
+    this.localStorageService.setSchedules(JSON.stringify(this.schedules));
   }
 
   /**
@@ -222,27 +243,31 @@ export class DayPage {
       // 입력 데이터가 없다면 아무 변화 없음
       if (!data[1]) return;
 
-      // // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
-      // const filtered = this.events.
-      //   filter(item => moment(item.date).format('YYYY-MM-DD') !== data[0].date);
-      // // 스케줄에 현재 스케줄을 제외한 정보에 변경된 정보를 추가
-      // this.events = filtered.concat(data[0].events);
-      // // 스케줄 로컬에 저장
-      // this.setEvents();
+      // schedule이 있다면
+      if (data[0].schedules) {
+        // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
+        const filtered = this.schedules.
+        filter(item => moment(item.date).format('YYYY-MM-DD') !== data[0].date);
+        // 스케줄에 현재 스케줄을 제외한 정보에 변경된 정보를 추가
+        this.schedules = filtered.concat(data[0].schedules);
+      }
+      // 스케줄 로컬에 저장
+      this.setSchedules();
 
-      // const newEvents: Event = new Event(
-      //   day.date,
-      //   data[1].note,
-      //   Event.COLORS.DEFALTE,
-      //   false,
-      //   data[1].detail,
-      // );
-      // // 현제 날짜에 schedule 추가
-      // day.events.push(newEvents);
-      // // 스케줄만 모와놓은 자료에도 추가
-      // this.events.push(newEvents);
-      // // 스케줄 로컬에 저장
-      // this.setEvents();
+      // TODO: repeat설정
+      const newSchedule: Event = new Event(
+        day.date,
+        data[1].note,
+        Event.COLORS.DEFALTE,
+        false,
+        data[1].detail,
+      );
+      // 현제 날짜에 schedule 추가
+      day.schedules.push(newSchedule);
+      // 스케줄만 모와놓은 자료에도 추가
+      this.schedules.push(newSchedule);
+      // 스케줄 로컬에 저장
+      this.setSchedules();
     });
   }
 
