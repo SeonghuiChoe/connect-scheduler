@@ -241,7 +241,9 @@ export class DayPage {
       // 입력데이터와 변경된 day정보를 갖고오기 때문에 배열
       if (!data || !Array.isArray(data)) return;
       // 입력 데이터가 없다면 아무 변화 없음
-      if (!data[1]) return;
+      if (!data[1]
+        || (data[1] && !data[1].note)
+        || (data[1] && !data[1].detail)) return;
 
       // schedule이 있다면
       if (data[0].schedules) {
