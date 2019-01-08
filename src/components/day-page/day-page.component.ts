@@ -62,32 +62,28 @@ export class DayPage {
     this.getHolidays();
   }
 
+  /**
+   * Make event Object
+   */
+  private makeEventObject = (arr) => {
+    return arr
+      .map((event: Object) =>
+        new Event(
+          new Date(event['_date']),
+          event['_note'],
+          event['_color'],
+          event['_isRepeat'] == 'true',
+          event['_detail'],
+          event['_isHoliday'],
+        ));
+  }
+
   // TODO: 매번 가져와야되는지 오프라인에서
   private getHolidays() {
     // 공휴일을 가져온다.
-    this.holidays = this.holidayService.
-      getHolidays().
-      map((event: Object) =>
-        new Event(
-          new Date(event['date']),
-          event['note'],
-          event['color'],
-          event['isRepeat'] == 'true',
-          event['detail'],
-          event['isHoliday'],
-        ));
-
-    this.schedules = JSON.parse(this.localStorageService
-      .getSchedules())
-      .map((event: Object) =>
-      new Event(
-        new Date(event['_date']),
-        event['_note'],
-        event['_color'],
-        event['_isRepeat'] == 'true',
-        event['_detail'],
-        event['_isHoliday'],
-      ));
+    this.holidays = this.makeEventObject(this.holidayService.getHolidays());
+    this.schedules = this.makeEventObject(
+      JSON.parse(this.localStorageService.getSchedules()));
     this.changeMonth();
   }
 
