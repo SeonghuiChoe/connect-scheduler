@@ -6,6 +6,7 @@ import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.componen
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Day } from '../../models/day';
 import { Event } from '../../models/Event';
+import { AddService } from '../../utils/add.service';
 
 @Component({
   selector: 'day-page',
@@ -57,13 +58,16 @@ export class DayPage {
   constructor(
     private holidayService: HolidayService,
     private dialog: MatDialog,
-    private localStorageService: LocalStorageService) {
-    // 공휴일 가져오기
-    this.getHolidays();
+    private localStorageService: LocalStorageService,
+    private addService: AddService) {
+
+    this.getEvents();
   }
 
   /**
    * Make event Object
+   * @param {Array<Object>}
+   * @return {Array<Event>}
    */
   private makeEventObject = (arr) => {
     return arr
@@ -78,12 +82,15 @@ export class DayPage {
         ));
   }
 
-  // TODO: 매번 가져와야되는지 오프라인에서
-  private getHolidays() {
-    // 공휴일을 가져온다.
+  /**
+   * 공휴일과 스케줄을 가져온다.
+   */
+  private getEvents() {
+    // TODO: 매번 가져와야되는지 오프라인에서
     this.holidays = this.makeEventObject(this.holidayService.getHolidays());
     this.schedules = this.makeEventObject(
-      JSON.parse(this.localStorageService.getSchedules()));
+      JSON.parse(this.localStorageService.getSchedules())
+    );
     this.changeMonth();
   }
 
@@ -101,13 +108,6 @@ export class DayPage {
     this.insertCurrentMonth(days);
     this.insertNextMonth(days);
     this.days = days;
-  }
-
-  /**
-   * 10미만 앞에 0추가
-   */
-  private addZero(target: number) {
-    return target < 10 ? '0' + target : target;
   }
 
   /**
@@ -158,7 +158,7 @@ export class DayPage {
     for (let i = 1; i <= daysInMonth; i ++) {
       const isToday =
         (this.today.format('YYYYMM') == this.currentDate.format('YYYYMM')) &&
-        (this.today.format('DD') == this.addZero(i));
+        (this.today.format('DD') == this.addService.zero(i));
       const holidays = this.makeEvent(this.holidays, this.currentDate, i);
       const schedules = this.makeEvent(this.schedules, this.currentDate, i);
       const isWeekend = this.currentDate.date(i).day() === 0 || this.currentDate.date(i).day() === 6;
@@ -201,7 +201,7 @@ export class DayPage {
    */
   private makeEvent(events, month: Moment, num: number) {
     const filtered = events.filter(h => {
-      const zeroMonth = this.addZero(h.date.getMonth() + 1);
+      const zeroMonth = this.addService.zero(h.date.getMonth() + 1);
       return h.isRepeat ?
         `${zeroMonth}-${h.date.getDate()}` === `${month.format('MM-')}${num}` :
         `${h.date.getFullYear()}-${zeroMonth}-${h.date.getDate()}` === `${month.format('YYYY-MM-')}${num}`;

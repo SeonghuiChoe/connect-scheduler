@@ -17,6 +17,7 @@ import { DayInsertDialog } from '../components/day-insert-dialog/day-insert-dial
 // Services
 import { LocalStorageService } from '../services/local-storage.service';
 import { HolidayService } from '../services/holiday.service';
+import { AddService } from '../utils/add.service';
 
 // Directive
 import { AutofocusDirective } from '../directive/auto-focus.directive';
@@ -47,6 +48,7 @@ import { AutofocusDirective } from '../directive/auto-focus.directive';
   providers: [
     LocalStorageService,
     HolidayService,
+    AddService,
   ],
   exports: [
     MatButtonModule,
