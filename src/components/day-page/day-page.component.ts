@@ -7,6 +7,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { Day } from '../../models/day';
 import { Event } from '../../models/Event';
 import { AddService } from '../../utils/add.service';
+import { MakeEventObject } from './event.service';
 
 @Component({
   selector: 'day-page',
@@ -59,27 +60,10 @@ export class DayPage {
     private holidayService: HolidayService,
     private dialog: MatDialog,
     private localStorageService: LocalStorageService,
-    private addService: AddService) {
+    private addService: AddService,
+    private makeEventObject: MakeEventObject) {
 
     this.getEvents();
-  }
-
-  /**
-   * Make event Object
-   * @param {Array<Object>}
-   * @return {Array<Event>}
-   */
-  private makeEventObject = (arr) => {
-    return arr
-      .map((event: Object) =>
-        new Event(
-          new Date(event['_date']),
-          event['_note'],
-          event['_color'],
-          event['_isRepeat'] == 'true',
-          event['_detail'],
-          event['_isHoliday'],
-        ));
   }
 
   /**
@@ -87,8 +71,10 @@ export class DayPage {
    */
   private getEvents() {
     // TODO: 매번 가져와야되는지 오프라인에서
-    this.holidays = this.makeEventObject(this.holidayService.getHolidays());
-    this.schedules = this.makeEventObject(
+    this.holidays = this.makeEventObject.perform(
+      this.holidayService.getHolidays()
+    );
+    this.schedules = this.makeEventObject.perform(
       JSON.parse(this.localStorageService.getSchedules())
     );
     this.changeMonth();
@@ -123,7 +109,15 @@ export class DayPage {
     isWeekend: boolean, // 주말 여부
     isFront: boolean // 앞에 추가할건지 여부
   ) => {
-    const day: Day = new Day(date, holidays, schedules, isNotCurrentMonthDays, isToday, isWeekend, false);
+    const day: Day = new Day(
+      date,
+      holidays,
+      schedules,
+      isNotCurrentMonthDays,
+      isToday,
+      isWeekend,
+      false
+    );
     isFront ? month.push(day) : month.unshift(day);
   }
 
@@ -273,7 +267,7 @@ export class DayPage {
    * 해당 달로 이동
    * 해당 달이 없을 경우 현재달로 변경
    */
-  geMonth(month: number) {
+  goMonth(month: number) {
     if (!month) {
       this.currentDate = moment(new Date());
     } else {
