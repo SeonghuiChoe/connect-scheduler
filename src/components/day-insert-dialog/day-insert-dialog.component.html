@@ -15,6 +15,12 @@
       (keyup.enter)="ok(event)"
       placeholder="Detail">
   </mat-form-field>
+  <mat-checkbox
+    [(ngModel)]="event.isRepeat"
+    color="warn"
+    name="isRepeat">
+    Do you want repeat?
+  </mat-checkbox>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="ok(event)">Ok</button>

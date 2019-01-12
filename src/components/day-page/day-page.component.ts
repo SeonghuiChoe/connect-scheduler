@@ -251,7 +251,7 @@ export class DayPage {
         day.date,
         data[1].note,
         Event.COLORS.DEFALTE,
-        false,
+        data[1].isRepeat,
         data[1].detail,
       );
       // 현제 날짜에 schedule 추가

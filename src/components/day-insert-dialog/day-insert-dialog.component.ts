@@ -21,6 +21,7 @@ export class DayInsertDialog {
   private event = {
     note: '',
     detail: '',
+    isRepeat: false,
   }
 
   private events: Array<Event> = [];
