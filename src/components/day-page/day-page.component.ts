@@ -246,7 +246,6 @@ export class DayPage {
       // 스케줄 로컬에 저장
       this.setSchedules();
 
-      // TODO: repeat설정
       const newSchedule: Event = new Event(
         day.date,
         data[1].note,

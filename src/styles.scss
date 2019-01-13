@@ -30,6 +30,11 @@ html, body, head, div {
   }
 }
 
+.check-repeat.mat-checkbox
+.mat-checkbox-layout {
+  padding: 1em 0;
+}
+
 mat-tab-group {
   height: 100%;
 
