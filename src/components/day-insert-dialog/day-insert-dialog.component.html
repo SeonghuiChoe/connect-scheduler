@@ -15,6 +15,12 @@
       (keyup.enter)="ok(event)"
       placeholder="Detail">
   </mat-form-field>
+  <mat-radio-group class="check-colors">
+    <mat-radio-button
+      *ngFor="let color of colors; let i=index"
+      value="{{i}}">{{color.name}}
+    </mat-radio-button>
+  </mat-radio-group>
   <mat-checkbox
     [(ngModel)]="event.isRepeat"
     color="warn"

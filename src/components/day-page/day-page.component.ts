@@ -193,7 +193,7 @@ export class DayPage {
   /**
    * 날에 맞는 휴일 가져오기
    */
-  private makeEvent(events, month: Moment, num: number) {
+  private makeEvent(events, month: Moment, num: number): Array<Event> {
     const filtered = events.filter(h => {
       const zeroMonth = this.addService.zero(h.date.getMonth() + 1);
       return h.isRepeat ?

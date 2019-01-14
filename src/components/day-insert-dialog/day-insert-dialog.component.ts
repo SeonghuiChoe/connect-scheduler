@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Event } from '../../models/Event';
+import { Color } from '../../models/Color';
 
 export interface DayData {
   date: string;
@@ -25,6 +26,12 @@ export class DayInsertDialog {
   }
 
   private events: Array<Event> = [];
+
+  private colors: Array<Color> = [
+    new Color('red', '#e1786e'),
+    new Color('blue', '#98a2d8'),
+    new Color('green', '#a9d6a5'),
+  ];
 
   constructor(
     public dialogRef: MatDialogRef<DayInsertDialog>,

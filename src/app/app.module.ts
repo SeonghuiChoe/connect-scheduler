@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material';
 import { MatFormFieldModule, MatInputModule} from '@angular/material';
+import { MatRadioModule } from '@angular/material/radio';
 
 // Components
 import { AppComponent } from './app.component';
@@ -35,6 +36,7 @@ import { AutofocusDirective } from '../directive/auto-focus.directive';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatRadioModule,
   ],
   declarations: [
     AppComponent,
