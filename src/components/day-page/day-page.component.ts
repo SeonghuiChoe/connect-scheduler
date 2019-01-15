@@ -4,7 +4,7 @@ import { HolidayService } from '../../services/holiday.service';
 import { MatDialog } from '@angular/material';
 import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.component';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { Day } from '../../models/day';
+import { Day } from '../../models/Day';
 import { Event } from '../../models/Event';
 import { AddService } from '../../utils/add.service';
 import { MakeEventObject } from './event.service';

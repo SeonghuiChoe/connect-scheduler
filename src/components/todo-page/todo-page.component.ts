@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { Todo } from '../../models/todo';
+import { Todo } from '../../models/Todo';
 
 @Component({
   selector: 'todo-page',
