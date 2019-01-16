@@ -28,9 +28,9 @@ export class DayInsertDialog {
   private events: Array<Event> = [];
 
   private colors: Array<Color> = [
-    new Color('red', '#e1786e'),
-    new Color('blue', '#98a2d8'),
-    new Color('green', '#a9d6a5'),
+    new Color('r', '#e1786e'),
+    new Color('b', '#98a2d8'),
+    new Color('g', '#a9d6a5'),
   ];
 
   constructor(
@@ -47,7 +47,10 @@ export class DayInsertDialog {
     this.dialogRef.close([this.day, schdule]);
   }
 
-  deleteEvent(i) {
+  deleteEvent(i: number) {
+    // for view
+    this.events.splice(i, 1);
+    // for schedule
     this.day.schedules.splice(i, 1);
   }
 }
