@@ -35,6 +35,19 @@ html, body, head, div {
   padding: 1em 0;
 }
 
+/* radio button */
+.mat-radio-button.mat-accent
+.mat-radio-container
+.mat-radio-inner-circle {
+  background-color: #f44336;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked
+.mat-radio-container
+.mat-radio-outer-circle {
+  border-color: #f44336;
+}
+
 mat-tab-group {
   height: 100%;
 
