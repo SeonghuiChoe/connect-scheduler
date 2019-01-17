@@ -19,9 +19,10 @@ export interface DayData {
 })
 export class DayInsertDialog {
 
-  private event = {
+  private schedule = {
     note: '',
     detail: '',
+    color: Event.COLORS.DEFALTE,
     isRepeat: false,
   }
 
@@ -38,6 +39,10 @@ export class DayInsertDialog {
     @Inject(MAT_DIALOG_DATA) public day: DayData) {
       this.events = day.holidays.concat(day.schedules);
     }
+
+  changeColor(color) {
+    this.schedule.color = color;
+  }
 
   ok(schdule): void {
     this.dialogRef.close([this.day, schdule]);

@@ -4,25 +4,30 @@
   <mat-form-field>
     <input
       matInput
-      [(ngModel)]="event.note"
+      [(ngModel)]="schedule.note"
       cdkFocusInitial
       >
   </mat-form-field>
   <mat-form-field>
     <input
       matInput
-      [(ngModel)]="event.detail"
-      (keyup.enter)="ok(event)"
+      [(ngModel)]="schedule.detail"
+      (keyup.enter)="ok(schedule)"
       placeholder="Detail">
   </mat-form-field>
   <mat-radio-group class="check-colors">
     <mat-radio-button
-      *ngFor="let color of colors; let i=index"
-      value="{{i}}">{{color.name}}
+      *ngFor="let color of colors"
+      value="{{color.colorData}}"
+      (click)="changeColor(color.colorData)">
+      <div
+        class="check-color-box"
+        [ngStyle]="{'background-color': color.colorData}">
+      </div>
     </mat-radio-button>
   </mat-radio-group>
   <mat-checkbox
-    [(ngModel)]="event.isRepeat"
+    [(ngModel)]="schedule.isRepeat"
     color="warn"
     name="isRepeat"
     class="check-repeat">
@@ -30,8 +35,8 @@
   </mat-checkbox>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="ok(event)">Ok</button>
-  <button mat-button (click)="cancel(event)">cancel</button>
+  <button mat-button (click)="ok(schedule)">Ok</button>
+  <button mat-button (click)="cancel(schedule)">cancel</button>
 </div>
 <div class="event-box">
   <div *ngFor="let event of events; let i=index">

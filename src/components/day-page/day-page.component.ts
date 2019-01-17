@@ -232,8 +232,9 @@ export class DayPage {
     dialogRef.afterClosed().subscribe(data => {
       // 입력데이터와 변경된 day정보를 갖고오기 때문에 배열
       if (!data || !Array.isArray(data)) return;
-      console.log(data)
 
+      // TODO: 삭제가 잘 안되는 오류
+      // TODO: 글자 색도 정하도록
       // schedule이 있다면
       if (data[0] && data[0].schedules) {
         // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
@@ -253,7 +254,7 @@ export class DayPage {
       const newSchedule: Event = new Event(
         day.date,
         data[1].note,
-        Event.COLORS.DEFALTE,
+        data[1].color,
         data[1].isRepeat,
         data[1].detail,
       );

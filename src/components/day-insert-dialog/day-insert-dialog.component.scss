@@ -2,6 +2,11 @@
   display: flex;
   justify-content: space-between;
   padding-right: 1.3em;
+
+  .check-color-box {
+    width: .8em;
+    height: .8em;
+  }
 }
 
 .event-box {
