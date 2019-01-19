@@ -1,19 +1,30 @@
-export class Color {
-  // 색 이름
-  private _name: string;
-  // 색상
-  private _colorData: string;
+enum BG_COLORS {
+  DEFALTE = '#eee',
+}
 
-  constructor(name: string, colorData: string) {
-    this._name = name;
-    this._colorData = colorData;
+enum TEXT_COLORS {
+  DEFALTE = '#777',
+}
+
+export class Color {
+  constructor(
+    // name
+    private _name: string = 'gray',
+    // background color
+    private _bgColor: string = BG_COLORS.DEFALTE,
+    // Text color
+    private _textColor: string = TEXT_COLORS.DEFALTE) {
   }
 
   get name() {
     return this._name;
   }
 
-  get colorData() {
-    return this._colorData;
+  get bgColor() {
+    return this._bgColor;
+  }
+
+  get textColor() {
+    return this._textColor;
   }
 }

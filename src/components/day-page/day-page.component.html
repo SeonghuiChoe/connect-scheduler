@@ -34,7 +34,12 @@
       </div>
       <div class="event-box">
         <div *ngFor="let event of day.holidays.concat(day.schedules); let i=index">
-          <div class="event" [ngStyle]="{'background-color': event.color}" *ngIf="i<2">{{event.note}}</div>
+          <div
+            class="event"
+            [ngStyle]="{'background-color': event.color.bgColor}"
+            *ngIf="i<2">
+            <span [ngStyle]="{'color': event.color.textColor}">{{event.note}}</span>
+          </div>
           <div class="more" *ngIf="i==2">+{{day.holidays.concat(day.schedules).length - 2}}</div>
         </div>
       </div>
@@ -47,8 +52,9 @@
       <div
         *ngFor="let event of selectDay.holidays.concat(selectDay.schedules)"
         class="body-event"
-        [ngStyle]="{'background-color': event.color}">{{event.note}}
-          <span *ngIf="event.detail"> - {{event.detail}}</span>
+        [ngStyle]="{'background-color': event.color.bgColor, 'color': event.color.textColor}">
+        {{event.note}}
+        <span *ngIf="event.detail"> - {{event.detail}}</span>
       </div>
     </div>
   </div>

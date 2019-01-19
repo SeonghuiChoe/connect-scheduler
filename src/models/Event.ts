@@ -1,13 +1,7 @@
-enum ColorStatus {
-  DEFALTE = '#eee',
-}
+import { Color } from "./Color";
+
 
 export class Event {
-
-  /**
-   * 색
-   */
-  public static COLORS = ColorStatus;
 
   /**
    * 날짜
@@ -27,7 +21,7 @@ export class Event {
   /**
    * 색
    */
-  private _color: ColorStatus = ColorStatus.DEFALTE;
+  private _color: Color = new Color();
 
   /**
    * 반복설정

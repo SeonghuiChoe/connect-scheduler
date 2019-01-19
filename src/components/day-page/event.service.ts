@@ -1,4 +1,5 @@
 import { Event } from '../../models/Event';
+import { Color } from '../../models/Color';
 
 export class MakeEventObject {
 
@@ -13,7 +14,11 @@ export class MakeEventObject {
         new Event(
           new Date(event['_date']),
           event['_note'],
-          event['_color'],
+          new Color(
+            event['_color']._name,
+            event['_color']._bgColor,
+            event['_color']._textColor,
+          ),
           event['_isRepeat'] == 'true',
           event['_detail'],
           event['_isHoliday'],

@@ -18,11 +18,11 @@
   <mat-radio-group class="check-colors">
     <mat-radio-button
       *ngFor="let color of colors"
-      value="{{color.colorData}}"
-      (click)="changeColor(color.colorData)">
+      value="{{color.bgColor}}"
+      (click)="changeColor(color)">
       <div
         class="check-color-box"
-        [ngStyle]="{'background-color': color.colorData}">
+        [ngStyle]="{'background-color': color.bgColor}">
       </div>
     </mat-radio-button>
   </mat-radio-group>
@@ -40,8 +40,8 @@
 </div>
 <div class="event-box">
   <div *ngFor="let event of events; let i=index">
-    <div class="event" [ngStyle]="{'background-color': event.color}">
-      <span>{{event.note}}</span>
+    <div class="event" [ngStyle]="{'background-color': event.color.bgColor}">
+      <span [ngStyle]="{'color': event.color.textColor}">{{event.note}}</span>
       <span *ngIf="!event.isHoliday" (click)="deleteEvent(i)">x</span>
     </div>
   </div>

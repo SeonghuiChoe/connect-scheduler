@@ -22,16 +22,16 @@ export class DayInsertDialog {
   private schedule = {
     note: '',
     detail: '',
-    color: Event.COLORS.DEFALTE,
+    color: new Color(),
     isRepeat: false,
   }
 
   private events: Array<Event> = [];
 
   private colors: Array<Color> = [
-    new Color('r', '#e1786e'),
-    new Color('b', '#98a2d8'),
-    new Color('g', '#a9d6a5'),
+    new Color('r', '#e1786e', '#fff'),
+    new Color('b', '#98a2d8', '#fff'),
+    new Color('g', '#a9d6a5', '#fff'),
   ];
 
   constructor(
