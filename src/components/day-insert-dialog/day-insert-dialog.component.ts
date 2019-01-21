@@ -4,12 +4,14 @@ import { Event } from '../../models/Event';
 import { Color } from '../../models/Color';
 
 export interface DayData {
-  date: string;
-  holidays: Array<Event>;
-  schedules: Array<Event>;
-  isNotCurrentMonthDays: boolean;
-  isToday: boolean;
-  isWeekend: boolean;
+  day: {
+    date: string;
+    holidays: Array<Event>;
+    schedules: Array<Event>;
+    isNotCurrentMonthDays: boolean;
+    isToday: boolean;
+    isWeekend: boolean;
+  }
 }
 
 @Component({
@@ -36,8 +38,9 @@ export class DayInsertDialog {
 
   constructor(
     public dialogRef: MatDialogRef<DayInsertDialog>,
-    @Inject(MAT_DIALOG_DATA) public day: DayData) {
-      this.events = day.holidays.concat(day.schedules);
+    @Inject(MAT_DIALOG_DATA) public dayData: DayData) {
+      this.events = dayData.day.holidays
+        .concat(dayData.day.schedules);
     }
 
   changeColor(color) {
@@ -45,17 +48,17 @@ export class DayInsertDialog {
   }
 
   ok(schdule): void {
-    this.dialogRef.close([this.day, schdule]);
+    this.dialogRef.close([this.dayData.day, schdule]);
   }
 
   cancel(schdule): void {
-    this.dialogRef.close([this.day, schdule]);
+    this.dialogRef.close([this.dayData.day, schdule]);
   }
 
   deleteEvent(i: number) {
     // for view
     this.events.splice(i, 1);
     // for schedule
-    this.day.schedules.splice(i, 1);
+    this.dayData.day.schedules.splice(i, 1);
   }
 }

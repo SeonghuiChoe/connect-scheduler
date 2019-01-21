@@ -52,7 +52,8 @@
       <div
         *ngFor="let event of selectDay.holidays.concat(selectDay.schedules)"
         class="body-event"
-        [ngStyle]="{'background-color': event.color.bgColor, 'color': event.color.textColor}">
+        [ngStyle]="{'background-color': event.color.bgColor, 'color': event.color.textColor}"
+        (click)="updateEvent(event)">
         {{event.note}}
         <span *ngIf="event.detail"> - {{event.detail}}</span>
       </div>

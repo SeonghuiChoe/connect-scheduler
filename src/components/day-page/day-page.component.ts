@@ -218,12 +218,14 @@ export class DayPage {
     const dialogRef = this.dialog.open(DayInsertDialog, {
       width: '250px',
       data: {
-        date: moment(day.date).format('YYYY-MM-DD'),
-        holidays: day.holidays,
-        schedules: day.schedules,
-        isNotCurrentMonthDays: day.isNotCurrentMonthDays,
-        isToday: day.isToday,
-        isWeekend: day.isWeekend,
+        day: {
+          date: moment(day.date).format('YYYY-MM-DD'),
+          holidays: day.holidays,
+          schedules: day.schedules,
+          isNotCurrentMonthDays: day.isNotCurrentMonthDays,
+          isToday: day.isToday,
+          isWeekend: day.isWeekend,
+        }
       }
     });
 
@@ -318,5 +320,9 @@ export class DayPage {
     }
     // 선택되지 않았다면 선택 표시
     this.detailDay(day);
+  }
+
+  updateEvent(event: Event) {
+    console.log(event);
   }
 }
