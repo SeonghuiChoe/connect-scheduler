@@ -2,7 +2,7 @@ import moment, { Moment } from 'moment';
 import { Component } from '@angular/core';
 import { HolidayService } from '../../services/holiday.service';
 import { MatDialog } from '@angular/material';
-import { DayInsertDialog } from '../day-insert-dialog/day-insert-dialog.component';
+import { DayDialog } from '../day-dialog/day-dialog.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Day } from '../../models/Day';
 import { Event } from '../../models/Event';
@@ -45,10 +45,7 @@ export class DayPage {
 
   days: Array<Day> = [];
 
-  selectDay: Object = {
-    holidays: [],
-    schedules: [],
-  };
+  selectDay: Day = new Day();
 
   // 사용자가 입력한 이벤트
   schedules: Array<Event> = [];
@@ -64,6 +61,7 @@ export class DayPage {
     private makeEventObject: MakeEventObject) {
 
     this.getEvents();
+    this.selectDay['dDay'] = 'D-day';
   }
 
   /**
@@ -85,10 +83,7 @@ export class DayPage {
    */
   private changeMonth() {
     // 달이 변경될때 선택된 날 초기화
-    this.selectDay = {
-      holidays: [],
-      schedules: [],
-    };
+    this.selectDay = new Day();
     const days = [];
     this.insertPreMonth(days);
     this.insertCurrentMonth(days);
@@ -215,7 +210,7 @@ export class DayPage {
    */
   private insertSchedule(day: Day) {
     // holidays
-    const dialogRef = this.dialog.open(DayInsertDialog, {
+    const dialogRef = this.dialog.open(DayDialog, {
       width: '250px',
       data: {
         day: {
@@ -323,6 +318,19 @@ export class DayPage {
   }
 
   updateEvent(event: Event) {
-    console.log(event);
+    // holidays
+    const dialogRef = this.dialog.open(DayDialog, {
+      width: '250px',
+      data: {
+        day: {
+          date: moment(this.selectDay.date).format('YYYY-MM-DD'),
+          holidays: this.selectDay.holidays,
+          schedules: this.selectDay.schedules,
+          isNotCurrentMonthDays: this.selectDay.isNotCurrentMonthDays,
+          isToday: this.selectDay.isToday,
+          isWeekend: this.selectDay.isWeekend,
+        }
+      }
+    });
   }
 }

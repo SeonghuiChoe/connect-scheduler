@@ -15,11 +15,11 @@ export interface DayData {
 }
 
 @Component({
-  selector: 'day-insert-dialog.',
-  templateUrl: 'day-insert-dialog.component.html',
-  styleUrls: ['./day-insert-dialog.component.scss'],
+  selector: 'day-dialog.',
+  templateUrl: 'day-dialog.component.html',
+  styleUrls: ['./day-dialog.component.scss'],
 })
-export class DayInsertDialog {
+export class DayDialog {
 
   private schedule = {
     note: '',
@@ -37,7 +37,7 @@ export class DayInsertDialog {
   ];
 
   constructor(
-    public dialogRef: MatDialogRef<DayInsertDialog>,
+    public dialogRef: MatDialogRef<DayDialog>,
     @Inject(MAT_DIALOG_DATA) public dayData: DayData) {
       this.events = dayData.day.holidays
         .concat(dayData.day.schedules);

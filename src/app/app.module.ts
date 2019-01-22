@@ -13,7 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { AppComponent } from './app.component';
 import { TodoPage } from '../components/todo-page/todo-page.component';
 import { DayPage } from '../components/day-page/day-page.component';
-import { DayInsertDialog } from '../components/day-insert-dialog/day-insert-dialog.component';
+import { DayDialog } from '../components/day-dialog/day-dialog.component';
 
 // Services
 import { LocalStorageService } from '../services/local-storage.service';
@@ -43,10 +43,10 @@ import { AutofocusDirective } from '../directive/auto-focus.directive';
     AutofocusDirective,
     TodoPage,
     DayPage,
-    DayInsertDialog,
+    DayDialog,
   ],
   entryComponents: [
-    DayInsertDialog
+    DayDialog
   ],
   providers: [
     LocalStorageService,
