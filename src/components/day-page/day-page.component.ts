@@ -245,8 +245,7 @@ export class DayPage {
 
       // 입력 데이터가 없다면 아무 변화 없음
       if (!data[1]
-        || (data[1] && !data[1].note)
-        || (data[1] && !data[1].detail)) return;
+        || (data[1] && !data[1].note)) return;
 
       const newSchedule: Event = new Event(
         day.date,
@@ -329,6 +328,12 @@ export class DayPage {
           isNotCurrentMonthDays: this.selectDay.isNotCurrentMonthDays,
           isToday: this.selectDay.isToday,
           isWeekend: this.selectDay.isWeekend,
+        },
+        schedule: {
+          note: event.note,
+          detail: event.detail,
+          color: event.color,
+          isRepeat: event.isRepeat,
         }
       }
     });

@@ -15,7 +15,9 @@
       (keyup.enter)="ok(schedule)"
       placeholder="Detail">
   </mat-form-field>
-  <mat-radio-group class="check-colors">
+  <mat-radio-group
+    class="check-colors"
+    [(ngModel)]="schedule.color.bgColor">
     <mat-radio-button
       *ngFor="let color of colors"
       value="{{color.bgColor}}"

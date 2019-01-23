@@ -11,6 +11,12 @@ export interface DayData {
     isNotCurrentMonthDays: boolean;
     isToday: boolean;
     isWeekend: boolean;
+  },
+  schedule: {
+    note: string,
+    detail: string,
+    color: Color,
+    isRepeat: boolean,
   }
 }
 
@@ -41,6 +47,12 @@ export class DayDialog {
     @Inject(MAT_DIALOG_DATA) public dayData: DayData) {
       this.events = dayData.day.holidays
         .concat(dayData.day.schedules);
+      if (dayData.schedule) {
+        this.schedule.note = dayData.schedule.note;
+        this.schedule.detail = dayData.schedule.detail;
+        this.schedule.color = dayData.schedule.color;
+        this.schedule.isRepeat = dayData.schedule.isRepeat;
+      }
     }
 
   changeColor(color) {
