@@ -230,8 +230,6 @@ export class DayPage {
       // 입력데이터와 변경된 day정보를 갖고오기 때문에 배열
       if (!data || !Array.isArray(data)) return;
 
-      // TODO: 삭제가 잘 안되는 오류
-      // TODO: 글자 색도 정하도록
       // schedule이 있다면
       if (data[0] && data[0].schedules) {
         // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
@@ -244,8 +242,7 @@ export class DayPage {
       }
 
       // 입력 데이터가 없다면 아무 변화 없음
-      if (!data[1]
-        || (data[1] && !data[1].note)) return;
+      if (!data[1] || (data[1] && !data[1].note)) return;
 
       const newSchedule: Event = new Event(
         day.date,
@@ -336,6 +333,25 @@ export class DayPage {
           isRepeat: event.isRepeat,
         }
       }
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      // 입력데이터와 변경된 day정보를 갖고오기 때문에 배열
+      if (!data || !Array.isArray(data)) return;
+
+      // schedule이 있다면
+      if (data[0] && data[0].schedules) {
+        // 기존에 저장되있는 스케줄에서 선택된 날의 스케줄을 제외한 자료
+        const filtered = this.schedules.
+        filter(item => moment(item.date).format('YYYY-MM-DD') !== data[0].date);
+        // 스케줄에 현재 스케줄을 제외한 정보에 변경된 정보를 추가
+        this.schedules = filtered.concat(data[0].schedules);
+        // 스케줄 로컬에 저장
+        this.setSchedules();
+      }
+
+      // 입력 데이터가 없다면 아무 변화 없음
+      if (!data[1] || (data[1] && !data[1].note)) return;
     });
   }
 }
