@@ -34,6 +34,8 @@ export class DayDialog {
     isRepeat: false,
   }
 
+  private checkDelete: Array<number> = [];
+
   private events: Array<Event> = [];
 
   private colors: Array<Color> = [
@@ -60,17 +62,22 @@ export class DayDialog {
   }
 
   ok(schdule): void {
+    // for schedule
+    if (this.checkDelete.length > 0) {
+      for (let i = 0; i < this.checkDelete.length; i++) {
+        this.dayData.day.schedules.splice(i, 1);
+      }
+    }
     this.dialogRef.close([this.dayData.day, schdule]);
   }
 
-  cancel(schdule): void {
-    this.dialogRef.close([this.dayData.day, schdule]);
+  cancel(): void {
+    this.dialogRef.close();
   }
 
   deleteEvent(i: number) {
     // for view
     this.events.splice(i, 1);
-    // for schedule
-    this.dayData.day.schedules.splice(i, 1);
+    this.checkDelete.push(i);
   }
 }
